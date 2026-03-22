@@ -204,6 +204,20 @@ The description field is a trigger, not a summary. It determines whether the age
 - Avoid offering too many options for the same task — provide a default approach with an escape hatch for edge cases
 - When providing templates, match the level of strictness to the task's fragility: strict templates for data formats and API responses, flexible templates for analysis and writing
 
+## The CurrentExamples Folder
+
+The root of this repository contains a folder called `CurrentExamples/`. This folder holds reference material relevant to whichever skill is currently being created or improved. Its contents change every time and may include:
+
+- Old prompts or instructions that the new skill should incorporate or draw from
+- Pre-generated output files that show what the skill's output should look like
+- README files or documentation that provide context about the domain
+- Example content that the skill will need to process or produce
+- Existing work from other projects that serves as inspiration
+
+The folder may also be empty, which means there are no examples to reference for the current skill.
+
+When starting a skill session, always check `CurrentExamples/` first. Read everything in it and reason about why each item is there and how it relates to the skill being built. Do not ask the user to explain the folder contents unless the relationship is genuinely unclear after reading — in most cases, the connection between the examples and the skill's purpose will be obvious from context. Use what you find to inform the architecture, templates, output format, quality standards, and depth of the skill.
+
 ## When the User Asks You to Improve an Existing Skill
 
 If the user asks you to improve a skill that already exists in the repo:
