@@ -8,7 +8,8 @@
 4. Existing Context Folder Handling
 5. Initialising a New Context Folder
 6. Temporary Plan Hygiene
-7. Final Review Rules
+7. Decisions and References Hygiene
+8. Final Review Rules
 
 ## 1. Baseline Behaviour
 
@@ -26,13 +27,13 @@ Do not optimise for elegance at the cost of unnecessary churn.
 
 Before reorganising, ask:
 
-- Is the current file clearly wrong, or merely imperfect?
-- Is overlap material, or just adjacent-topic mention?
-- Will restructuring improve understanding enough to justify the churn?
+- is the current file clearly wrong, or merely imperfect?
+- is overlap material, or just adjacent-topic mention?
+- will restructuring improve understanding enough to justify the churn?
 
 If the current layout is good enough, preserve it.
 
-“Good enough” means:
+"Good enough" means:
 
 - file scopes are coherent,
 - overlap is limited,
@@ -72,7 +73,8 @@ Merge files when:
 Split a file when:
 
 - it contains multiple independently changing systems,
-- or readers repeatedly need only one subset of it.
+- readers repeatedly need only one subset of it,
+- or one subsystem's durable notes are being buried by another.
 
 ### Rename
 
@@ -107,9 +109,10 @@ When `context/` does not exist:
 
 1. inspect the repository deeply enough to infer the subsystem map,
 2. create `architecture.md`,
-3. create one file in `systems/` per stable subsystem/feature area,
+3. create one file in `systems/` per stable subsystem or feature area,
 4. avoid speculative files for uncertain future systems,
-5. include durable notes only where there is real evidence.
+5. include durable notes only where there is real evidence,
+6. use formatting structures that improve comprehension rather than defaulting to bullets alone.
 
 A new folder should be comprehensive, but not padded with speculative placeholders.
 
@@ -149,7 +152,8 @@ Before finishing, verify:
 - every important topic has a clear home,
 - overlap is materially lower than before,
 - preserved files stayed preserved where possible,
-- any rename/delete/merge/split was justified by real structural benefit,
+- any rename, delete, merge, or split was justified by real structural benefit,
 - folder roles are being respected,
 - no diary-style or milestone-style files remain,
-- the folder reads as a coherent repository memory system rather than a loose pile of notes.
+- the folder reads as a coherent repository memory system rather than a loose pile of notes,
+- the final result was linted or a concrete lint failure was disclosed.

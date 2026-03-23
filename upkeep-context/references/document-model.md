@@ -1,10 +1,10 @@
 # Document Model
 
-This reference defines the allowed canonical file types, their roles, and their required section templates.
+This reference defines the canonical file types, their roles, their required section templates, and how canonical ownership should be preserved even when a document uses multiple presentation formats.
 
 ## Canonical Context Structure
 
-The skill should default to this structure:
+Default to this structure:
 
 ```text
 context/
@@ -17,7 +17,25 @@ context/
 
 Only `architecture.md` and `systems/` are universally required.
 
-The other folders are part of the canonical model, but they should contain files only when justified by the project.
+The other folders are canonical roles, not mandatory filler targets. Create files in them only when their role is justified.
+
+## Canonical Ownership Rule
+
+Every important topic should have one primary home.
+
+Allowed:
+
+- one file owns a topic canonically,
+- neighbouring files mention that topic only at interface level,
+- one document uses both a table and bullets to express the same topic more clearly.
+
+Not allowed:
+
+- two files both fully documenting the same subsystem as if they were both canonical,
+- architecture repeating entire system documents,
+- references or plans quietly becoming shadow system docs.
+
+Supportive duplication within one document is acceptable. Canonical duplication across documents is not.
 
 ## 1. `architecture.md`
 
@@ -47,10 +65,11 @@ Use this section order:
 
 ### Structure Rules
 
-- `Repository Structure` must use a text code block.
+- `Repository Structure` must use a text tree in a fenced code block.
 - Important directories and files should have short one-line descriptions.
-- Depth should be meaningful, not shallow.
-- Keep architecture structural rather than status-heavy.
+- Depth should be meaningful rather than shallow.
+- Structural sections may include a supporting table or diagram when it clarifies the same information better than bullets alone.
+- Keep `architecture.md` structural rather than status-heavy; detailed subsystem reality belongs in `systems/`.
 
 ## 2. `systems/<topic>.md`
 
@@ -97,12 +116,6 @@ Good:
 - `systems/replay.md`
 - `systems/telemetry.md`
 
-Less ideal when the shorter form would be equally clear:
-
-- `systems/sensors-observations.md`
-- `systems/game-environment.md`
-- `systems/determinism-replay.md`
-
 Keep the longer name only when:
 
 - the shorter name would collide with another real subsystem,
@@ -126,10 +139,12 @@ Use this section order:
 
 ### Writing Rules
 
-- Use small meaningful bullets rather than long prose dumps.
-- Describe reality, not aspiration, in the “current” section.
-- Tie future work to the subsystem itself, not to a project timeline.
-- Put durable past lessons in the durable-notes section, not in a diary format.
+- Use bullets for digestible current-state statements and takeaways.
+- Add tables when inventories, interfaces, or comparisons are dense enough that bullets alone become noisy.
+- Add a simple flow or diagram only when it materially clarifies relationships.
+- Describe reality rather than aspiration in the current section.
+- Tie future work to the subsystem itself rather than to a project timeline.
+- Put durable past lessons in the durable-notes section rather than in diary format.
 
 ## 3. `plans/<topic>.md`
 
@@ -143,7 +158,7 @@ It is not part of the stable long-term memory model. It exists only when explici
 
 - Place files in `plans/`.
 - Use a short stable descriptor.
-- Keep only one active implementation plan unless there is a very strong reason otherwise.
+- Keep only one active implementation plan by default.
 
 ### Required Sections
 
@@ -181,13 +196,7 @@ Examples:
 
 - Place files in `decisions/`.
 - Use lowercase hyphenated names.
-- Name by decision topic, not by date.
-
-Examples:
-
-- `decisions/controller-baseline.md`
-- `decisions/plugin-boundaries.md`
-- `decisions/storage-model.md`
+- Name by decision topic rather than by date.
 
 ### Suggested Sections
 
@@ -219,13 +228,7 @@ Examples:
 
 - Place files in `references/`.
 - Use lowercase hyphenated names.
-- Name by subject matter, not by chronology.
-
-Examples:
-
-- `references/a2c-vs-sac.md`
-- `references/event-schema.md`
-- `references/postgres-migration-notes.md`
+- Name by subject matter rather than chronology.
 
 ### Suggested Sections
 

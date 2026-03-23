@@ -7,6 +7,7 @@
 3. Merge Duplicate Ownership
 4. Durable Note vs History Log
 5. Architecture Depth Expectation
+6. Supportive Multi-Format Presentation
 
 ## 1. Milestone Decomposition to System Decomposition
 
@@ -91,31 +92,6 @@ context/
     └── training-signal.md
 ```
 
-## 6. Decisions and References Placement
-
-### Good
-
-```text
-context/
-├── architecture.md
-├── systems/
-│   ├── analytics.md
-│   └── agent-learning.md
-├── decisions/
-│   └── controller-baseline.md
-├── references/
-│   └── a2c-vs-sac.md
-└── plans/
-    └── actor-critic-stabilisation.md
-```
-
-Why it is good:
-
-- current implementation truth stays in `systems/`,
-- the durable choice lives in `decisions/`,
-- the deeper supporting comparison lives in `references/`,
-- the active execution guide lives in `plans/`.
-
 Both files explain:
 
 - reward terms,
@@ -182,4 +158,51 @@ repo/
 └── README.md                   # Project mission and scope
 ```
 
-The second version is still brief, but it already orients the reader. Strong architecture files should usually go deeper than this into important source/config/test/doc directories.
+The second version is still brief, but it already orients the reader. Strong architecture files should usually go deeper than this into important source, config, test, and doc directories.
+
+## 6. Supportive Multi-Format Presentation
+
+When comparing several modules, a table plus bullets can be better than either one alone.
+
+### Good
+
+```markdown
+## Boundaries / Ownership
+
+| Module | Owns | Depends on | Change Pressure |
+| --- | --- | --- | --- |
+| `scheduler` | job orchestration | queue, config | medium |
+| `queue` | task persistence | storage | medium |
+| `workers` | task execution | queue, external APIs | high |
+
+- `workers` is the most failure-prone boundary because it touches external APIs directly.
+- `scheduler` and `queue` should remain separate canonical topics because orchestration changes do not always require persistence changes.
+```
+
+Why it is good:
+
+- the table compresses comparable fields cleanly,
+- the bullets pull out the implications a future engineer should notice,
+- one document still owns the topic canonically.
+
+### Bad
+
+```markdown
+## Boundaries / Ownership
+
+- scheduler owns jobs
+- queue owns persistence
+- workers execute jobs
+
+## Another File Elsewhere
+
+- scheduler owns jobs
+- queue owns persistence
+- workers execute jobs
+```
+
+Why it is bad:
+
+- the second file creates duplicate ownership,
+- the repetition is no longer supportive presentation,
+- readers cannot tell which file to trust.

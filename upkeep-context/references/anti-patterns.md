@@ -1,21 +1,21 @@
 # Anti-Patterns
 
-This reference names the common failure modes that make a `context/` folder noisy, unstable, or misleading.
+This reference names the common failure modes that make a `context/` folder noisy, unstable, shallow, or misleading.
 
 ## 1. Milestone Slicing
 
 Bad:
 
-- `MILESTONE_1.md`
-- `PHASE_2.md`
-- `SPRINT_4_NOTES.md`
+- `milestone-1.md`
+- `phase-2.md`
+- `sprint-4-notes.md`
 
 Why it fails:
 
 - later milestones restate earlier reality,
 - information duplicates instead of moving to a canonical home,
 - readers must reconstruct the present from historical slices,
-- upkeep becomes additive clutter instead of maintenance.
+- upkeep becomes additive clutter rather than maintenance.
 
 Corrective action:
 
@@ -27,9 +27,9 @@ Corrective action:
 
 Bad:
 
-- `HISTORY.md`
-- `RECENT_CHANGES.md`
-- “today we did X” sections
+- `history.md`
+- `recent_changes.md`
+- "today we did X" sections
 
 Why it fails:
 
@@ -59,15 +59,15 @@ Why it fails:
 Corrective action:
 
 - pick one canonical home,
-- trim the neighbouring file to interface-level mention only.
+- trim neighbouring files to interface-level mention only.
 
 ## 4. Vague Catch-All Files
 
 Bad:
 
-- `MISC.md`
-- `NOTES.md`
-- `GENERAL_SYSTEMS.md`
+- `misc.md`
+- `notes.md`
+- `general-systems.md`
 
 Why it fails:
 
@@ -80,27 +80,6 @@ Corrective action:
 
 - redistribute content into proper system docs,
 - delete the catch-all file.
-
-## 9. Dumping-Ground Decisions and References
-
-Bad:
-
-- `decisions/misc.md`
-- `references/random-research.md`
-- folders filled with lightly curated scraps that have no clear reuse value
-
-Why it fails:
-
-- the role boundary collapses,
-- research becomes hard to revisit,
-- cross-cutting decisions become untrustworthy,
-- the folder turns into storage instead of memory.
-
-Corrective action:
-
-- create decision and reference files only when they have a durable, specific role,
-- name them by subject,
-- delete or merge scraps that have no lasting value.
 
 ## 5. Over-Broad System Files
 
@@ -141,7 +120,7 @@ Corrective action:
 
 Bad:
 
-- “Current Implemented System” describes things not actually implemented,
+- `Current Implemented Reality` describes things not actually implemented,
 - missing items are presented as real,
 - future design is mixed into present reality.
 
@@ -163,7 +142,7 @@ Bad:
 - architecture that only lists top-level folders,
 - no subsystem responsibilities,
 - no dependency direction,
-- no execution/data flow,
+- no execution or data flow,
 - no one-line descriptions.
 
 Why it fails:
@@ -177,3 +156,40 @@ Corrective action:
 - deepen the structural tree,
 - read representative files,
 - annotate the tree meaningfully.
+
+## 9. Thin Systems
+
+Bad:
+
+- a system document that names a subsystem but barely explains ownership, interfaces, risks, or partial work,
+- every section reduced to one short bullet regardless of subsystem importance.
+
+Why it fails:
+
+- the file exists without carrying enough memory value,
+- future readers still need first-pass rediscovery from code,
+- the folder looks complete while remaining informationally weak.
+
+Corrective action:
+
+- raise depth where the subsystem has real complexity or change pressure,
+- add tables, interface summaries, or flow notes when bullets alone are insufficient.
+
+## 10. Decorative Formatting
+
+Bad:
+
+- adding diagrams, charts, or tables just because they look richer,
+- replacing clear prose with visuals that take longer to decode,
+- using a single visual format as a hard rule regardless of the information.
+
+Why it fails:
+
+- increases noise rather than clarity,
+- makes the document harder to scan,
+- confuses style with memory quality.
+
+Corrective action:
+
+- choose the representation that makes the information clearest,
+- combine formats only when they support understanding.

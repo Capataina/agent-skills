@@ -1,46 +1,54 @@
 ---
 name: upkeep-context
-description: "Maintains a repository-level context folder that reflects the current implementation state. Use when asked to create, initialize, regenerate, audit, clean up, restructure, upkeep, or update a project's context/ documentation by reading the repository and producing canonical architecture and feature/system documents. Prefers feature-adjacent or subsystem-adjacent files over milestone-based or time-sliced files, preserves durable project memory, removes overlap, merges duplicated coverage, and keeps context docs aligned with code reality rather than aspirations or changelog-style history. Not for writing product specs, roadmaps, release notes, or general-purpose prose documentation."
+description: "Maintains a repository-level context folder as durable implementation memory. Use when asked to create, initialize, regenerate, audit, clean up, restructure, repair, or update a project's context/ documentation by reading the repository, running the bundled repo scan and context lint scripts, and producing canonical architecture and subsystem documents grounded in current code reality. Prefers feature-adjacent or subsystem-adjacent files over milestone slices, preserves durable lessons, supports richer markdown structures such as trees, tables, matrices, and diagrams when they improve comprehension, and keeps context docs comprehensive without redundancy. Not for product specs, roadmaps, release notes, changelogs, or general-purpose prose docs."
 ---
 
 # Upkeep Context
 
-Maintain a `context/` folder as the repository's working memory layer. The goal is a deep, concise, reality-based documentation set that lets someone understand the whole repository faster than re-deriving it from code, while keeping one canonical home per important topic.
+Maintain a `context/` folder as the repository's working memory layer. The goal is durable, implementation-grounded memory that lets a future engineer or agent understand the repository quickly without re-deriving everything from code.
 
 Before editing or generating any `context/` files, read the reference files in this order:
 
 1. Read `references/context-principles.md` first.
    It defines what `context/` is for, what it must contain, and what it must never become.
 2. Read `references/document-model.md` second.
-   It defines the only canonical file types this skill should create and the required section templates.
+   It defines the canonical file types, section templates, and how canonical ownership works.
 3. Read `references/granularity-rules.md` third.
-   It defines how to choose document boundaries and how to avoid overlap, milestone slicing, and vague catch-all files.
+   It defines how to choose file boundaries through stable ownership rather than chronology.
 4. Read `references/upkeep-decision-rules.md` fourth.
-   It defines when to preserve, update, merge, split, rename, or delete files and how to keep churn low.
+   It defines when to preserve, update, merge, split, rename, or delete files with low churn.
 5. Read `references/anti-patterns.md` fifth.
-   It lists failure modes that commonly corrupt `context/`.
-6. Read `references/implement-now-guidance.md` sixth if an execution-plan file is present or needs to be created.
-   It defines the writing standards for high-quality `implement-now` files.
-7. Read `references/examples.md` last.
-   It contains worked examples of good and bad decompositions.
+   It lists common failure modes that make `context/` shallow, noisy, or contradictory.
+6. Read `references/script-contract.md` sixth.
+   It defines the mandatory role of `scan_repo.py` and `lint_context.py`, plus fallback rules when a script genuinely cannot run.
+7. Read `references/content-depth-standards.md` seventh.
+   It defines what "comprehensive but non-redundant" means for architecture and system documents.
+8. Read `references/markdown-presentation-patterns.md` eighth.
+   It defines when to use bullets, tables, matrices, trees, and diagrams, including when supportive multi-format presentation is appropriate.
+9. Read `references/implement-now-guidance.md` ninth if a plan file is present or needs to be created.
+   It defines the writing standards for high-quality temporary execution plans.
+10. Read `references/examples.md` last.
+    It contains worked examples of good decompositions, stronger formatting patterns, and common corrections.
 
 ## Core Identity
 
-This skill is not a generic summariser, a changelog generator, or a planning assistant.
+This skill is not a generic summariser, changelog generator, or planning assistant.
 
 It maintains a **repository memory layer** that captures:
 
 - current implementation reality,
 - subsystem boundaries and interfaces,
-- active risks and partially implemented work,
+- dependency and execution flows,
+- active risks and partial work,
 - durable lessons from prior attempts,
-- temporary execution plans only when explicitly requested.
+- temporary execution plans only when explicitly requested or clearly necessary.
 
 It must reject:
 
 - milestone-based or phase-based slicing,
 - diary-style history,
-- duplicated ownership across files,
+- duplicated canonical ownership across files,
+- speculative subsystem files,
 - cosmetic rewrites that create churn without improving understanding.
 
 ## Priority Order
@@ -48,14 +56,15 @@ It must reject:
 When trade-offs exist, optimise in this order:
 
 1. `context/` must match current implementation reality.
-2. `context/` must be sufficient to understand the repository as a whole.
+2. `context/` must materially reduce first-pass code rediscovery.
 3. Each important topic must have one canonical home.
 4. Repeated upkeep must produce low churn.
-5. Writing should stay concise without becoming shallow.
+5. Writing should be comprehensive without padding.
+6. Formatting should improve comprehension, not become decoration.
 
 ## Supported File Model
 
-This skill should default to this folder model:
+Default to this folder model:
 
 ```text
 context/
@@ -68,7 +77,7 @@ context/
 
 Only `architecture.md` and `systems/` are universally essential.
 
-`plans/`, `decisions/`, and `references/` are part of the canonical structure, but they should contain files only when justified. Do not create filler files just because the folders exist.
+`plans/`, `decisions/`, and `references/` are canonical folders, but they should contain files only when justified. Do not create filler files just to mirror the model.
 
 Do not create default files such as:
 
@@ -97,167 +106,100 @@ Use:
 
 Avoid:
 
-- all-caps prefixes that push the meaningful topic off-screen,
+- all-caps filenames such as `ARCHITECTURE.md`,
 - vague filenames,
 - milestone or chronology words,
 - names that exist only to mirror a temporary project phase.
 
 Prefer the shortest stable topic name that is still unambiguous in its folder and in the repository.
 
-Examples:
+## Operating Modes
 
-- prefer `systems/agent-observations.md` over `systems/sensors-and-observations.md` when the shorter name still captures the scope clearly
-- prefer `systems/environment.md` over `systems/game-environment.md` when there is only one meaningful environment subsystem
-- keep the longer name only when the shorter one would collide with another real subsystem
+Choose the mode that matches the user's intent and the repository state:
 
-Optimise topic names for:
+- `Initialize`: create an initial `context/` for a repo that does not yet have one.
+- `Upkeep`: refresh an existing coherent `context/` in place with minimal churn.
+- `Repair`: correct stale, inconsistent, or structurally drifting files without broad reorganisation.
+- `Restructure`: merge, split, rename, or delete files when the current layout is actively misleading or duplicative.
+- `Audit-only`: diagnose the state of `context/` and recommend actions without rewriting files.
+- `Plan-support`: create or maintain a temporary `plans/` file only when explicitly requested or clearly necessary for active execution.
 
-- IDE scanability,
-- quick recognition,
-- stability over time,
-- low collision risk.
+Do not choose a mode based on repository size labels such as "small" or "large." Choose it based on evidence about structure quality, overlap pressure, missing canonical homes, and user intent.
 
-For existing repositories, do not rename files purely to enforce the convention unless the current names are actively harmful or you are already making a substantial structural update. Low churn still applies.
+## Evidence Standard
 
-## Operating Rules
+Use the repository as primary evidence for implementation truth. Existing `context/` files are prior memory, not unquestionable truth.
 
-### 1. Read the repository as evidence
+Inspect enough of the repository to justify each major claim about:
 
-Use the codebase itself as the source of truth for implementation reality. Existing `context/` files are prior memory, not unquestionable truth.
+- top-level structure,
+- major subsystem boundaries,
+- dependency direction,
+- key execution or data flows,
+- what appears implemented, partial, missing, or obsolete.
 
-Always inspect enough of the repository to answer:
+When a statement is inferred rather than directly observed in code or configuration, write it as an inference rather than as a verified fact.
 
-- what the top-level structure is,
-- what the major subsystems are,
-- how they connect,
-- what appears implemented, partial, missing, or obsolete,
-- whether the existing `context/` structure still fits the codebase.
+## Script Usage
 
-### 2. Treat architecture and system documents differently
+This skill is a script-backed workflow. The bundled scripts are mandatory parts of the process, not optional conveniences.
 
-`architecture.md` is the top-down structural map. It should describe the repository shape, subsystem responsibilities, dependency direction, and major execution/data flows.
-
-`systems/*.md` files are the canonical homes for feature- or subsystem-level reality. They should contain the implementation state, boundaries, interfaces, risks, future-relevant gaps, and durable lessons for one stable topic.
-
-`plans/*.md` files are temporary execution guides for active work.
-
-`decisions/*.md` files hold durable cross-cutting project decisions and their trade-offs.
-
-`references/*.md` files hold durable supporting material such as research, external-context summaries, schema notes, or comparative studies.
-
-Do not let `architecture.md` become a duplicate of all system documents. It is the map, not the territory.
-
-### 3. Preserve good-enough structure
-
-Low churn is mandatory.
-
-If an existing file already has:
-
-- a coherent scope,
-- low material overlap,
-- and reality that can be updated in place,
-
-preserve it.
-
-Prefer:
-
-- in-place updates over renames,
-- content moves over full rewrites,
-- targeted merges or splits over folder-wide reorganisation.
-
-Only restructure when the current layout is actively misleading, duplicative, stale, or too vague to remain stable.
-
-### 4. Keep one canonical home per topic
-
-Every important subsystem, feature area, or cross-cutting concern must have one primary home.
-
-If two files both own the same topic:
-
-- move content so one file becomes canonical, or
-- merge them if they are not independently stable topics.
-
-If a file contains multiple independently changing topics:
-
-- split it.
-
-### 5. Keep durable memory, not chronological memory
-
-Preserve information that remains useful over time:
-
-- discarded approaches,
-- failed experiments,
-- constraints revealed by prior work,
-- future revisit guidance,
-- migration notes that still affect current work.
-
-Do not preserve:
-
-- daily progress logs,
-- time-stamped “we did X today” notes,
-- stacked milestone summaries,
-- narrative release history.
+- Run `scripts/scan_repo.py` near the start of every non-auditless run to inventory repository structure, existing `context/` files, and likely subsystem roots.
+- Run `scripts/lint_context.py` before presenting a completed `context/` update.
+- Use the scripts as deterministic scaffolding, not as semantic decision-makers.
+- If a script genuinely cannot run, follow the fallback rules in `references/script-contract.md` and say so explicitly in the final handoff.
 
 ## Execution Workflow
 
 When this skill is triggered, follow this sequence:
 
-1. Read the repository structure and key entrypoints.
-2. Read the existing `context/` folder if present.
-3. Identify stable subsystem and feature boundaries.
-4. Map existing documents to those boundaries.
-5. Detect gaps, overlap, stale files, bad naming, and missing canonical homes.
-6. Choose the minimum restructuring needed.
-7. Update or create `architecture.md`.
-8. Update, create, merge, split, rename, or delete files in `systems/` as justified.
-9. Create or update files in `plans/`, `decisions/`, or `references/` only when justified by their role.
-10. Run the quality checklist before presenting the result.
+1. Determine the operating mode from user intent and repository state.
+2. Run `scripts/scan_repo.py` and inspect key entrypoints plus any existing `context/` files.
+3. Map stable subsystem and feature boundaries from repository evidence.
+4. Decide whether the current `context/` should be preserved, updated, repaired, or restructured.
+5. Update or create `architecture.md`.
+6. Update, create, merge, split, rename, or delete files in `systems/` as justified.
+7. Create or update files in `plans/`, `decisions/`, or `references/` only when justified by their role.
+8. Run `scripts/lint_context.py`.
+9. Fix any hard failures and review any warnings with judgment.
+10. Present the resulting tree, major decisions, and any remaining risks or caveats.
 
-## Architecture Depth Rules
+## Architecture and System Separation
 
-`architecture.md` must be deep enough to orient a new engineer or agent.
+`architecture.md` is the top-down structural map. It should describe the repository shape, subsystem responsibilities, dependency direction, and major execution/data flows.
 
-It should include:
+`systems/*.md` files are the canonical homes for feature- or subsystem-level reality. They should capture implemented behaviour, boundaries, interfaces, active risks, partial work, likely change pressure, and durable lessons for one stable topic.
 
-- a repository overview,
-- a structured repository tree inside a text code block,
-- meaningful depth into important source/config/test/doc directories,
-- one-line descriptions for significant directories and files,
-- subsystem responsibilities,
-- dependency direction,
-- major execution or data-flow pipelines,
-- brief structural reality notes where needed.
+Do not let `architecture.md` duplicate all system docs. It is the map, not the territory.
 
-Do not stop at shallow folder names like `src/` or `app/`. Go deep enough that the structure is genuinely informative.
+## Composition Rules
 
-Use `scripts/scan_repo.py` if Python is available and the script would speed up structural inventory. The script is optional. If it is unavailable, perform the same structural analysis manually.
+The default output should be readable by both humans and LLMs. Use the clearest representation for the information at hand:
 
-## Script Usage
+- use bullets for concise takeaways, ownership points, and digestible lists,
+- use tables for dense inventories, comparisons, or interface summaries,
+- use trees for repository structure,
+- use diagrams or mermaid graphs when flows or relationships are awkward in prose,
+- use combined formats when one representation helps scanning and another helps reasoning.
 
-This skill may use bundled scripts, but scripts are helpers, not decision-makers.
+Supportive duplication inside the same document is allowed when it improves comprehension, such as a table followed by bullets that interpret the table.
 
-- `scripts/scan_repo.py` inventories repository structure, existing `context/` files, and likely subsystem roots.
-- `scripts/lint_context.py` checks structure, naming, required sections, suspicious file patterns, and temporary-plan hygiene.
-
-Rules for script usage:
-
-- The skill must still work without scripts.
-- Do not rely on scripts to decide semantic boundaries.
-- Do not auto-generate prose directly from script output.
-- Use script output as deterministic scaffolding for human-quality documentation decisions.
+Canonical duplication across documents is not allowed. If two files both fully own the same topic, pick one canonical home and reduce the other to interface-level mention.
 
 ## Quality Checklist
 
 Before considering the `context/` folder complete, verify:
 
 - `architecture.md` exists and is structurally deep enough to orient a new reader.
-- Every important subsystem or feature has one canonical home.
-- Folder roles are respected: systems for implementation truth, plans for active execution, decisions for durable cross-cutting choices, references for supporting material.
-- No file is named by milestone, phase, chronology, or vague miscellany.
-- Existing good-enough files were preserved rather than rewritten for cosmetic reasons.
-- System docs describe current reality, not aspiration.
-- Durable lessons are attached to the owning subsystem rather than placed in a history log.
-- Temporary plan files exist only when currently relevant.
-- Material overlap between files is low.
-- Reading `context/` is faster than rediscovering the same information from code.
-
-Begin now.
+- every important subsystem or feature has one canonical home,
+- folder roles are respected: systems for implementation truth, plans for active execution, decisions for durable cross-cutting choices, references for supporting material,
+- naming is lowercase and stable rather than chronological or vague,
+- the repo scan was run unless a documented fallback was genuinely necessary,
+- the context lint was run unless a documented fallback was genuinely necessary,
+- architecture and system docs are comprehensive enough to avoid immediate rediscovery from code,
+- supportive formatting improves comprehension without replacing canonical ownership,
+- existing good-enough files were preserved rather than rewritten for cosmetic reasons,
+- system docs describe current reality rather than aspiration,
+- durable lessons are attached to the owning subsystem rather than placed in a history log,
+- temporary plan files exist only when currently relevant,
+- material overlap between files is low.

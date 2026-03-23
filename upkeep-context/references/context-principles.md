@@ -32,15 +32,15 @@ Comprehensive means the folder captures:
 - known issues and risks,
 - durable lessons from past attempts.
 
-It does **not** mean verbosity for its own sake.
+It does not mean verbosity for its own sake.
 
 ### Concise, not shallow
 
 The standard is:
 
-> say as much as possible while saying as little as possible
+> say as much as needed while saying as little as possible
 
-`context/` should be faster to read than re-exploring the repository. If a document becomes so verbose that direct code exploration is easier, the memory layer has failed.
+`context/` should be faster to read than re-exploring the repository. If a document becomes so sparse that a reader must immediately re-derive the basics from code, the memory layer has failed.
 
 ### Dynamic, not archival
 
@@ -59,10 +59,22 @@ Preserve durable knowledge:
 
 Do not preserve chronological accumulation:
 
-- “today we did X,”
-- “yesterday we tried Y,”
+- "today we did X",
+- "yesterday we tried Y",
 - weekly change logs,
 - stacked milestone records.
+
+### Adaptive, not threshold-driven
+
+Do not decide depth or structure from arbitrary repo-size labels or fixed numeric cutoffs.
+
+Instead, adapt to:
+
+- boundary clarity,
+- overlap pressure,
+- dependency complexity,
+- change independence,
+- and how much explanation a future reader would need to act safely.
 
 ## Truth Model
 
@@ -75,6 +87,19 @@ Use the existing `context/` folder as prior memory:
 - replaceable when structurally wrong.
 
 Do not let polished old documents override the actual codebase.
+
+## Evidence Standard
+
+Context claims should be grounded in inspected repository evidence.
+
+That means:
+
+- inspect representative entrypoints and owning modules,
+- read enough code and configuration to justify major subsystem boundaries,
+- distinguish direct observation from inference,
+- avoid confident claims about behaviour that was not actually verified.
+
+The skill does not need a fixed file-count quota. It needs enough evidence to support its claims.
 
 ## What Belongs In Context
 
@@ -116,6 +141,23 @@ Examples:
 - an A2C versus SAC research comparison may belong in `references/a2c-vs-sac.md`.
 
 This rule reduces overlap and prevents memory drift.
+
+## Supportive Presentation Principle
+
+Different markdown structures can support the same canonical topic inside one document.
+
+For example:
+
+- a table may inventory interfaces,
+- bullets may summarize the operational implications,
+- a diagram may show the same flow at a glance.
+
+That is supportive presentation, not duplicate ownership.
+
+The line is simple:
+
+- multiple formats inside one owning document are allowed when they improve comprehension,
+- multiple documents acting as co-owners of the same topic are not.
 
 ## Stability Principle
 
