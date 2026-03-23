@@ -1,6 +1,6 @@
 ---
 name: upkeep-context
-description: "Maintains a repository-level context folder that reflects the current implementation state. Use when asked to create, initialize, regenerate, audit, clean up, restructure, or update a project's context/ documentation by reading the repository and producing canonical architecture and feature/system documents. Prefers feature-adjacent or subsystem-adjacent files over milestone-based or time-sliced files, preserves durable project memory, removes overlap, merges duplicated coverage, and keeps context docs aligned with code reality rather than aspirations or changelog-style history. Not for writing product specs, roadmaps, release notes, or general-purpose prose documentation."
+description: "Maintains a repository-level context folder that reflects the current implementation state. Use when asked to create, initialize, regenerate, audit, clean up, restructure, upkeep, or update a project's context/ documentation by reading the repository and producing canonical architecture and feature/system documents. Prefers feature-adjacent or subsystem-adjacent files over milestone-based or time-sliced files, preserves durable project memory, removes overlap, merges duplicated coverage, and keeps context docs aligned with code reality rather than aspirations or changelog-style history. Not for writing product specs, roadmaps, release notes, or general-purpose prose documentation."
 ---
 
 # Upkeep Context
