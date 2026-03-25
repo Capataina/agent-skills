@@ -71,6 +71,26 @@ def warn_for_shallow_content(path: Path, text: str, warnings: list[str], minimum
         )
 
 
+def warn_for_reference_shape(references_dir: Path, warnings: list[str]) -> None:
+    for path in sorted(references_dir.iterdir()):
+        if path.is_dir():
+            markdown_files = sorted(child for child in path.iterdir() if child.is_file() and child.suffix == ".md")
+            nested_dirs = sorted(child for child in path.iterdir() if child.is_dir())
+            if len(markdown_files) == 1 and not nested_dirs:
+                warnings.append(
+                    f"references/{path.name}/: folder contains only one markdown file; verify the folder shape is still justified"
+                )
+            if not markdown_files and not nested_dirs:
+                warnings.append(f"references/{path.name}/: empty reference folder")
+
+
+def is_distinct_path(a: Path, b: Path) -> bool:
+    try:
+        return not a.samefile(b)
+    except (FileNotFoundError, OSError):
+        return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Lint a context folder.")
     parser.add_argument("context_dir", nargs="?", default="context", help="Path to context directory")
@@ -85,7 +105,7 @@ def main() -> int:
     else:
         arch = context_dir / "architecture.md"
         legacy_arch = context_dir / "ARCHITECTURE.md"
-        if legacy_arch.exists():
+        if legacy_arch.exists() and is_distinct_path(legacy_arch, arch):
             warnings.append("ARCHITECTURE.md exists; prefer lowercase architecture.md")
 
         if not arch.exists():
@@ -111,6 +131,10 @@ def main() -> int:
             plan_files = sorted(plans_dir.glob("*.md"))
             if len(plan_files) > 1:
                 warnings.append("more than one active plan file exists in plans/")
+
+        references_dir = context_dir / "references"
+        if references_dir.exists() and references_dir.is_dir():
+            warn_for_reference_shape(references_dir, warnings)
 
         for path in sorted(context_dir.rglob("*.md")):
             rel = path.relative_to(context_dir)

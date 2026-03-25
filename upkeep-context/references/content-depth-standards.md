@@ -54,7 +54,7 @@ A strong `systems/*.md` file should usually cover these dimensions when relevant
 - boundaries and ownership,
 - current implemented behaviour,
 - key interfaces or data flow,
-- important artifacts or modules,
+- important artefacts or modules,
 - active risks,
 - partial work,
 - missing or likely changes,

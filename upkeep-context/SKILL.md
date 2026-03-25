@@ -1,6 +1,6 @@
 ---
 name: upkeep-context
-description: "Maintains a repository-level context folder as durable implementation memory. Use when asked to create, initialize, regenerate, audit, clean up, restructure, repair, or update a project's context/ documentation by reading the repository, running the bundled repo scan and context lint scripts, and producing canonical architecture and subsystem documents grounded in current code reality. Prefers feature-adjacent or subsystem-adjacent files over milestone slices, preserves durable lessons, supports richer markdown structures such as trees, tables, matrices, and diagrams when they improve comprehension, and keeps context docs comprehensive without redundancy. Not for product specs, roadmaps, release notes, changelogs, or general-purpose prose docs."
+description: "Maintains a repository-level context folder as durable implementation memory. Use when asked to create, initialise, regenerate, audit, clean up, restructure, repair, or update a project's context/ documentation by reading the repository, running the bundled repo scan and context lint scripts, and producing canonical architecture and subsystem documents grounded in current code reality. Prefers feature-adjacent or subsystem-adjacent files over milestone slices, preserves durable lessons, supports richer markdown structures such as trees, tables, matrices, and diagrams when they improve comprehension, and keeps context docs comprehensive without redundancy. Not for product specs, roadmaps, release notes, changelogs, or general-purpose prose docs."
 ---
 
 # Upkeep Context
@@ -41,6 +41,7 @@ It maintains a **repository memory layer** that captures:
 - dependency and execution flows,
 - active risks and partial work,
 - durable lessons from prior attempts,
+- maintainable reference material whose relevance depends on current project reality,
 - temporary execution plans only when explicitly requested or clearly necessary.
 
 It must reject:
@@ -49,6 +50,7 @@ It must reject:
 - diary-style history,
 - duplicated canonical ownership across files,
 - speculative subsystem files,
+- static research archives that are never revisited as the repository changes,
 - cosmetic rewrites that create churn without improving understanding.
 
 ## Priority Order
@@ -78,6 +80,10 @@ context/
 Only `architecture.md` and `systems/` are universally essential.
 
 `plans/`, `decisions/`, and `references/` are canonical folders, but they should contain files only when justified. Do not create filler files just to mirror the model.
+
+`references/` is not a museum. Research and supporting papers there may need upkeep when implementation reality changes. Update, merge, split, condense, or prune reference material only when that materially improves accuracy, canonical ownership, or long-term usability. Do not apply aggressive pruning pressure by default.
+
+Some `references/` artefacts may follow the richer structure produced by `project-research`, including topic folders and analysis-heavy papers. Preserve that stronger structure when it still matches the topic and remains maintainable.
 
 Do not create default files such as:
 
@@ -117,7 +123,7 @@ Prefer the shortest stable topic name that is still unambiguous in its folder an
 
 Choose the mode that matches the user's intent and the repository state:
 
-- `Initialize`: create an initial `context/` for a repo that does not yet have one.
+- `Initialise`: create an initial `context/` for a repo that does not yet have one.
 - `Upkeep`: refresh an existing coherent `context/` in place with minimal churn.
 - `Repair`: correct stale, inconsistent, or structurally drifting files without broad reorganisation.
 - `Restructure`: merge, split, rename, or delete files when the current layout is actively misleading or duplicative.
@@ -172,6 +178,10 @@ When this skill is triggered, follow this sequence:
 
 Do not let `architecture.md` duplicate all system docs. It is the map, not the territory.
 
+`references/` files are durable supporting memory, including project-grounded research. They may discuss external findings, comparisons, or implementation lessons, but they still need upkeep when the repository changes enough to make their project-specific claims stale.
+
+When a reference artefact clearly follows the `project-research` style, upkeep should preserve its research-specific sections and analytical structure unless there is a clear reason to simplify or consolidate it.
+
 ## Composition Rules
 
 The default output should be readable by both humans and LLMs. Use the clearest representation for the information at hand:
@@ -201,5 +211,7 @@ Before considering the `context/` folder complete, verify:
 - existing good-enough files were preserved rather than rewritten for cosmetic reasons,
 - system docs describe current reality rather than aspiration,
 - durable lessons are attached to the owning subsystem rather than placed in a history log,
+- research references that depend on current implementation reality were refreshed when they had gone stale,
+- `references/` was kept useful without aggressive or cosmetic pruning,
 - temporary plan files exist only when currently relevant,
 - material overlap between files is low.

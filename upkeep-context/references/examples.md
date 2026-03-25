@@ -8,6 +8,7 @@
 4. Durable Note vs History Log
 5. Architecture Depth Expectation
 6. Supportive Multi-Format Presentation
+7. Condense Mature Research Carefully
 
 ## 1. Milestone Decomposition to System Decomposition
 
@@ -206,3 +207,37 @@ Why it is bad:
 - the second file creates duplicate ownership,
 - the repetition is no longer supportive presentation,
 - readers cannot tell which file to trust.
+
+## 7. Condense Mature Research Carefully
+
+Suppose a project once had:
+
+```text
+context/
+└── references/
+    └── actor-critic/
+        ├── overview.md
+        ├── a2c.md
+        └── sac-vs-a2c.md
+```
+
+This was justified when:
+
+- the repository was still deciding which baseline direction to trust,
+- the subtopics were changing independently,
+- the broader research area still needed room to grow.
+
+Later, the repository stabilises around one implemented direction and most of the actionable lessons now belong to one stable topic.
+
+Correct action:
+
+- update stale repository-specific claims,
+- preserve the durable research insights,
+- condense the folder into one richer canonical file such as `references/actor-critic.md` only if that shape is now easier to maintain and navigate,
+- cross-reference any remaining neighbouring files rather than duplicating their content.
+
+Incorrect action:
+
+- delete the broader research simply to make the folder smaller,
+- keep the folder expanded forever even after it has become overlapping maintenance overhead,
+- collapse the folder into a thin summary that loses the durable insights which justified the research in the first place.

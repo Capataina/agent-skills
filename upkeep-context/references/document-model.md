@@ -219,10 +219,13 @@ Reference files hold durable supporting material that informs implementation but
 Examples:
 
 - research comparisons,
+- project-grounded research papers that relate external findings back to the repository,
 - external API or protocol summaries,
 - schema notes,
 - benchmark interpretation notes,
 - migration references.
+
+Reference material is durable, but not static. If a research paper includes project-specific gap analysis, implementation comparisons, or recommendations tied to current repository reality, upkeep may need to revise it when the repository changes.
 
 ### Naming Rules
 
@@ -239,6 +242,31 @@ Adapt structure to the reference type, but favour:
 3. `Content`
 4. `Implications for the Repository`
 5. `Open Constraints / Follow-Up Questions` when needed
+
+### Research-Shaped References
+
+Some reference artefacts will be deeper project-grounded research papers or topic folders created in the style of `project-research`.
+
+These may use stronger section patterns such as:
+
+1. `Scope / Purpose`
+2. `Current Project Relevance`
+3. `Research Signal`
+4. `Current State Vs Research-Backed Expectations`
+5. `Gap Analysis`
+6. `Recommended Priority Order`
+7. `Relationship To Existing Context`
+
+They may also appear as topic folders with an `overview.md` plus supporting papers.
+
+When these shapes are justified, preserve them. Do not flatten them into the generic reference pattern unless the broader research structure no longer improves navigation, ownership, or upkeep.
+
+### Upkeep Rules
+
+- Preserve a reference artefact when it still has a coherent topic and its project-specific claims remain substantially accurate.
+- Update a reference artefact when implementation reality has changed enough to stale its repository-specific analysis.
+- Merge or condense a research folder when multiple artefacts now act as one stable topic and the broader split no longer improves navigation or upkeep.
+- Do not collapse a reference folder just because it is possible. Only condense when the result remains rich, accurate, and clearly more maintainable than the expanded shape.
 
 ## Disallowed Default File Types
 

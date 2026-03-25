@@ -1,6 +1,6 @@
 ---
 name: upkeep-learning
-description: "Maintains a repository-level learning/ system that teaches a software project from first principles using the existing learning folder, the context folder, the root README, and targeted code inspection when needed. Use when asked to create, initialize, update, extend, restructure, audit, or preserve project learning materials, learning paths, concept files, systems deep-dives, exercises, glossaries, or study navigation. Prefers iterative upkeep over one-shot generation, preserves learner progress in checklist files, keeps navigation explicit, and adds project-specific exercises without arbitrary file-count quotas. Not for generic code documentation, release notes, product specs, or bug fixing."
+description: "Maintains a repository-level learning/ system that teaches a software project from first principles using the existing learning folder, the context folder, the root README, and targeted code inspection when needed. Use when asked to create, initialise, update, extend, restructure, audit, or preserve project learning materials, learning paths, concept files, systems deep-dives, exercises, glossaries, or study navigation. Prefers iterative upkeep over one-shot generation, preserves learner progress in checklist files, keeps navigation explicit, and adds project-specific exercises without arbitrary file-count quotas. Not for generic code documentation, release notes, product specs, or bug fixing."
 ---
 
 # Upkeep Learning
@@ -112,7 +112,7 @@ Default source priority is:
 
 Do not traverse the full codebase by default. Inspect code only when a project-specific implementation claim, file location, or systems deep-dive needs verification.
 
-### 3. Navigation is a first-class artifact
+### 3. Navigation is a first-class artefact
 
 `learning/` must always be traversable through multiple entry points:
 

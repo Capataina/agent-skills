@@ -193,3 +193,43 @@ Corrective action:
 
 - choose the representation that makes the information clearest,
 - combine formats only when they support understanding.
+
+## 11. Stale Research References
+
+Bad:
+
+- a research file still says a capability is missing after the repository implemented it,
+- a comparison section still reflects an old project constraint that no longer exists,
+- `references/` papers are treated as permanent truth even when their repository-specific analysis has drifted.
+
+Why it fails:
+
+- it breaks trust in the memory layer,
+- it misleads future design and implementation work,
+- it turns durable research into stale folklore.
+
+Corrective action:
+
+- refresh repository-specific sections when implementation reality changes,
+- preserve the durable external lessons,
+- clearly separate what is still true from what became obsolete.
+
+## 12. Research Hoarding
+
+Bad:
+
+- `references/` accumulates many overlapping papers on the same stable topic,
+- a once-useful research folder remains expanded even after the repository has absorbed the decision and a tighter canonical artefact would be easier to maintain,
+- upkeep preserves every research slice simply because it exists.
+
+Why it fails:
+
+- readers must scan too many adjacent files,
+- overlap pressure rises,
+- upkeep becomes additive clutter instead of maintenance.
+
+Corrective action:
+
+- preserve breadth when it still has clear independent value,
+- merge or condense only when stable ownership and long-term usability improve,
+- keep pruning conservative rather than aggressive.

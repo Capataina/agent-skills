@@ -103,7 +103,7 @@ Preferred subdivisions:
 
 These folders may be sparse in small projects. Keep them only when they have a clear role.
 
-`systems/` is preferred over `implementations/` because it aligns better with project memory and covers both behavior and implementation.
+`systems/` is preferred over `implementations/` because it aligns better with project memory and covers both behaviour and implementation.
 
 ## `exercises/`
 

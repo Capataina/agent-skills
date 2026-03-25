@@ -12,7 +12,7 @@ Exercise files should contain:
 - skeleton code or constrained scaffolding when appropriate,
 - realistic starting state,
 - hints or staged goals when needed,
-- expected behavior,
+- expected behaviour,
 - progress markers only when the exercise naturally has multiple internal milestones.
 
 They should not contain:

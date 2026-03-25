@@ -36,11 +36,12 @@ Use sources for the right purpose:
 
 1. Root `README.md`
    Meaning: project intent, scope, direction, and top-level truth.
-   Rule: do not contradict it; suggest updates when it is stale.
+   Rule: treat it as the directional source of truth for scope, milestones, and intended trajectory; do not contradict it, and suggest updates when it is stale.
 
 2. `context/`
    Meaning: repository memory and implementation-facing documentation.
    Covers: architecture, subsystem boundaries, active work, plans, and current operational understanding.
+   Rule: use it as the main maintained view of current implementation-facing reality.
 
 3. Code
    Meaning: implementation reality.
@@ -53,6 +54,7 @@ Use sources for the right purpose:
 If sources conflict:
 - `README.md` sets intent and scope.
 - code determines implementation reality.
+- `context/` is the maintained memory layer for current implementation-facing reality.
 - `context/` and `learning/` must be updated to match reality and remain useful.
 
 ---
@@ -105,7 +107,7 @@ Apply changes only where the project has materially changed. Do not record brain
 
 Examples of changes that may justify documentation updates:
 - a new subsystem, integration, dependency, or technology;
-- an important behavior change;
+- an important behaviour change;
 - a public API change;
 - a rename or structural refactor;
 - a new concept the user will need to understand later;

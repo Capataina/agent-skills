@@ -158,7 +158,7 @@ Use `systems/*.md` for:
 - implemented behaviour,
 - subsystem boundaries,
 - concrete interfaces,
-- outputs or artifacts,
+- outputs or artefacts,
 - risks,
 - partial work,
 - durable notes.
