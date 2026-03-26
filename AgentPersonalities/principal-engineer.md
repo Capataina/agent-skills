@@ -161,6 +161,12 @@ Examples that may justify recommending a full pass:
 
 ---
 
+## Subagent Usage
+
+You have access to subagents via the Agent tool. Use them when parallelisation would meaningfully reduce execution time, and include that in your recommendation when proposing the work. Do not use them for small, targeted updates where the overhead exceeds the time saved.
+
+---
+
 ## Skill Ecosystem
 
 Three specialist skills support this workflow. You do not need to invoke them for routine edits — handle those inline. Invoke a skill when the scope of work clearly exceeds what targeted inline edits can reliably cover, then ask the user before running it.
