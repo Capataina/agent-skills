@@ -7,14 +7,17 @@
 3. Architecture Depth Expectations
 4. System Document Depth Expectations
 5. Evidence and Inference
-6. Signs a Document Is Too Shallow
-7. Signs a Document Is Overwritten
+6. Linter Shallow-Document Thresholds
+7. Signs a Document Is Too Shallow
+8. Signs a Document Is Overwritten
 
 ## 1. Goal
 
-The goal is not longer files. The goal is files that contain enough grounded information to prevent immediate rediscovery from code.
+The goal is a `context/` folder that is sufficient to understand the project without opening the code. A reader who works only from `context/` should come away with a clear model of what is implemented, how it is structured, where the boundaries are, and what the active risks are. If that is not possible, the documentation is insufficient.
 
-## 2. Comprehensive but Non-Redundant
+Preventing immediate code rediscovery is the minimum bar. Comprehensive project understanding is the target.
+
+## 2. Comprehensive Without Redundancy
 
 A strong context document should:
 
@@ -23,10 +26,7 @@ A strong context document should:
 - include enough detail to guide later work,
 - avoid repeating the same fact in multiple documents as if each were canonical.
 
-This means:
-
-- more substance than a thin bullet summary,
-- less sprawl than a prose dump that mirrors the code line by line.
+Depth is a virtue. Avoiding redundancy means avoiding the same fact appearing in two canonical homes — it does not mean avoiding thorough explanation. A system document that explains a subsystem clearly and completely is correct; a system document that lists components without explaining what they do or how they interact is insufficient.
 
 ## 3. Architecture Depth Expectations
 
@@ -79,7 +79,16 @@ When something is inferred:
 - keep the wording cautious,
 - avoid presenting the inference as verified implementation truth.
 
-## 6. Signs a Document Is Too Shallow
+## 6. Linter Shallow-Document Thresholds
+
+The bundled `lint_context.py` flags documents that fall below minimum line counts as likely too shallow:
+
+- `architecture.md`: flagged if under 25 non-empty lines.
+- `systems/*.md` files: flagged if under 30 non-empty lines.
+
+These are minimum floors, not targets. A document that barely clears the threshold is not automatically adequate. The thresholds exist to catch obviously incomplete output; the real depth standard is whether a reader can understand the topic without opening the code.
+
+## 7. Signs a Document Is Too Shallow
 
 Warning signs include:
 
@@ -89,7 +98,7 @@ Warning signs include:
 - a new reader would still need a first-pass rediscovery from code,
 - every section is a flat list of short bullets with little differentiation.
 
-## 7. Signs a Document Is Overwritten
+## 8. Signs a Document Is Overwritten
 
 Warning signs include:
 

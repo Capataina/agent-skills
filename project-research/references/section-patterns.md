@@ -27,7 +27,7 @@ Use this to explain why the topic matters now in this repository:
 
 ### What The Topic Actually Is
 
-Use this when shared conceptual grounding will make the rest of the paper much easier to understand. Keep it concise and high-signal.
+Use this when shared conceptual grounding will make the rest of the paper much easier to understand. Keep it focused and high-signal.
 
 ### Research Signal
 

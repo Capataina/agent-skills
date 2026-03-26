@@ -8,7 +8,10 @@ from pathlib import Path
 import sys
 
 
-FILE_TEMPLATE = """# {title}
+FILE_TEMPLATE = """<!-- This scaffold is a starting point. Delete any section that does not
+     serve the research question. See references/anti-patterns.md #6. -->
+
+# {title}
 
 ## Scope / Purpose
 
@@ -44,7 +47,10 @@ FILE_TEMPLATE = """# {title}
 """
 
 
-OVERVIEW_TEMPLATE = """# {title}
+OVERVIEW_TEMPLATE = """<!-- This scaffold is a starting point. Delete any section that does not
+     serve the folder's purpose. See references/anti-patterns.md #6. -->
+
+# {title}
 
 ## Scope / Purpose
 

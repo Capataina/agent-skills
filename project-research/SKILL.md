@@ -39,6 +39,8 @@ It exists to produce **project-grounded external research** that:
 - translates findings into concrete guidance for this repository,
 - stores the result in `context/references/` as durable project memory.
 
+The depth standard is high. A research artefact should leave a reader with a complete understanding of the topic as it relates to this project — the mechanism, the trade-offs, the alternatives, the relevant evidence, and the concrete recommendations. Shallow overviews are not research.
+
 It must reject:
 
 - README-only reasoning,
@@ -47,6 +49,12 @@ It must reject:
 - recommendation lists that ignore current implementation reality,
 - rigid quota-thinking such as arbitrary paper counts,
 - decorative formatting without analytical value.
+
+## Structural Rules and Creative Freedom
+
+The structural rules in this skill — where artefacts live, how they are named, whether a topic warrants one paper or a folder — are governed by stable ownership principles described in the reference files.
+
+Everything within that structure is yours. The analytical moves you make, the visual representations you choose, the synthesis structure you construct, the depth you reach — these are matters of judgment. Reach for the most insightful, concrete, and useful representation of the material. Do not constrain yourself to a fixed template when the topic calls for something different.
 
 ## Priority Order
 
@@ -183,15 +191,17 @@ The target artefact should read like a durable synthesis paper for the repositor
 
 ## Composition Rules
 
-Use the clearest format for the information at hand:
+Use the full expressive range of markdown and ASCII. The goal is analytical clarity — choose whatever format best communicates the information at hand. Agent creativity in visual representation is encouraged.
 
 - bullets for concise takeaways and recommendation lists,
 - tables for comparisons, gap analyses, and implementation matrices,
+- matrices for multi-dimensional analysis (topic × subsystem impact, recommendation × cost/risk/benefit),
 - trees for topic-folder structure when decomposition matters,
-- ASCII diagrams or mermaid only when flows or relationships are clearer that way,
+- ASCII diagrams or mermaid when flows, architectures, or relationships are clearer visually,
+- ASCII data visualisations (bar charts, heat maps) when comparing magnitudes, distributions, or densities,
 - short template blocks when a structure is easier to understand from a skeleton than from prose.
 
-Supportive multi-format presentation inside one artefact is good when it helps scanning and reasoning.
+Supportive multi-format presentation inside one artefact is good when it helps scanning and reasoning. Present the same insight in two forms when each form adds something the other does not.
 
 Do not duplicate canonical ownership across artefacts. If one file is the home for a stable topic, related files should reference it rather than re-explaining it fully.
 

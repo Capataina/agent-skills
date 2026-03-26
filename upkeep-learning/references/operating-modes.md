@@ -63,7 +63,7 @@ Choose the smallest mode that solves the task.
 Prefer:
 
 - `extend` over `update` when the requested change is narrow,
-- `update` over `initialise` when the existing structure is good enough,
+- `update` over `initialise` when the existing structure is strong enough to expand responsibly,
 - `audit` when the user wants assessment before edits.
 
 Do not perform a folder-wide rewrite when a narrower mode would solve the task.

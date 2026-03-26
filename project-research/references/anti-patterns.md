@@ -66,6 +66,8 @@ Why this fails:
 - arbitrary minima create predictable but thin output,
 - the real standard is sufficiency of reasoning and relevance.
 
+For the concrete sufficiency test, see operating-modes.md.
+
 ## 8. Research That Cannot Compound
 
 The artefact ignores existing references, creates overlap, and leaves no clear relationship to the rest of the research corpus.

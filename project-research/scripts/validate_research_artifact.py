@@ -14,6 +14,11 @@ REQUIRED_HEADINGS = (
     "## Relationship To Existing Context",
 )
 
+OVERVIEW_REQUIRED_HEADINGS = (
+    "## Scope / Purpose",
+    "## Relationship To Existing Context",
+)
+
 REQUIRED_SIGNALS = (
     "repository",
     "research",
@@ -44,15 +49,18 @@ def resolve_target(root: Path, target_arg: str) -> Path:
     return (root / target).resolve()
 
 
-def validate_file(path: Path) -> tuple[list[str], list[str]]:
+def validate_file(
+    path: Path,
+    required_headings: tuple[str, ...] = REQUIRED_HEADINGS,
+) -> tuple[list[str], list[str]]:
     errors: list[str] = []
     warnings: list[str] = []
     text = path.read_text(encoding="utf-8")
 
-    if not text.lstrip().startswith("# "):
+    if not text.lstrip().startswith("# ") and not text.lstrip().startswith("<!--"):
         errors.append(f"{path}: missing top-level title")
 
-    for heading in REQUIRED_HEADINGS:
+    for heading in required_headings:
         if heading not in text:
             errors.append(f"{path}: missing required heading '{heading}'")
 
@@ -87,9 +95,19 @@ def validate_folder(path: Path) -> tuple[list[str], list[str]]:
     if len(nested) < 2:
         warnings.append(f"{path}: topic folder has no supporting markdown files beyond overview.md")
 
-    file_errors, file_warnings = validate_file(overview)
+    # Validate overview.md with overview-specific headings
+    file_errors, file_warnings = validate_file(overview, OVERVIEW_REQUIRED_HEADINGS)
     errors.extend(file_errors)
     warnings.extend(file_warnings)
+
+    # Validate all other .md files with standard headings
+    for child in nested:
+        if child.name == "overview.md":
+            continue
+        child_errors, child_warnings = validate_file(child, REQUIRED_HEADINGS)
+        errors.extend(child_errors)
+        warnings.extend(child_warnings)
+
     return errors, warnings
 
 

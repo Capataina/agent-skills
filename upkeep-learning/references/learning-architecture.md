@@ -1,6 +1,6 @@
 # Learning Architecture
 
-This file defines the preferred structure and roles inside `learning/`.
+This file defines the preferred archive structure for `learning/`.
 
 ## Stable Top-Level Tree
 
@@ -9,7 +9,6 @@ Use this model by default:
 ```text
 learning/
 ├── LEARNING_MAP.md
-├── DIRECTORY_TREE.md
 ├── GLOSSARY.md
 ├── STUDY_GUIDE.md
 ├── paths/
@@ -20,65 +19,69 @@ learning/
 └── references/
 ```
 
-This top-level model should remain stable across upkeep unless the repository has a strong reason to differ.
+Keep this top-level model stable unless the repository has a strong reason to differ.
+
+## Archive-Scale Interpretation
+
+The stable top-level tree is not a request for a small archive. It is a stable shell for a potentially very large archive underneath.
+
+It is acceptable for:
+
+- `concepts/` to contain many topic clusters,
+- `project/` to contain deep system and architecture branches,
+- `materials/` to contain rich domain-grouped reading maps,
+- `references/` to hold supporting diagrams, cheat sheets, notation guides, or status conventions,
+- `paths/` to contain many overlapping routes for different learner goals.
 
 ## Top-Level File Roles
 
 ### `LEARNING_MAP.md`
 
-The entry point for the learning system.
+The archive entry point and structural overview.
 
 It should explain:
 
 - what `learning/` is for,
-- how to use the folder,
+- how it differs from `context/`,
+- how to navigate the archive,
 - where different kinds of learners should start,
-- how checklist tracking works,
-- how the navigation files relate to one another.
+- how the paths, exercises, and glossary relate,
+- how current, planned, foundational, and historical material are labelled.
 
-### `DIRECTORY_TREE.md`
-
-The structural index.
-
-It should include:
-
-- a tree view of `learning/`,
-- brief descriptions for major folders,
-- brief descriptions for key files,
-- enough detail to make traversal easy without opening every file.
+It should also include a directory tree section with folder and key file descriptions, giving learners a full structural picture without opening everything.
 
 ### `GLOSSARY.md`
 
-The global glossary of technical terms used across the learning system.
+The global glossary.
+
+For a large archive, this should be substantial, comprehensive, and cross-linked. It should not be a token appendix.
 
 ### `STUDY_GUIDE.md`
 
 The high-level route selector.
 
-It is not a rigid linear curriculum. It should help the learner choose among multiple paths and recommend sensible combinations.
+It should help the learner choose among multiple routes, combinations, and starting points. It is not the only navigation layer, but it is one of the most important.
 
 ## `paths/`
 
-Contains focused learning-path files rather than one giant master curriculum.
+Contains focused learning-path files rather than one giant curriculum file.
 
 Expected files often include:
 
 - `PATH_INDEX.md`
-- `mathematics-path.md`
-- `reinforcement-learning-path.md`
-- `neuroscience-path.md`
-- `systems-and-simulation-path.md`
 - `project-architecture-path.md`
 - `implementation-first-path.md`
-- `interview-preparation-path.md`
+- `systems-and-simulation-path.md`
+- `reinforcement-learning-path.md`
+- `neuroscience-path.md`
+- `foundations-path.md`
+- other domain-specific or goal-specific routes the project warrants
 
-Create only the paths the project warrants.
-
-Path files are one of the main checklist-heavy surfaces in the learning system.
+Large archives should usually have several paths. Overlap is fine when it helps different learner intents.
 
 ## `concepts/`
 
-The main conceptual teaching layer.
+The main theory and concept layer.
 
 Preferred top-level subdivisions:
 
@@ -87,11 +90,11 @@ Preferred top-level subdivisions:
 - `domain-patterns/`
 - `advanced/`
 
-Deeper topic folders are conditional and should be created only when they materially improve scanability.
+For large projects, expect deeper topic clusters under these. Use deeper folders aggressively when they improve study flow or isolate major subject families.
 
 ## `project/`
 
-The project-specific learning layer.
+The project-specific teaching layer.
 
 Preferred subdivisions:
 
@@ -101,9 +104,9 @@ Preferred subdivisions:
 - `comparisons/`
 - `evolution/`
 
-These folders may be sparse in small projects. Keep them only when they have a clear role.
+These may all be substantial in a mature archive.
 
-`systems/` is preferred over `implementations/` because it aligns better with project memory and covers both behaviour and implementation.
+`systems/` is preferred over `implementations/` when the focus is behaviour, data flow, and design rationale rather than only code anatomy.
 
 ## `exercises/`
 
@@ -113,43 +116,41 @@ Expected anchor files:
 
 - `EXERCISE_GUIDE.md`
 - `EXERCISE_ORDER.md`
-- optional hint index files under `solutions/` if needed
+- optional hint files or `solutions/` support
 
-The exercise tree should usually be topic-first:
-
-- `foundations/`
-- `core/`
-- `domain-patterns/`
-- `project/`
-
-Create deeper type-based folders inside those only when justified by file count or complexity.
+Organise primarily by topic area, then add deeper type-based folders only when useful.
 
 ## `materials/`
 
-Curated external resources organised by topic, not by medium.
+Curated domain resources organised by topic, not by medium.
+
+In a strong archive, materials files can themselves be substantial teaching guides rather than just bullet lists of external links.
 
 ## `references/`
 
-Supporting files that help the learner but are not part of the main study progression.
+Supporting files that help interpretation, orientation, or quick lookup.
 
 Examples:
 
-- diagrams,
-- cheatsheets,
+- notation guides,
+- diagram collections,
+- cheat sheets,
 - status conventions,
-- supporting notes.
+- quick-reference matrices,
+- supporting notes that should not interrupt the main study flow.
 
 ## Status Conventions
 
-Use short status sections only when ambiguity exists.
+Use short status sections when ambiguity exists.
 
 Examples:
 
 - `Current for this project.`
-- `Superseded in the current implementation, but still important for understanding the project's evolution.`
-- `Historical background only.`
+- `Foundational domain knowledge.`
+- `Planned project direction; not implemented yet.`
+- `Superseded in the current implementation, but still educationally important.`
 
-Do not force status sections into every file.
+Do not force status sections into every file, but use them wherever the learner might otherwise confuse present reality with future direction or historical context.
 
 ## Naming Rules
 
@@ -158,7 +159,6 @@ Avoid nested `README.md` files inside `learning/`.
 Prefer descriptive role-specific names:
 
 - `LEARNING_MAP.md`
-- `DIRECTORY_TREE.md`
 - `STUDY_GUIDE.md`
 - `PATH_INDEX.md`
 - `EXERCISE_GUIDE.md`

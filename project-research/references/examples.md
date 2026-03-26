@@ -18,7 +18,7 @@ Why one file works:
 - one dominant question,
 - comparisons and maturity analysis fit cleanly as sections.
 
-Good section mix:
+Good section mix (see section-patterns.md for the full catalog):
 
 - scope and purpose,
 - current project relevance,

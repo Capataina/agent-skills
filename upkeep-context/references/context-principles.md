@@ -34,11 +34,11 @@ Comprehensive means the folder captures:
 
 It does not mean verbosity for its own sake.
 
-### Concise, not shallow
+### Thorough, not redundant
 
 The standard is:
 
-> say as much as needed while saying as little as possible
+> say as much as needed without redundancy or padding
 
 `context/` should be faster to read than re-exploring the repository. If a document becomes so sparse that a reader must immediately re-derive the basics from code, the memory layer has failed.
 

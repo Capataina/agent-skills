@@ -18,6 +18,10 @@ Prefer:
 - content moves over wholesale reorganisation,
 - small structural improvements over total folder resets.
 
+Exception:
+
+If the existing archive or skill instructions are deeply underspecified, a full rewrite is justified. Low churn is not a reason to preserve a weak educational standard.
+
 ## Progress Preservation Rule
 
 Checklist state is durable learning state.
@@ -95,10 +99,20 @@ Examples:
 
 Whenever the tree changes, update the navigation layer as part of the same task:
 
-- `LEARNING_MAP.md`
-- `DIRECTORY_TREE.md`
+- `LEARNING_MAP.md` (covers both usage guidance and directory structure)
 - `STUDY_GUIDE.md`
 - `paths/*.md`
 - `EXERCISE_ORDER.md`
 
 Do not leave structural changes unreflected in the navigation files.
+
+## Depth Synchronisation
+
+When a major file is clearly too thin for its topic, do not merely patch a sentence or two.
+
+Expand it to the depth the archive requires, and update:
+
+- relevant path files,
+- exercise links,
+- glossary references,
+- comparison or evolution files if the deeper treatment reveals gaps.

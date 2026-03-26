@@ -2,6 +2,14 @@
 
 Exercises are the practical layer of `learning/`. They should increase mastery, not spoil it.
 
+## Exercise File Format
+
+Exercises are code files, not markdown documents.
+
+Use `.py`, `.rs`, or whatever language fits the project. The exercise prompt, goal, tasks, hints, and expected behaviour live as a structured comment block (docstring or block comment) at the top of the file. The learner's working area starts immediately below that header. This allows the learner to implement directly inside the learning folder without maintaining a separate workspace.
+
+Purely conceptual exercises — design reasoning, written comparisons, thought experiments — may remain as `.md` files when no sensible code surface exists. Implementation, debugging, extension, and reconstruction exercises must be code.
+
 ## Core Exercise Rule
 
 Exercise files must not contain complete answer-heavy implementations.
@@ -98,22 +106,15 @@ Example:
 
 Use this only when the sub-steps are genuinely part of the learner's progress, not as decorative formatting.
 
-## Hint-Oriented Solutions
+## Solution Files
 
-If `solutions/` exists, it should be hint-oriented rather than answer-heavy.
+Solutions live in `exercises/solutions/` as code files in the same language as their corresponding exercises. A solution file for `exercises/core/simple-mlp.py` lives at `exercises/solutions/core/simple-mlp.py`. This preserves the folder structure and makes pairing obvious.
 
-Preferred structure:
+`SOLUTION_INDEX.md` remains as a markdown index listing exercises and their solution files.
 
-- `SOLUTION_INDEX.md`
-- topic-grouped hint files
+Solutions should be working implementations, not walkthroughs. Keep them readable but do not over-explain the code — the learning should happen through the exercise, not through reading a heavily commented solution.
 
-Hint files should usually provide:
-
-1. a first nudge,
-2. a stronger directional hint,
-3. a near-complete explanation only if appropriate for the repository.
-
-Do not make the solutions layer so complete that it undermines the exercises.
+Do not make the solution layer so complete or so visible that it undermines the exercises. The solutions folder exists for verification and unblocking, not for bypassing practice.
 
 ## Project-Specific Practice
 
@@ -127,3 +128,19 @@ Examples:
 - compare two algorithmic choices in the project's own context.
 
 Do not limit exercises to toy math or generic algorithm drills when the project has important systems worth practising directly.
+
+## Archive-Scale Exercise Expectation
+
+In a serious archive, the exercise layer should be broad and substantial.
+
+It should cover:
+
+- foundations,
+- core concepts,
+- domain patterns,
+- project systems,
+- debugging,
+- comparison and design reasoning,
+- roadmap-facing thought exercises where useful.
+
+Do not keep the exercise layer small out of caution. If the archive is large, the practice layer should also be rich.

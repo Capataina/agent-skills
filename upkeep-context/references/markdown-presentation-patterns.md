@@ -13,7 +13,7 @@
 
 ## 1. Goal
 
-Use markdown structures that make repository memory easier to scan, compare, and reason about for both humans and LLMs.
+Use the full expressive range of markdown and ASCII to make repository memory as clear, scannable, and useful as possible for both humans and LLMs. Agent creativity in choosing representations is encouraged — if you can see a better way to show something visually, use it.
 
 ## 2. Default Principle
 
@@ -64,6 +64,19 @@ Use a simple ASCII diagram or mermaid graph when:
 - state or data moves through multiple transformations.
 
 Keep diagrams simple enough to read in plain text.
+
+## 6b. Creative ASCII Visualisation
+
+ASCII can go beyond flow diagrams. When information has spatial structure, density, or dimensional relationships, consider a more expressive ASCII representation.
+
+Examples:
+
+- module dependency heat maps showing coupling intensity,
+- ASCII bar charts comparing subsystem sizes or call frequencies,
+- class anatomy boxes showing fields and methods at a glance,
+- timeline representations for pipeline stages.
+
+The criterion is the same as any other format: does this make the information clearer? If yes, use it.
 
 ## 7. Supportive Multi-Format Presentation
 

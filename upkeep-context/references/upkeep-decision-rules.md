@@ -149,7 +149,7 @@ For research-heavy material in `references/`:
 
 - update it when repository changes stale its project-specific comparisons, gap analysis, or recommendations,
 - preserve it when the topic and shape still provide durable value,
-- preserve richer `project-research` structures when they still provide real analytical value and a clear canonical home,
+- preserve richer research-paper structures when they still provide real analytical value and a clear canonical home,
 - merge or condense it when a folder or cluster of papers has become a maintenance burden and one richer canonical artefact would serve better,
 - avoid aggressive pruning; reduce scope only when it clearly improves accuracy, ownership, or long-term usability,
 - keep durable insights even when pruning surface area,

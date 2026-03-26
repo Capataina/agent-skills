@@ -30,8 +30,7 @@ For an audit-only run:
 
 - a deterministic inventory of repository structure,
 - language and top-level counts,
-- current `context/` file inventory,
-- likely subsystem roots that reduce blind traversal.
+- current `context/` file inventory.
 
 Use it to narrow exploration, not to replace reasoning.
 
@@ -40,8 +39,8 @@ Use it to narrow exploration, not to replace reasoning.
 `lint_context.py` should check:
 
 - canonical filenames and folder structure,
-- required sections,
-- plan hygiene,
+- required sections in `architecture.md` and `systems/*.md`,
+- plan file count (flags accumulation, but does not validate plan sections),
 - suspicious naming patterns,
 - likely shallow or structurally weak output via warnings.
 
@@ -73,8 +72,3 @@ The context upkeep workflow should be:
 - deterministic again in final linting.
 
 That balance keeps the skill efficient without pretending the scripts can decide document architecture on their own.
-
-## Open Constraints / Follow-Up Questions
-
-- If the linter remains too weak, strengthen it rather than downgrading its role.
-- If the scanner output is too shallow for some repo shapes, expand the script output rather than telling agents to ignore it.

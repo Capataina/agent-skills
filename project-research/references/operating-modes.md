@@ -72,3 +72,5 @@ Instead, research is sufficient when:
 - the strongest relevant trade-offs are captured,
 - the current repository state has been verified enough to support project-specific claims,
 - the recommendation no longer depends on obvious unanswered questions that could have been resolved within the run.
+
+Research is substantial when you have engaged with multiple distinct sources or perspectives, not just confirmed an initial impression. If your first search answered the question completely, verify that answer against at least one contrasting source before accepting it.

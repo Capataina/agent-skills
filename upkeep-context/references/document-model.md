@@ -245,7 +245,7 @@ Adapt structure to the reference type, but favour:
 
 ### Research-Shaped References
 
-Some reference artefacts will be deeper project-grounded research papers or topic folders created in the style of `project-research`.
+Some reference artefacts will be deeper project-grounded research papers or topic folders following a research-paper structure with topic folders and analytical sections.
 
 These may use stronger section patterns such as:
 

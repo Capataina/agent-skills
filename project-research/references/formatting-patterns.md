@@ -1,11 +1,13 @@
 # Formatting Patterns
 
-Use formatting as an analytical tool, not as decoration.
+Use the full expressive range of markdown and ASCII as analytical tools, not as decoration.
+
+Agent creativity in choosing visual representations is encouraged. If you can see a way to make an insight clearer, more spatial, or more comparable through a diagram, table, or ASCII visualisation — use it.
 
 The target style blends:
 
-- the teaching clarity of `upkeep-learning`,
-- the structural richness of `upkeep-context`,
+- the teaching clarity of educational archive material,
+- the structural richness of implementation memory documents,
 - the density and discipline of a technical synthesis paper.
 
 ## Good Uses Of Rich Formatting
@@ -44,11 +46,13 @@ Use sparingly for:
 - the most important warning,
 - the key framing sentence that the rest of the paper depends on.
 
-### ASCII Diagrams
+### ASCII Diagrams and Data Visualisations
 
-Use when an architecture or information flow is easier to understand visually and a quick text diagram is sufficient.
+Use ASCII diagrams when an architecture or information flow is easier to understand visually.
 
-Good example:
+Use ASCII data visualisations when comparing magnitudes, distributions, densities, or multi-dimensional properties.
+
+Examples:
 
 ```text
 External research
@@ -58,6 +62,18 @@ Project grounding -> Current-state model -> Recommendation
         |                                  |
         +---------- code verification -----+
 ```
+
+```text
+Algorithm comparison (sample efficiency):
+
+A2C   ████████████░░░░░  62%
+SAC   ██████████████████  91%
+PPO   ████████████████░░  80%
+TD3   ███████████████░░░  76%
+      0%                 100%
+```
+
+The criterion is analytical value: does this representation make the finding more concrete, comparable, or spatially obvious? If yes, use it.
 
 ### Layered Presentation
 

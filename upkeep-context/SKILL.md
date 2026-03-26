@@ -44,6 +44,8 @@ It maintains a **repository memory layer** that captures:
 - maintainable reference material whose relevance depends on current project reality,
 - temporary execution plans only when explicitly requested or clearly necessary.
 
+The standard for `context/` completeness is high: a reader working only from `context/` should be able to understand the entire project. If that is not possible after reading `context/`, the documentation is insufficient, not just imperfect. Architecture files, system files, and reference material should be written at a depth that makes immediate code rediscovery unnecessary.
+
 It must reject:
 
 - milestone-based or phase-based slicing,
@@ -58,10 +60,10 @@ It must reject:
 When trade-offs exist, optimise in this order:
 
 1. `context/` must match current implementation reality.
-2. `context/` must materially reduce first-pass code rediscovery.
+2. `context/` must be comprehensive enough that a reader working only from it can understand the project.
 3. Each important topic must have one canonical home.
 4. Repeated upkeep must produce low churn.
-5. Writing should be comprehensive without padding.
+5. Writing should be thorough and clear — depth is a virtue, not a problem.
 6. Formatting should improve comprehension, not become decoration.
 
 ## Supported File Model
@@ -83,7 +85,7 @@ Only `architecture.md` and `systems/` are universally essential.
 
 `references/` is not a museum. Research and supporting papers there may need upkeep when implementation reality changes. Update, merge, split, condense, or prune reference material only when that materially improves accuracy, canonical ownership, or long-term usability. Do not apply aggressive pruning pressure by default.
 
-Some `references/` artefacts may follow the richer structure produced by `project-research`, including topic folders and analysis-heavy papers. Preserve that stronger structure when it still matches the topic and remains maintainable.
+Some `references/` artefacts may follow a richer research-paper structure, including topic folders and analysis-heavy papers. Preserve that stronger structure when it still matches the topic and remains maintainable.
 
 Do not create default files such as:
 
@@ -118,6 +120,20 @@ Avoid:
 - names that exist only to mirror a temporary project phase.
 
 Prefer the shortest stable topic name that is still unambiguous in its folder and in the repository.
+
+## Structural Rules and Creative Freedom
+
+The structural rules in this skill — folder layout, naming conventions, canonical file roles — are fixed. They exist to make `context/` predictable and navigable across projects and agents.
+
+Everything within that structure is yours. How you explain a subsystem, what depth you reach, what diagrams you draw, what visual representations you choose — these are matters of judgment and creative expression. The goal is maximum clarity and usefulness. Reach for whatever approach achieves that best.
+
+When the default structure genuinely does not serve the project, adapt with intent and document why. The defaults exist for good reasons and should not be abandoned lightly, but they are not cages.
+
+## Living System
+
+`context/` is not a one-shot output. It is an evergrowing, maintained memory layer.
+
+The principal-engineer personality maintains `context/` incrementally during normal sessions — creating files when new systems are added, updating owning documents when behaviour changes, and making targeted edits without invoking this skill. This skill is invoked for large passes when accumulated drift is too broad for inline edits to handle reliably.
 
 ## Operating Modes
 
@@ -180,17 +196,20 @@ Do not let `architecture.md` duplicate all system docs. It is the map, not the t
 
 `references/` files are durable supporting memory, including project-grounded research. They may discuss external findings, comparisons, or implementation lessons, but they still need upkeep when the repository changes enough to make their project-specific claims stale.
 
-When a reference artefact clearly follows the `project-research` style, upkeep should preserve its research-specific sections and analytical structure unless there is a clear reason to simplify or consolidate it.
+When a reference artefact clearly follows a research-paper structure with analytical sections and topic folders, upkeep should preserve its research-specific sections and analytical structure unless there is a clear reason to simplify or consolidate it.
 
 ## Composition Rules
 
-The default output should be readable by both humans and LLMs. Use the clearest representation for the information at hand:
+The default output should be readable by both humans and LLMs. Use the clearest representation for the information at hand. The full expressive range of markdown and ASCII is available — use it where it improves understanding.
 
 - use bullets for concise takeaways, ownership points, and digestible lists,
 - use tables for dense inventories, comparisons, or interface summaries,
 - use trees for repository structure,
-- use diagrams or mermaid graphs when flows or relationships are awkward in prose,
+- use ASCII diagrams or mermaid graphs when flows or relationships are awkward in prose,
+- use ASCII data visualisations (heat maps, bar charts, spatial layouts) when information has spatial or density structure,
 - use combined formats when one representation helps scanning and another helps reasoning.
+
+Agent creativity in choosing the right visual representation is encouraged. If a concept has a shape, draw it. If a comparison has multiple dimensions, table it. If a flow spans several layers, diagram it.
 
 Supportive duplication inside the same document is allowed when it improves comprehension, such as a table followed by bullets that interpret the table.
 

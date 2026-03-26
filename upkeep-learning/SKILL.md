@@ -1,61 +1,114 @@
 ---
 name: upkeep-learning
-description: "Maintains a repository-level learning/ system that teaches a software project from first principles using the existing learning folder, the context folder, the root README, and targeted code inspection when needed. Use when asked to create, initialise, update, extend, restructure, audit, or preserve project learning materials, learning paths, concept files, systems deep-dives, exercises, glossaries, or study navigation. Prefers iterative upkeep over one-shot generation, preserves learner progress in checklist files, keeps navigation explicit, and adds project-specific exercises without arbitrary file-count quotas. Not for generic code documentation, release notes, product specs, or bug fixing."
+description: "Maintains a repository-level learning/ archive as a comprehensive educational system for mastering a project and its surrounding domain. Use when asked to create, rewrite, expand, update, audit, restructure, or preserve project learning materials, study paths, concept papers, system deep-dives, glossaries, exercises, comparisons, or curriculum navigation. Produces exhaustive, first-principles, example-rich teaching content grounded in existing learning/, context/, the root README, and targeted code inspection. Covers both current implementation reality and README-defined direction or domain territory, even when parts are not implemented yet. Not for release notes, product specs, or bug fixing."
 ---
 
 # Upkeep Learning
 
-Maintain a `learning/` folder as the repository's learning system. The goal is a deep, navigable, first-principles teaching layer that evolves with the project and remains useful across repeated upkeep.
+Maintain `learning/` as the repository's educational archive.
 
-Before editing or generating any `learning/` files, read the reference files in this order:
+This skill is for building and maintaining a large, rigorous, highly navigable teaching system for the project and its domain. The archive should teach thoroughly, explain relentlessly, and remove ambiguity wherever possible. It is allowed to be big. It is allowed to be long. It is allowed to be highly detailed. Do not compress major topics into short summaries when they warrant serious treatment.
 
-1. Read `references/operating-modes.md` first.
-   It defines the four supported workflows: initialise, update, extend, and audit.
-2. Read `references/source-priority.md` second.
-   It defines which project sources to trust first and when targeted code inspection is justified.
-3. Read `references/learning-architecture.md` third.
-   It defines the stable top-level `learning/` structure, navigation files, learning paths, and status conventions.
-4. Read `references/coverage-and-organisation.md` fourth.
-   It defines coverage-based generation, conditional folder depth, and anti-redundancy rules.
-5. Read `references/exercise-strategy.md` fifth.
-   It defines exercise types, hint-oriented solutions, order files, and checkbox placement rules.
-6. Read `references/update-workflow.md` sixth.
-   It defines low-churn upkeep, learner progress preservation, and when to add, merge, split, rename, or retire files.
-7. Read `references/templates.md` last.
-   It contains the standard templates for navigation files, paths, concepts, systems, comparisons, exercises, and hint files.
+## Reference Loading
+
+Before editing or generating any `learning/` files, read the mandatory core. These five files apply to everything:
+
+1. `references/archive-philosophy.md` — core identity and non-negotiable teaching principles
+2. `references/operating-modes.md` — determine the mode that applies to this invocation
+3. `references/source-model.md` — source roles across learning/, context/, README, and code
+4. `references/learning-architecture.md` — stable top-level structure and archive organisation
+5. `references/depth-and-writing-standards.md` — the writing bar that applies to all content in this archive
+
+Then apply the following task-based rules. Each one is a hard requirement, not a suggestion:
+
+**Building curriculum, paths, or any navigation file:**
+Read `references/curriculum-design.md` and `references/navigation-design.md` before creating or editing any path, guide, or navigation file.
+
+**Writing any exercise file:**
+Read `references/exercise-strategy.md` before writing or editing any exercise. Do not skip this regardless of how straightforward the exercise seems.
+
+**Planning coverage decisions across the archive:**
+Read `references/coverage-and-organisation.md` before making structural coverage decisions.
+
+**Updating an existing archive:**
+Read `references/update-workflow.md` before making changes to an existing `learning/` folder.
+
+**Using or creating files from standard templates:**
+Read `references/templates.md` before producing new files that follow standard templates.
+
+**Writing mathematical or scientific content:**
+Read `references/mathematical-and-scientific-writing.md` before writing formal technical material.
+
+**Writing or updating glossary entries:**
+Read `references/glossary-standards.md` before touching `GLOSSARY.md`.
+
+**Adding significant visual elements, diagrams, or rich formatting:**
+Read `references/visual-markdown-patterns.md` before adding substantial visual structure.
+
+**Uncertain about depth standards for a specific file type:**
+Read `references/file-type-standards.md` before writing that file type.
+
+## Structural Rules and Creative Freedom
+
+The structural rules in this skill — folder layout, navigation file names, canonical file roles, naming conventions — are fixed. They exist to make the archive predictable, navigable, and consistent across projects.
+
+Everything within that structure is yours. The narrative you construct, the analogies you draw, the visual representations you choose, the depth you reach, the connections you make between ideas — all of this is judgment and creative expression. The goal is maximum pedagogical value. Reach for whatever approach teaches best.
+
+When the default structure genuinely does not serve the project, adapt with intent and document why. The defaults exist for good reasons, but they are not cages.
 
 ## Core Identity
 
-This skill is not a one-shot curriculum generator.
+This skill is not a lightweight doc generator.
 
-It maintains a **repository learning layer** that captures:
+It maintains a **repository-scale educational archive** that captures:
 
-- first-principles explanations of the project's concepts,
-- project-specific systems and decisions,
-- reusable domain patterns,
-- navigable learning paths and study guidance,
-- practice material and recommended exercise order,
-- durable educational lessons from current and superseded approaches.
+- first-principles explanations of the project's concepts and domain,
+- deep project-specific system and architecture teaching,
+- foundational theory needed to understand the README vision,
+- major current systems and major future-facing ideas,
+- multiple guided learning paths for different learner goals,
+- extensive glossary support,
+- project-grounded exercises and practice routes,
+- comparisons, alternatives, trade-offs, and historical transitions,
+- durable learning material that remains valuable across repeated upkeep.
 
-It must reject:
+The archive should be:
 
-- arbitrary file-count quotas,
-- giant linear curriculum files as the only navigation model,
-- answer-heavy exercises that defeat learning,
-- full-codebase traversal by default,
-- redundant or vanity folder nesting,
-- historical logs that do not improve understanding.
+- exhaustive,
+- verbose,
+- explanatory,
+- narrative — explaining concepts as connected wholes, not as lists of assertions,
+- elaborate,
+- richly structured,
+- visually expressive — using tables, ASCII diagrams, flow charts, and other markdown capabilities wherever they improve understanding,
+- cross-linked,
+- reader-oriented,
+- unafraid of length.
+
+The archive must reject:
+
+- shallow topic summaries for major concepts,
+- bullet-point inventories that list a topic without teaching it,
+- timid under-explanation,
+- generic filler prose,
+- pretending current implementation is the whole learning surface,
+- answer-heavy exercises that destroy practice value,
+- arbitrary brevity,
+- decorative structure with weak teaching content,
+- narrow coverage caused by `context/` alone,
+- deleting educationally useful material because it is not current runtime behaviour.
 
 ## Priority Order
 
 When trade-offs exist, optimise in this order:
 
-1. `learning/` must stay aligned with the current project reality.
-2. `learning/` must maximise real educational coverage without arbitrary quotas.
-3. Navigation must stay explicit and easy to scan.
-4. Learner progress in checklist files must be preserved across upkeep.
-5. Structure should stay stable at the top level and conditional at deeper levels.
-6. Repeated upkeep must produce low churn.
+1. `learning/` must maximise pedagogical completeness.
+2. `learning/` must cover both current implementation reality and README-defined project/domain territory.
+3. Major topics must be explained thoroughly enough that a motivated learner is not left with obvious unresolved questions.
+4. Navigation must remain explicit despite archive scale.
+5. Learner progress in checklist files must be preserved across upkeep.
+6. Structure should stay stable at the top level and sensible at deeper levels.
+7. Repeated upkeep should avoid pointless churn, but not at the cost of weak teaching.
 
 ## Supported File Model
 
@@ -63,8 +116,7 @@ This skill should default to this top-level folder model:
 
 ```text
 learning/
-├── LEARNING_MAP.md
-├── DIRECTORY_TREE.md
+├── LEARNING_MAP.md        (archive overview, usage guide, and directory tree)
 ├── GLOSSARY.md
 ├── STUDY_GUIDE.md
 ├── paths/
@@ -75,76 +127,91 @@ learning/
 └── references/
 ```
 
-The top-level model should remain stable unless the repository has a compelling reason to differ.
+The top-level model should remain stable unless the repository has a compelling reason to differ. `LEARNING_MAP.md` serves as both the usage guide and the structural overview of the archive — no separate `DIRECTORY_TREE.md` is required.
 
-Deeper topic/type subfolders are **conditional**, not mandatory. Create them only when they improve navigation or match real topic boundaries. Do not introduce extra nesting only for symmetry.
+Deeper topic/type subfolders are conditional, but archive depth is encouraged. Create topic clusters when they improve study flow or reflect the scale of the material. Do not flatten a genuinely large domain just to keep the tree small.
 
 Avoid nested `README.md` files inside `learning/`. Use role-specific filenames such as:
 
 - `LEARNING_MAP.md`
-- `DIRECTORY_TREE.md`
 - `STUDY_GUIDE.md`
-- `PATH_INDEX.md`
-- `EXERCISE_GUIDE.md`
-- `EXERCISE_ORDER.md`
-- `SOLUTION_INDEX.md`
+- `paths/PATH_INDEX.md`
+- `exercises/EXERCISE_GUIDE.md`
+- `exercises/EXERCISE_ORDER.md`
+- `exercises/solutions/SOLUTION_INDEX.md`
+
+## Exercises Are Code Files
+
+Exercises in `learning/exercises/` are code files, not markdown documents.
+
+Use `.py`, `.rs`, or whatever language fits the project. The exercise prompt, goal, tasks, hints, and expected behaviour live as a structured comment block at the top of the file. The working area for the learner starts immediately below.
+
+This allows the learner to implement directly inside the learning folder without maintaining a separate workspace.
+
+Solution files in `exercises/solutions/` are also code files in the same language. They match the exercise file they answer and are named identically, living under `exercises/solutions/`.
+
+Purely conceptual exercises with no sensible code surface (design reasoning, written comparisons) may remain as `.md` files, but implementation, debugging, extension, and reconstruction exercises must be code.
 
 ## Operating Rules
 
-### 1. Treat `learning/` as a maintained system
+### 1. Treat `learning/` as a living, maintained educational archive
+
+This is not a one-shot generation. The archive is evergrowing and dynamic. Routine incremental edits are handled during normal sessions; this skill is invoked for large passes when accumulated change warrants it.
 
 The skill may initialise `learning/` if it does not exist, but it should primarily think in terms of upkeep:
 
-- update existing files in place when possible,
+- update and expand existing files in place when possible,
 - preserve useful prior material,
-- add new files for new concepts or systems,
+- add many new files when the archive is underspecified,
 - rework navigation when the project evolves,
-- keep the learning system current without discarding durable lessons.
+- keep the archive current without discarding durable lessons,
+- deepen material aggressively when prior coverage is thin.
 
-### 2. Use project memory before code mining
+### 2. Cover the full learning surface, not just current code reality
 
-Default source priority is:
+The archive must teach:
 
-1. existing `learning/`
-2. `context/`
-3. root `README`
-4. targeted code inspection
+- what exists now,
+- what the project is trying to become,
+- the theory required to understand both,
+- the trade-offs and alternatives around that journey.
 
-Do not traverse the full codebase by default. Inspect code only when a project-specific implementation claim, file location, or systems deep-dive needs verification.
+If the root `README` makes an area central, that area belongs in `learning/` even when it is not yet implemented in code or fully represented in `context/`.
 
 ### 3. Navigation is a first-class artefact
 
 `learning/` must always be traversable through multiple entry points:
 
-- `LEARNING_MAP.md` for overall usage guidance,
-- `DIRECTORY_TREE.md` for structure and file descriptions,
+- `LEARNING_MAP.md` for overall usage guidance and archive structure,
 - `STUDY_GUIDE.md` for high-level route selection,
 - `paths/*.md` for focused learning paths,
 - `exercises/EXERCISE_ORDER.md` for practice sequencing.
 
 Do not rely on one massive curriculum file as the only path through the learning system.
 
-### 4. Coverage is judged by learning surfaces, not counts
+### 4. Exhaustiveness matters more than restraint
 
-Do not target a fixed number of concept files, exercises, or materials.
+There is no such thing as "too much learning" in this skill.
 
-Instead, cover the important learning surfaces present in the repository:
+Do not hold back out of fear that the archive is becoming too large, too descriptive, too explanatory, or too detailed. If a major topic deserves more teaching, write more teaching.
+
+Do not target arbitrary file counts, but do target exhaustive coverage across the major learning surfaces:
 
 - foundations required to understand the project,
 - core domain concepts,
 - reusable domain patterns,
 - project systems and architecture,
-- important decisions and trade-offs,
-- current and superseded approaches when the contrast is educationally valuable,
+- important decisions, trade-offs, and alternatives,
+- current, planned, and superseded approaches when the contrast is educationally valuable,
 - project-specific implementation exercises where reconstruction or debugging would deepen mastery.
 
-More coverage is better when it remains relevant and non-redundant.
+More coverage is better when it remains relevant, well-organised, and genuinely educational.
 
 ### 5. Keep top-level structure stable and deeper structure conditional
 
 Use the stable top-level tree above.
 
-Below that, create deeper topic folders only when they materially improve scanability. If a deeper folder would hold only one or two files and is unlikely to grow, prefer a flatter layout.
+Below that, create deeper topic folders whenever they materially improve scanability, progression, or topic separation. Small folders are acceptable if they mark a meaningful boundary in a large educational archive.
 
 ### 6. Preserve learner progress
 
@@ -159,7 +226,7 @@ Checkbox-heavy files usually include:
 
 Concept files, systems files, glossary files, and decision files should generally not contain learner checkboxes.
 
-### 7. Preserve old approaches when they still teach something
+### 7. Preserve old, planned, and comparative material when it teaches something
 
 When the project replaces one approach with another, do not automatically delete the old learning material.
 
@@ -167,9 +234,16 @@ Preserve it when it remains educationally or architecturally valuable, and make 
 
 - project comparisons,
 - evolution notes,
-- short status sections in ambiguous files.
+- short status sections in ambiguous files,
+- roadmap-facing files for future directions that matter to understanding the project.
 
 Do not preserve obsolete material that adds no learning value.
+
+### 8. Use formatting as a teaching tool
+
+The full expressive range of markdown is available and expected. Rich formatting is not decoration — it is a teaching tool.
+
+Use tables, comparison matrices, ASCII diagrams, flow charts, dependency maps, notation tables, and code blocks wherever they make understanding easier. If a concept has spatial structure, draw it. If a comparison has multiple dimensions, table it. If a data flow has stages, diagram it. Agent creativity in choosing the right visual representation is encouraged — the goal is maximum clarity, not adherence to a fixed set of formats.
 
 ## Execution Workflow
 
@@ -179,11 +253,11 @@ When this skill is triggered, follow this sequence:
 2. Read the `context/` folder if present.
 3. Read the root `README`.
 4. Determine whether the task is initialise, update, extend, or audit.
-5. Identify the learning surfaces that need to exist or be revised.
-6. Update navigation files before or alongside content changes.
-7. Update concept, project, exercise, materials, and reference files with minimal necessary churn.
-8. Inspect code selectively only for verification or implementation-specific details.
-9. Preserve checklist state and existing good-enough structure where possible.
+5. Identify the full learning surfaces that need to exist or be revised, including README-defined future direction and prerequisite theory.
+6. Expand or create navigation files before or alongside content changes.
+7. Update concept, project, exercise, materials, glossary, and reference files with the depth the archive requires.
+8. Inspect code selectively for verification or implementation-specific details.
+9. Preserve checklist state and keep useful existing structure where possible.
 10. Run the quality checklist before presenting the result.
 
 ## Quality Checklist
@@ -191,13 +265,18 @@ When this skill is triggered, follow this sequence:
 Before considering `learning/` complete, verify:
 
 - The top-level `learning/` structure is clear and stable.
-- Navigation files exist and are internally consistent.
-- Deeper folder nesting is justified by real navigational benefit.
-- Coverage is strong across foundations, core concepts, domain patterns, project systems, and exercises where warranted.
-- No arbitrary numeric targets were used as the decision-maker.
-- Exercises are educationally useful and do not include full solutions in the exercise file itself.
+- `LEARNING_MAP.md` covers both archive usage guidance and structural overview.
+- Navigation files exist, are internally consistent, and can support a large archive.
+- Coverage is strong across foundations, core concepts, domain patterns, project systems, exercises, glossary support, and README-defined future/project-domain areas.
+- Major topics are taught as connected narratives, not as bullet-point inventories of assertions.
+- Major topics are explained exhaustively — a motivated learner should have no obvious unresolved questions.
+- Technical topics include notation, equations, worked examples, comparisons, or diagrams wherever those improve understanding.
+- Exercises are code files (for implementation tasks) with structured comment headers containing the prompt, tasks, hints, and expected behaviour.
+- Solution files are code files in `exercises/solutions/` matching the exercise they answer.
+- The archive reflects current implementation reality without abandoning project mission, roadmap, or prerequisite theory.
 - `EXERCISE_ORDER.md` provides a meaningful recommended sequence.
-- Path files provide multiple legitimate study routes rather than one rigid linear curriculum.
+- Path files provide multiple legitimate study routes rather than one rigid curriculum.
 - Learner checklist state was preserved where there is a clear semantic match.
-- Current vs superseded project approaches are clear where ambiguity exists.
-- The learning system reflects current project reality without losing durable educational value.
+- Current, planned, historical, and superseded material are clearly labelled where ambiguity exists.
+- The archive is verbose, explanatory, comprehensive, and unafraid of depth.
+- Rich formatting (tables, diagrams, trees, ASCII visualisations) is used wherever it improves understanding.
