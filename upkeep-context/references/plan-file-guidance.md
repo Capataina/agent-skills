@@ -1,4 +1,15 @@
-# Implement-Now Guidance
+# Plan File Guidance
+
+## Table of Contents
+
+1. [When To Create One](#when-to-create-one)
+2. [What It Is For](#what-it-is-for)
+3. [Required Sections](#required-sections)
+4. [Section Guidance](#section-guidance)
+5. [Writing Rules](#writing-rules)
+6. [Quality Bar](#quality-bar)
+7. [Maintaining Active Plans](#maintaining-active-plans)
+8. [Anti-Patterns](#anti-patterns)
 
 This reference defines how to write a high-quality `plans/<topic>.md` file.
 
@@ -19,7 +30,7 @@ Do not create one just because a task exists.
 
 ## What It Is For
 
-A strong `implement-now` file should:
+A strong plan file should:
 
 - clarify exact implementation scope,
 - map modules and responsibilities,
@@ -137,7 +148,7 @@ Include:
 
 ## Quality Bar
 
-A good `implement-now` file lets a strong engineer answer:
+A good plan file lets a strong engineer answer:
 
 - what exactly is changing,
 - where each part belongs,
@@ -146,6 +157,23 @@ A good `implement-now` file lets a strong engineer answer:
 - and what neighbouring systems are at risk.
 
 If the file does not reduce ambiguity materially, it is too weak.
+
+## Maintaining Active Plans
+
+Plan files are living documents while active. During implementation:
+
+- tick checkboxes as items are completed,
+- update status fields in the header to reflect current progress,
+- add notes to completed items when the implementation deviated from the original plan and the deviation matters,
+- when all completion criteria are met, remove the plan file.
+
+During context upkeep, check all active plans for:
+
+- items that have been completed since the plan was last updated,
+- items that are no longer relevant due to scope changes,
+- plans where all work is done but the file was never cleaned up.
+
+Multiple plans may be active simultaneously when they cover independent systems. Each plan should be self-contained and not depend on another plan's progress.
 
 ## Anti-Patterns
 

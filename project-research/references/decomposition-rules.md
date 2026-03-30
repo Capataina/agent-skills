@@ -13,9 +13,9 @@ Prefer one file when:
 
 Examples:
 
-- `context/references/a2c.md`
+- `context/references/event-sourcing.md`
 - `context/references/logging-pipeline.md`
-- `context/references/replay-buffer-design.md`
+- `context/references/connection-pooling.md`
 
 ## Topic Folder
 
@@ -29,10 +29,10 @@ Prefer a folder when:
 Examples:
 
 ```text
-context/references/actor-critic/
+context/references/caching-strategies/
 ├── overview.md
-├── a2c.md
-└── sac-vs-a2c.md
+├── application-layer-caching.md
+└── redis-vs-memcached.md
 ```
 
 ```text

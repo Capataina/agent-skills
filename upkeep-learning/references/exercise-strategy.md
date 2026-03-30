@@ -1,5 +1,17 @@
 # Exercise Strategy
 
+## Table of Contents
+
+1. [Exercise File Format](#exercise-file-format)
+2. [Core Exercise Rule](#core-exercise-rule)
+3. [Exercise Categories](#exercise-categories)
+4. [Topic-First Structure](#topic-first-structure)
+5. [Exercise Navigation Files](#exercise-navigation-files)
+6. [Checkboxes](#checkboxes)
+7. [Solution Files](#solution-files)
+8. [Project-Specific Practice](#project-specific-practice)
+9. [Archive-Scale Exercise Expectation](#archive-scale-exercise-expectation)
+
 Exercises are the practical layer of `learning/`. They should increase mastery, not spoil it.
 
 ## Exercise File Format
@@ -122,9 +134,9 @@ Project-specific exercises are required when reconstructing, debugging, or exten
 
 Examples:
 
-- rebuild a centreline construction system,
-- debug reward shaping,
-- extend the observation vector,
+- rebuild an authentication flow from scratch,
+- debug a caching invalidation strategy,
+- extend the API pagination system,
 - compare two algorithmic choices in the project's own context.
 
 Do not limit exercises to toy math or generic algorithm drills when the project has important systems worth practising directly.

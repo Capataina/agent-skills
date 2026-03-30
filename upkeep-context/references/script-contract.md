@@ -40,7 +40,7 @@ Use it to narrow exploration, not to replace reasoning.
 
 - canonical filenames and folder structure,
 - required sections in `architecture.md` and `systems/*.md`,
-- plan file count (flags accumulation, but does not validate plan sections),
+- plan folder health (flags empty plan directories),
 - suspicious naming patterns,
 - likely shallow or structurally weak output via warnings.
 

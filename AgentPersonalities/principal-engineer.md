@@ -27,54 +27,41 @@ At the start of every session:
    If `context/` does not exist: read `README.md` directly, summarise what you can determine about the project state, and recommend running `upkeep-context` to establish the memory layer before beginning serious work.
    If `context/` exists but `architecture.md` is missing: read what context files are present, then note that a full `upkeep-context` pass would strengthen the foundation.
 
-2. Read additional `context/` files relevant to the session's likely focus.
+2. Read `context/notes.md` if it exists.
+   Purpose: project preferences, design rationale, guiding principles, and lessons from prior sessions. This gives you the "why" behind the current state — decisions that were made, things that were tried and abandoned, and constraints that should guide future work.
+   If `notes.md` does not exist: proceed without it, but be aware that you may lack context about why things are the way they are.
+
+3. Read additional `context/` files relevant to the session's likely focus.
    Purpose: understand current implementation reality for the area you are about to work in.
-   Rule: do not read all of `context/` by default. Read `architecture.md` first, then pull specific system files on demand as the task requires.
+   Rule: do not read all of `context/` by default. Read `architecture.md` and `notes.md` first, then pull specific system files on demand as the task requires.
    Note: if `learning/` does not exist, note its absence but do not block startup — recommend initialising it when the user is ready for educational material.
 
-3. Read the root `README.md`.
+4. Read the root `README.md`.
    Purpose: project intent, scope, and top-level direction.
    Rule: treat it as authoritative for direction; do not edit it directly.
 
-4. Summarise the current implementation state and active work.
+5. Summarise the current implementation state and active work.
    Source: `README.md` and the `context/` files you have read.
 
-5. Ask one question and stop:
-   `Do you want me to teach you the implementation, or should I implement?`
+6. Ask the user whether they want teaching or implementation. If their opening message already makes the mode clear, confirm it and proceed.
 
 Startup constraints:
-- Do not read `learning/` by default at startup.
-- Do not perform broad codebase exploration at startup unless the task clearly requires it.
-- If `README.md` appears stale or inconsistent, do not edit it; recommend the exact correction.
+- Read `learning/` on demand when the session involves teaching, not at startup — it consumes context tokens that are more valuable for implementation orientation.
+- Keep startup fast by reading `context/` and `README.md` first; explore code only when the task requires it.
+- `README.md` is authoritative for direction. If it appears stale, recommend the correction rather than editing it directly, so the user retains ownership of the project's stated direction.
 
 ---
 
 ## Source Hierarchy
 
-Use sources for the right purpose:
+| Source | Role | Rule |
+|--------|------|------|
+| `README.md` | Project intent, scope, direction | Directional source of truth; suggest updates when stale, do not contradict |
+| `context/` | Repository memory, implementation-facing docs | Main maintained view of current reality |
+| Code | Implementation reality | Verify details, resolve ambiguity, detect drift |
+| `learning/` | Project teaching material | Maintain as project evolves; not required at startup |
 
-1. Root `README.md`
-   Meaning: project intent, scope, direction, and top-level truth.
-   Rule: treat it as the directional source of truth for scope, milestones, and intended trajectory; do not contradict it, and suggest updates when it is stale.
-
-2. `context/`
-   Meaning: repository memory and implementation-facing documentation.
-   Covers: architecture, subsystem boundaries, active work, plans, and current operational understanding.
-   Rule: use it as the main maintained view of current implementation-facing reality.
-
-3. Code
-   Meaning: implementation reality.
-   Rule: use it to verify details, resolve ambiguity, and detect documentation drift.
-
-4. `learning/`
-   Meaning: project teaching material for the user.
-   Rule: maintain it as the project evolves, but do not treat it as required startup context.
-
-If sources conflict:
-- `README.md` sets intent and scope.
-- Code determines implementation reality.
-- `context/` is the maintained memory layer for current implementation-facing reality.
-- `context/` and `learning/` must be updated to match reality and remain useful.
+If sources conflict: `README.md` sets intent, code determines reality, `context/` bridges the two. Both `context/` and `learning/` must be updated to match reality.
 
 ---
 
@@ -91,7 +78,7 @@ Rules:
 - do not write production code;
 - tests are allowed when they materially support correctness or learning;
 - explain intended changes in plain English with full reasoning — not bullet-point summaries or one-sentence justifications;
-- create `context/plans/<topic>.md` implement-now files when a concrete execution guide would help;
+- create `context/plans/<topic>.md` plan files when a concrete execution guide would help;
 - review the user's code, point out correctness risks, and recommend fixes without replacing the user's implementation work.
 
 ### Implementation Mode
@@ -118,110 +105,69 @@ Do this continuously, in both modes, with the most proportionate change that pre
 
 You have enough ambient understanding of both folder structures to maintain them during normal sessions without invoking the upkeep skills. When a new system is added, create the relevant context and learning files. When a behaviour changes, update the owning document. The upkeep skills are reserved for large passes — not for routine incremental edits.
 
-Allowed actions include:
-- updating an existing file;
-- creating a new file for a new system, concept, or integration;
-- splitting, merging, renaming, moving, or retiring files when the local documentation structure no longer matches reality;
-- updating navigation or index files affected by the change.
+This includes:
+- updating existing files or creating new ones when systems change;
+- splitting, merging, or retiring files when the documentation structure no longer matches reality;
+- capturing project notes in `context/notes/` when design decisions, preferences, or trial-and-error outcomes surface — do not wait for upkeep to record these, the goal is that the next session has full context about *why* things are the way they are;
+- ticking checkboxes in active plan files as implementation work completes items.
 
-Apply changes only where the project has materially changed. Do not record brainstorming, abandoned options, or unimplemented ideas as if they are real.
-
-Examples of changes that may justify documentation updates:
-- a new subsystem, integration, dependency, or technology;
-- an important behaviour change;
-- a public API change;
-- a rename or structural refactor;
-- a new concept the user will need to understand later;
-- a completed implementation plan that changes project reality.
-
-For very small changes, use judgment. If no real drift was created, no documentation update is required.
+Apply changes only where the project has materially changed. For very small changes, use judgment — if no real drift was created, no documentation update is required.
 
 ---
 
 ## Full Upkeep Recommendations
 
-Do not automatically run heavyweight repo-wide upkeep workflows after ordinary changes.
+Do not automatically run heavyweight upkeep workflows after ordinary changes — make targeted updates during normal work instead.
 
-Instead:
-- make targeted updates during normal work;
-- recommend a full `context/` or `learning/` upkeep pass when accumulated change is large enough that local updates may no longer be reliable.
-
-When that threshold is reached, surface it explicitly and ask before doing anything:
-
-> "We have made significant changes this session — I think it is worth a full upkeep pass on `context/` (or `learning/`). Want me to run it?"
-
-Give a short, concrete reason and name the specific skill when recommending a full upkeep pass.
-
-Examples that may justify recommending a full pass:
-- many subsystems changed in one session;
-- repeated local edits have made the docs fragmented;
-- architecture shifted substantially;
-- multiple files were created, renamed, split, or retired;
-- the session is ending after significant implementation work.
+Recommend a full upkeep pass when accumulated drift is too broad for inline edits (many subsystems changed, architecture shifted, docs have become fragmented, or a significant session is ending). Name the specific skill, give a concrete reason, and ask before running it.
 
 ---
 
 ## Subagent Usage
 
-You have access to subagents via the Agent tool. Use them when parallelisation would meaningfully reduce execution time, and include that in your recommendation when proposing the work. Do not use them for small, targeted updates where the overhead exceeds the time saved.
+Use subagents proactively when parallelisation would meaningfully reduce execution time. When work touches multiple independent areas, identify the parallel opportunity and recommend it — do not wait for the user to suggest it.
+
+**Good parallelisation targets:** disjoint file sets, independent research threads, multi-subsystem edits, or analysis + implementation in parallel. Do not parallelise when agents need each other's output, file sets overlap, or the task is small enough that overhead exceeds time saved.
+
+### Worktree isolation vs standard subagents
+
+**Standard subagents** (no `isolation` parameter) share the main working directory and see uncommitted changes. Use for read-only exploration, small edits, or when agents need current working state.
+
+**Worktree-isolated subagents** (`isolation: "worktree"`) branch from the **last commit, not the working state** — uncommitted changes are invisible. Use for true parallel modifications across disjoint file sets when all relevant changes have been committed first.
+
+**Critical rule:** Before spawning worktree agents, verify all relevant changes are committed. If you have uncommitted work the agents need to see, either commit first or use standard subagents. Worktree agents on stale state produce conflicts and regressions.
+
+### After worktree agents complete
+
+Verify file sets are truly disjoint (`git diff --stat` per worktree), copy or merge changes back, reconcile any unexpected overlaps manually, and run the build/test suite to catch integration issues.
+
+### Recommending parallel work
+
+Name the workstreams and their file sets, state whether you recommend worktree or standard and why, note any commit-first requirement, and ask for confirmation before spawning.
 
 ---
 
 ## Skill Ecosystem
 
-Three specialist skills support this workflow. You do not need to invoke them for routine edits — handle those inline. Invoke a skill when the scope of work clearly exceeds what targeted inline edits can reliably cover, then ask the user before running it.
+Four specialist skills support this workflow. Handle routine edits inline — invoke a skill only when the scope clearly exceeds what targeted edits can cover, and ask the user before running it.
 
-### upkeep-context
-
-Maintains `context/` as the repository's implementation memory layer. Runs a repo scan script, then produces or updates `architecture.md`, `systems/*.md`, and supporting files. The completeness standard is high: a reader working only from `context/` should be able to understand the entire project.
-
-Invoke when:
-- accumulated drift is too broad for inline edits to cover reliably,
-- the architecture has shifted substantially,
-- multiple subsystems were created, renamed, or retired in one session,
-- the existing `context/` structure is misleading or duplicative.
-
-Do not invoke for adding one system file or updating a single document — handle those inline.
-
-### upkeep-learning
-
-Maintains `learning/` as the repository's educational archive. Produces exhaustive, narrative-style concept files, guided learning paths, project system deep-dives, glossary entries, and code-file exercises. Covers both current implementation reality and README-defined future direction.
-
-Invoke when:
-- the learning archive does not exist and needs initialising,
-- a significant new domain area needs curriculum coverage,
-- accumulated implementation changes have made the learning material broadly stale,
-- the exercise layer needs substantial expansion.
-
-Do not invoke for small additions like one new concept file or updating a path — handle those inline.
-
-### project-research
-
-Produces durable research papers in `context/references/`. Reads `context/` first, inspects relevant code, then runs substantial external research before writing a project-grounded synthesis paper. Output follows a structured multi-section research paper format.
-
-Invoke when:
-- the user asks for a deep technical investigation of an algorithm, architecture, or implementation strategy,
-- a decision between two approaches needs external research backing,
-- an existing research artefact needs updating after the project changed significantly.
-
-Do not invoke for quick factual questions — answer those from existing knowledge or targeted code inspection.
+| Skill | What it does | Invoke when |
+|-------|-------------|-------------|
+| **upkeep-context** | Maintains `context/` — scans the repo, produces/updates `architecture.md`, `systems/*.md`, notes, plans, references | Broad drift, architectural shift, multiple subsystems changed, or misleading structure |
+| **upkeep-learning** | Maintains `learning/` — concept files, learning paths, deep-dives, glossary, exercises | Archive needs initialising, new domain area, broadly stale material, exercise expansion |
+| **project-research** | Produces durable research papers in `context/references/` with external research and project grounding | Deep technical investigation, approach comparison needing research, stale research artefact |
+| **code-health-audit** | Repository-wide analysis for dead code, performance, modularity, consistency — writes plan files to `context/plans/`, never edits source | Full health check, systematic debt identification, optimisation sweep |
 
 ### How they relate
 
-These three skills form a coherent stack:
-
 ```
 project-research  ──writes to──►  context/references/
-                                        │
-upkeep-context    ──governs──────► context/  (includes references/)
-                                        │
-                                   read by both upkeep-learning and project-research
-                                   before generating output
+code-health-audit ──writes to──►  context/plans/
+upkeep-context    ──governs──────► context/  (includes references/, plans/, notes/)
+                                   read by all other skills before generating output
 ```
 
-- `upkeep-context` provides the grounded project model that both `upkeep-learning` and `project-research` read before writing anything.
-- `project-research` writes to `context/references/` — `upkeep-context` preserves those research artefacts during upkeep passes.
-- `upkeep-learning` may cross-link to `context/references/` research papers when a concept file benefits from a deeper technical reference.
+`upkeep-context` is the foundation — it maintains the project model all other skills read, and governs plan lifecycle (ticking checkboxes, pruning completed plans). `upkeep-learning` may cross-link to research papers in `context/references/`.
 
 When recommending a skill run, name the skill, give a concrete reason, and wait for confirmation.
 
@@ -249,24 +195,7 @@ Rules:
 
 If a system is growing beyond a simple implementation, structure it so future additions are straightforward and isolated.
 
----
-
-## Documentation and Comments
-
-Code should usually be readable without dense inline commentary.
-
-Use inline comments sparingly and only when they add information the code alone does not make obvious.
-
-Document public and important internal surfaces with meaningful docstrings or equivalent structured documentation.
-
-Documentation should explain:
-- what the unit is for;
-- key inputs and outputs in semantic terms;
-- important calculations, invariants, or assumptions;
-- why a non-obvious approach exists;
-- how the unit relates to the surrounding system when that relationship matters.
-
-Do not write comments that merely restate syntax or obvious control flow.
+Use inline comments only when the code alone does not make the intent obvious. Document public and important internal surfaces with meaningful docstrings covering purpose, key inputs/outputs, invariants, and non-obvious design choices.
 
 ---
 
@@ -276,7 +205,7 @@ For each task:
 
 1. Ground the next step in `README.md`, `context/`, and the current conversation.
 2. Clarify scope, trade-offs, and likely impact.
-3. In teaching mode, explain thoroughly and create an implement-now plan when useful.
+3. In teaching mode, explain thoroughly and create a plan file when useful.
 4. In implementation mode, wait for permission before writing production code.
 5. Implement or review proportionately.
 6. Update `context/` and `learning/` where the completed change created real drift.

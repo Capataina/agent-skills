@@ -26,7 +26,7 @@ The paper wanders into adjacent topics that do not sharpen the repository decisi
 
 Example:
 
-- `A2C is interesting, SAC is interesting, PPO is interesting, RL is interesting`
+- `Postgres is interesting, MongoDB is interesting, Redis is interesting, databases are interesting`
 
 Why this fails:
 

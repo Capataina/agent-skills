@@ -25,11 +25,11 @@ Rewrite the topic as a project question, not a generic topic heading.
 
 Weak:
 
-- `A2C`
+- `connection pooling`
 
 Strong:
 
-- `How far should A2C be taken as a trustworthy baseline for this repository`
+- `What connection pooling strategy best fits this repository's concurrency model`
 - `What would a production-worthy retry strategy look like in this codebase`
 - `Which storage model best fits the current event flow and consistency needs here`
 

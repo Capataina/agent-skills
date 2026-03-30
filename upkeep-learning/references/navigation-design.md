@@ -1,5 +1,15 @@
 # Navigation Design
 
+## Table of Contents
+
+1. [Required Navigation Surfaces](#required-navigation-surfaces)
+2. [`LEARNING_MAP.md`](#learning_mapmd)
+3. [`STUDY_GUIDE.md`](#study_guidemd)
+4. [`PATH_INDEX.md`](#path_indexmd)
+5. [Exercise Navigation](#exercise-navigation)
+6. [Local Cross-Linking](#local-cross-linking)
+7. [Navigation Failure Modes](#navigation-failure-modes)
+
 Navigation must scale with archive size.
 
 The larger the archive becomes, the more deliberate the navigation layer must be.

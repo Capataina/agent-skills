@@ -1,5 +1,23 @@
 # File Type Standards
 
+## Table of Contents
+
+1. [`LEARNING_MAP.md`](#learning_mapmd)
+2. [`GLOSSARY.md`](#glossarymd)
+3. [`STUDY_GUIDE.md`](#study_guidemd)
+4. [`paths/*.md`](#pathsmd)
+5. [Concept Files](#concept-files)
+6. [`project/architecture/*.md`](#projectarchitecturemd)
+7. [`project/systems/*.md`](#projectsystemsmd)
+8. [`project/decisions/*.md`](#projectdecisionsmd)
+9. [`project/comparisons/*.md`](#projectcomparisonsmd)
+10. [`project/evolution/*.md`](#projectevolutionmd)
+11. [`materials/*.md`](#materialsmd)
+12. [`EXERCISE_GUIDE.md`](#exercise_guidemd)
+13. [`EXERCISE_ORDER.md`](#exercise_ordermd)
+14. [Exercise Files](#exercise-files)
+15. [Reference Files In `learning/references/`](#reference-files-in-learningreferences)
+
 This file defines the minimum depth expectations for major file classes.
 
 Use these standards aggressively. Thin files are not acceptable for major topics.
@@ -150,7 +168,7 @@ Materials files live in `learning/materials/` and curate external or supplementa
 
 ### Naming conventions
 
-Use descriptive, topic-scoped names: `reinforcement-learning-resources.md`, `linear-algebra-foundations.md`, `project-setup-references.md`. Do not use generic names like `links.md` or `resources.md`. Group by learning area, not by resource type.
+Use descriptive, topic-scoped names: `distributed-systems-resources.md`, `linear-algebra-foundations.md`, `project-setup-references.md`. Do not use generic names like `links.md` or `resources.md`. Group by learning area, not by resource type.
 
 ### Organisation within `learning/materials/`
 

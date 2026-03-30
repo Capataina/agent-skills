@@ -1,15 +1,28 @@
 # Mathematical And Scientific Writing
 
-Use this reference for topics such as:
+## Table of Contents
 
-- reinforcement learning,
-- optimisation,
-- probability and statistics,
-- control,
-- simulation,
-- neuroscience,
-- dynamical systems,
-- algorithms with important formal machinery.
+1. [Core Rule](#core-rule)
+2. [Required Elements For Major Technical Topics](#required-elements-for-major-technical-topics)
+3. [Notation Standard](#notation-standard)
+4. [Equation Standard](#equation-standard)
+5. [Worked Example Standard](#worked-example-standard)
+6. [Scientific Topics](#scientific-topics)
+7. [Alternatives And Debates](#alternatives-and-debates)
+8. [Accessibility Rule](#accessibility-rule)
+9. [Failure Modes](#failure-modes)
+
+Use this reference for any topic where formal or scientific reasoning materially improves the teaching, such as:
+
+- algorithms with important formal machinery,
+- optimisation and numerical methods,
+- probability, statistics, and stochastic processes,
+- control theory and dynamical systems,
+- simulation and modelling,
+- cryptography and security protocols,
+- distributed systems and consensus,
+- signal processing and information theory,
+- domain-specific scientific foundations relevant to the project.
 
 ## Core Rule
 
@@ -77,9 +90,9 @@ Good worked examples:
 
 If the topic is central, include more than one worked example when useful.
 
-## Scientific Topics
+## Scientific and Domain-Specific Topics
 
-For topics like neuroscience or biological learning, combine:
+For topics grounded in a specific scientific or technical domain (distributed consensus, fluid dynamics, compiler theory, signal processing, biological learning, etc.), combine:
 
 - intuitive explanation,
 - precise mechanism description,
@@ -94,10 +107,10 @@ When a field contains major alternatives or competing framings, explain them.
 
 Examples:
 
-- Hebbian learning vs backpropagation,
-- one-step TD vs GAE,
-- shared-trunk vs separate actor/critic architectures,
-- rate-based vs spike-based models.
+- Paxos vs Raft for consensus,
+- optimistic vs pessimistic concurrency control,
+- gradient descent vs evolutionary strategies for optimisation,
+- batch processing vs stream processing for data pipelines.
 
 Do not present one idea as if there are no meaningful alternatives when the comparison is educationally important.
 
@@ -113,8 +126,8 @@ The learner should not need to decode research-paper prose to understand the arc
 
 Treat these as failures:
 
-- an RL file with no equations where equations would help,
-- a neuroscience file with only vague metaphors,
+- a technical file with no equations where equations would help,
+- a domain-specific file with only vague metaphors instead of precise mechanisms,
 - notation introduced without explanation,
 - equations presented without interpretation,
 - a difficult topic with no numeric or concrete example.

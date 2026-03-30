@@ -97,6 +97,17 @@ def main() -> int:
     args = parser.parse_args()
 
     context_dir = Path(args.context_dir)
+
+    # Auto-detect: if the path looks like a repo root (has context/ subdir
+    # but no architecture.md), use context/ inside it instead.
+    candidate = context_dir / "context"
+    if (
+        candidate.exists()
+        and candidate.is_dir()
+        and not (context_dir / "architecture.md").exists()
+    ):
+        context_dir = candidate
+
     errors: list[str] = []
     warnings: list[str] = []
 
@@ -129,16 +140,21 @@ def main() -> int:
         plans_dir = context_dir / "plans"
         if plans_dir.exists():
             plan_files = sorted(plans_dir.glob("*.md"))
-            if len(plan_files) > 1:
-                warnings.append("more than one active plan file exists in plans/")
+            if not plan_files:
+                warnings.append("plans/ directory exists but contains no plan files")
 
         references_dir = context_dir / "references"
         if references_dir.exists() and references_dir.is_dir():
             warn_for_reference_shape(references_dir, warnings)
 
+        # Top-level files that are part of the canonical context model.
+        CANONICAL_TOP_FILES = {"architecture.md", "notes.md"}
+        # Subdirectories that are part of the canonical context model.
+        CANONICAL_DIRS = {"systems", "plans", "notes", "references"}
+
         for path in sorted(context_dir.rglob("*.md")):
             rel = path.relative_to(context_dir)
-            if rel.as_posix() == "architecture.md":
+            if rel.as_posix() in CANONICAL_TOP_FILES:
                 continue
 
             for pattern in BAD_NAME_PATTERNS:
@@ -146,9 +162,7 @@ def main() -> int:
                     warnings.append(f"{rel.as_posix()}: suspicious filename pattern `{pattern.pattern}`")
 
             top = rel.parts[0]
-            if top == "systems":
-                continue
-            if top in {"plans", "decisions", "references"}:
+            if top in CANONICAL_DIRS:
                 continue
             warnings.append(f"{rel.as_posix()}: markdown file outside canonical context structure")
 

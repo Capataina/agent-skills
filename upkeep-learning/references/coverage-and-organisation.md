@@ -1,5 +1,15 @@
 # Coverage And Organisation
 
+## Table of Contents
+
+1. [Coverage Rule](#coverage-rule)
+2. [Main Learning Surfaces](#main-learning-surfaces)
+3. [Exhaustiveness Rule](#exhaustiveness-rule)
+4. [Organisation Rule](#organisation-rule)
+5. [Folder Depth](#folder-depth)
+6. [Progression Rule](#progression-rule)
+7. [Anti-Redundancy Rule](#anti-redundancy-rule)
+
 This skill should maximise educational coverage and depth aggressively.
 
 ## Coverage Rule

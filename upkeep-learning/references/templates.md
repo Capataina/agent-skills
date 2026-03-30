@@ -1,5 +1,25 @@
 # Templates
 
+## Table of Contents
+
+1. [`LEARNING_MAP.md`](#1-learning_mapmd)
+2. [`STUDY_GUIDE.md`](#2-study_guidemd)
+3. [`paths/*.md`](#3-pathsmd)
+4. [`paths/PATH_INDEX.md`](#4-pathspath_indexmd)
+5. [Concept Files](#5-concept-files)
+6. [`project/systems/*.md`](#6-projectsystemsmd)
+7. [`project/architecture/*.md`](#7-projectarchitecturemd)
+8. [`project/comparisons/*.md`](#8-projectcomparisonsmd)
+9. [`project/evolution/*.md`](#9-projectevolutionmd)
+10. [`exercises/EXERCISE_GUIDE.md`](#10-exercisesexercise_guidemd)
+11. [`exercises/EXERCISE_ORDER.md`](#11-exercisesexercise_ordermd)
+12. [Exercise Files (Python)](#12-exercise-files-python)
+13. [Exercise Files (Rust)](#13-exercise-files-rust)
+14. [Solution Files](#14-solution-files)
+15. [`GLOSSARY.md` entry pattern](#15-glossarymd-entry-pattern)
+16. [`exercises/solutions/SOLUTION_INDEX.md`](#16-exercisessolutionssolution_indexmd)
+17. [Hint Files](#17-hint-files)
+
 Use these templates as structural baselines. Expand them aggressively when the topic warrants it. These are minimum shapes, not upper bounds.
 
 ## 1. `LEARNING_MAP.md`
@@ -54,9 +74,9 @@ learning/
 
 ## Suggested Combinations
 
-- [ ] Foundations + reinforcement learning
+- [ ] Foundations + core concepts
 - [ ] Systems + project architecture
-- [ ] Neuroscience + project evolution
+- [ ] Domain theory + practical application
 ````
 
 ## 3. `paths/*.md`
@@ -92,8 +112,8 @@ learning/
 
 - `paths/project-architecture-path.md` — [who it is for, what it emphasises]
 - `paths/implementation-first-path.md` — [who it is for, what it emphasises]
-- `paths/reinforcement-learning-path.md` — [who it is for, what it emphasises]
-- `paths/neuroscience-path.md` — [who it is for, what it emphasises]
+- `paths/domain-theory-path.md` — [who it is for, what it emphasises]
+- `paths/advanced-topics-path.md` — [who it is for, what it emphasises]
 
 ## How To Choose
 
@@ -348,8 +368,8 @@ learning/
 
 ## Suggested Jumps
 
-- After `exercises/core/simple-mlp.py`, do ...
-- Before `exercises/project/rebuild-centreline-construction.py`, read ...
+- After `exercises/core/basic-pipeline.py`, do ...
+- Before `exercises/project/rebuild-auth-flow.py`, read ...
 ````
 
 ## 12. Exercise Files (Python)

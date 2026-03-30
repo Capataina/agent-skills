@@ -1,5 +1,15 @@
 # Archive Philosophy
 
+## Table of Contents
+
+1. [Core Standard](#core-standard)
+2. [What The Archive Is Not](#what-the-archive-is-not)
+3. [Scale Expectations](#scale-expectations)
+4. [Teaching Standard](#teaching-standard)
+5. [Tone Standard](#tone-standard)
+6. [Aggressive Instruction Standard](#aggressive-instruction-standard)
+7. [Failure Modes](#failure-modes)
+
 `learning/` is not a sidecar note set. It is a serious educational archive.
 
 The job of this skill is to produce and maintain a repository-level body of teaching material that can support long-term mastery of:

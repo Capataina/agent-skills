@@ -36,17 +36,17 @@ A topic deserves its own file in `systems/` when most of these are true:
 
 Examples that often justify separate files:
 
-- analytics,
-- environment simulation,
-- observation or sensor pipelines,
-- controller or brain subsystems,
-- determinism or replay infrastructure,
-- debug overlays,
-- telemetry or observability,
-- persistence or snapshots,
-- networking,
-- job scheduling,
-- search or indexing.
+- authentication and authorisation,
+- API gateway or routing,
+- data pipeline or ingestion,
+- search or indexing,
+- notification system,
+- job scheduling or background workers,
+- analytics or telemetry,
+- persistence or storage,
+- networking or communication,
+- caching layer,
+- deployment or infrastructure.
 
 ## 3. What Must Not Drive File Boundaries
 

@@ -7,9 +7,10 @@
 3. Preserve / Update / Merge / Split / Rename / Delete
 4. Existing Context Folder Handling
 5. Initialising a New Context Folder
-6. Temporary Plan Hygiene
-7. Decisions and References Hygiene
-8. Final Review Rules
+6. Plan Hygiene
+7. Notes Hygiene
+8. References Hygiene
+9. Final Review Rules
 
 ## 1. Baseline Behaviour
 
@@ -116,26 +117,47 @@ When `context/` does not exist:
 
 A new folder should be comprehensive, but not padded with speculative placeholders.
 
-## 6. Temporary Plan Hygiene
+## 6. Plan Hygiene
 
 Files in `plans/` are temporary execution aids.
 
 Rules:
 
 - create them only on explicit request or when clearly demanded by the workflow,
-- keep only one active plan by default,
-- remove or archive stale plans,
+- multiple active plans are allowed when different systems have independent active work,
+- tick checkboxes and update status within plan files as implementation progresses — a plan file should reflect current progress, not just the original scope,
+- when upkeeping context after implementation work, check all active plans for items that have been completed and mark them done,
+- remove or archive a plan once all its completion criteria are met,
+- do not let completed or stale plans accumulate indefinitely,
 - never let a completed execution plan silently become part of the long-term memory layer.
 
-## 7. Decisions and References Hygiene
+Some plan files may be produced by analysis workflows (such as repository-wide code health audits) rather than by direct user request. These follow the same lifecycle rules: they exist while the work is active and are removed once the work is complete.
 
-Files in `decisions/` and `references/` should be created only when they add durable value that would otherwise distort `architecture.md` or `systems/`.
+## 7. Notes Hygiene
 
-Create a file in `decisions/` when:
+Files in `notes/` capture evolving project knowledge — design rationale, preferences, trial-and-error outcomes, and guiding principles.
 
-- the choice is cross-cutting,
-- its trade-offs matter later,
-- and it does not belong cleanly to one subsystem file.
+The `notes.md` index at the root of `context/` must be kept in sync with the contents of `notes/`.
+
+Rules:
+
+- create a note file when a topic is important enough to remember across sessions but does not belong to a single system file,
+- notes are topical, not chronological — each file covers one topic and evolves in place,
+- when the project's understanding changes, update the note rather than appending a new entry,
+- merge notes that converge on the same topic,
+- delete notes that are no longer relevant to the project's current direction,
+- update the `notes.md` index whenever a note file is created, updated, or deleted,
+- do not let notes become stale — a stale note actively misleads future sessions.
+
+During upkeep, audit notes for:
+
+- staleness — does the note still reflect current project reality?
+- redundancy — is the same information now captured in a system file?
+- completeness — are there design decisions or preferences that surfaced during recent work but were never captured as notes?
+
+## 8. References Hygiene
+
+Files in `references/` should be created only when they add durable value that would otherwise distort `architecture.md` or `systems/`.
 
 Create a file in `references/` when:
 
@@ -143,7 +165,7 @@ Create a file in `references/` when:
 - it may be revisited later,
 - and it is not itself current implementation truth.
 
-Do not let either folder become a dumping ground.
+Do not let the folder become a dumping ground.
 
 For research-heavy material in `references/`:
 
@@ -155,7 +177,13 @@ For research-heavy material in `references/`:
 - keep durable insights even when pruning surface area,
 - prefer stable topic ownership over accumulated historical layering.
 
-## 8. Final Review Rules
+During upkeep, specifically check references for staleness:
+
+- if a reference says a capability is missing but the repository now implements it, update the reference,
+- if a comparison reflects constraints that no longer exist, refresh the analysis,
+- if a reference's recommendations have been fully absorbed into the codebase, consider whether the reference still adds value or should be pruned.
+
+## 9. Final Review Rules
 
 Before finishing, verify:
 

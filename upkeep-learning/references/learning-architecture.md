@@ -1,5 +1,19 @@
 # Learning Architecture
 
+## Table of Contents
+
+1. [Stable Top-Level Tree](#stable-top-level-tree)
+2. [Archive-Scale Interpretation](#archive-scale-interpretation)
+3. [Top-Level File Roles](#top-level-file-roles)
+4. [`paths/`](#paths)
+5. [`concepts/`](#concepts)
+6. [`project/`](#project)
+7. [`exercises/`](#exercises)
+8. [`materials/`](#materials)
+9. [`references/`](#references)
+10. [Status Conventions](#status-conventions)
+11. [Naming Rules](#naming-rules)
+
 This file defines the preferred archive structure for `learning/`.
 
 ## Stable Top-Level Tree
@@ -71,10 +85,9 @@ Expected files often include:
 - `PATH_INDEX.md`
 - `project-architecture-path.md`
 - `implementation-first-path.md`
-- `systems-and-simulation-path.md`
-- `reinforcement-learning-path.md`
-- `neuroscience-path.md`
 - `foundations-path.md`
+- `domain-theory-path.md`
+- `advanced-topics-path.md`
 - other domain-specific or goal-specific routes the project warrants
 
 Large archives should usually have several paths. Overlap is fine when it helps different learner intents.

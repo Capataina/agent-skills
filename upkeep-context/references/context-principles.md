@@ -1,5 +1,17 @@
 # Context Principles
 
+## Table of Contents
+
+1. [Core Definition](#core-definition)
+2. [Required Qualities](#required-qualities)
+3. [Truth Model](#truth-model)
+4. [Evidence Standard](#evidence-standard)
+5. [What Belongs In Context](#what-belongs-in-context)
+6. [What Does Not Belong In Context](#what-does-not-belong-in-context)
+7. [Canonical Ownership Principle](#canonical-ownership-principle)
+8. [Supportive Presentation Principle](#supportive-presentation-principle)
+9. [Stability Principle](#stability-principle)
+
 This reference defines what `context/` is, what it must achieve, and what it must never become.
 
 ## Core Definition
@@ -112,7 +124,9 @@ The skill does not need a fixed file-count quota. It needs enough evidence to su
 - partial work and active risks,
 - planned or missing work tied to the owning subsystem,
 - durable notes from prior attempts,
-- obsolete approaches when still relevant to future decisions.
+- obsolete approaches when still relevant to future decisions,
+- project preferences, guiding principles, and design rationale that shape future work,
+- trial-and-error outcomes — what was tried, what failed, and why it matters going forward.
 
 ## What Does Not Belong In Context
 
@@ -126,7 +140,7 @@ Avoid:
 - brainstorming dumps,
 - milestone-by-milestone narrative progress files,
 - generic history files,
-- vague catch-all notes files.
+- undifferentiated catch-all dump files.
 
 ## Canonical Ownership Principle
 
@@ -135,10 +149,10 @@ Every important topic should have one primary home.
 Examples:
 
 - architecture belongs in `architecture.md`,
-- analytics implementation reality belongs in `systems/analytics.md`,
-- a failed lidar experiment belongs inside the owning system doc if it still affects future decisions,
-- a durable controller-baseline choice may belong in `decisions/controller-baseline.md`,
-- an A2C versus SAC research comparison may belong in `references/a2c-vs-sac.md`.
+- payment processing implementation reality belongs in `systems/payments.md`,
+- a failed caching strategy belongs inside the owning system doc if it still affects future decisions,
+- a guiding principle about API design may belong in `notes/api-design.md`,
+- a REST versus GraphQL research comparison may belong in `references/rest-vs-graphql.md`.
 
 This rule reduces overlap and prevents memory drift.
 

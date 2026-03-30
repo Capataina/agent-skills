@@ -1,5 +1,19 @@
 # Depth And Writing Standards
 
+## Table of Contents
+
+1. [Core Rule](#core-rule)
+2. [Narrative Standard](#narrative-standard)
+3. [Pedagogical Completeness](#pedagogical-completeness)
+4. [Long-Form Acceptance](#long-form-acceptance)
+5. [Readability Standard](#readability-standard)
+6. [Explanation Layers](#explanation-layers)
+7. [Anti-Shallow Rules](#anti-shallow-rules)
+8. [Repetition Rule](#repetition-rule)
+9. [Tone Rule](#tone-rule)
+10. [Cross-Linking Rule](#cross-linking-rule)
+11. [Failure Modes](#failure-modes)
+
 This file defines the writing bar for the archive.
 
 ## Core Rule
@@ -18,11 +32,11 @@ Teach as a connected narrative, not as a topic inventory.
 
 The difference matters. A topic inventory lists assertions:
 
-- Neurons that fire together wire together.
-- Hebbian plasticity drives long-term potentiation.
-- This applies to memory formation.
+- Raft uses a leader-based approach.
+- Log replication ensures consistency.
+- This applies to distributed databases.
 
-A connected narrative explains the mechanism: what is happening biologically, why co-activation strengthens synaptic weight, how this was demonstrated experimentally, what it implies for unsupervised learning, where it breaks down, how it relates to backpropagation, and where it appears in the project at hand. The inventory leaves the learner with a checklist of facts they cannot reason from. The narrative leaves the learner with a mental model they can use, extend, and question.
+A connected narrative explains the mechanism: what problem consensus solves, why a leader-based protocol simplifies ordering, how log replication guarantees that all nodes converge on the same state, what happens during leader failure and re-election, where Raft trades availability for consistency, how it compares to leaderless approaches like EPaxos, and where it appears in the project at hand. The inventory leaves the learner with a checklist of facts they cannot reason from. The narrative leaves the learner with a mental model they can use, extend, and question.
 
 When writing about a concept, ask: could a motivated learner build a working understanding from this file alone, or are they left with a list of things they need to look up elsewhere? If the latter, the file is an inventory, not a teaching document. Expand it.
 

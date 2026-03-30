@@ -1,5 +1,16 @@
 # Curriculum Design
 
+## Table of Contents
+
+1. [Core Rule](#core-rule)
+2. [Route Design](#route-design)
+3. [Prerequisite Flow](#prerequisite-flow)
+4. [Layered Depth](#layered-depth)
+5. [Educational Momentum](#educational-momentum)
+6. [Large-Archive Strategy](#large-archive-strategy)
+7. [Path Diversity](#path-diversity)
+8. [Curriculum Failure Modes](#curriculum-failure-modes)
+
 The archive should support long-term study, not only isolated reading.
 
 Treat curriculum design as a first-class responsibility.
@@ -91,10 +102,9 @@ Useful path types often include:
 - `foundations-path.md`
 - `project-architecture-path.md`
 - `implementation-first-path.md`
-- `reinforcement-learning-path.md`
-- `neuroscience-path.md`
-- `systems-and-simulation-path.md`
-- `comparative-theory-path.md`
+- `domain-theory-path.md`
+- `advanced-topics-path.md`
+- `comparative-analysis-path.md`
 - `debugging-and-observability-path.md`
 
 Create the paths the repository actually warrants.

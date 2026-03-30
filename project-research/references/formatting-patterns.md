@@ -1,5 +1,10 @@
 # Formatting Patterns
 
+## Table of Contents
+
+1. [Good Uses Of Rich Formatting](#good-uses-of-rich-formatting)
+2. [Style Guidance](#style-guidance)
+
 Use the full expressive range of markdown and ASCII as analytical tools, not as decoration.
 
 Agent creativity in choosing visual representations is encouraged. If you can see a way to make an insight clearer, more spatial, or more comparable through a diagram, table, or ASCII visualisation — use it.
@@ -64,13 +69,13 @@ Project grounding -> Current-state model -> Recommendation
 ```
 
 ```text
-Algorithm comparison (sample efficiency):
+Cache hit ratio by strategy:
 
-A2C   ████████████░░░░░  62%
-SAC   ██████████████████  91%
-PPO   ████████████████░░  80%
-TD3   ███████████████░░░  76%
-      0%                 100%
+LRU       ████████████░░░░░  62%
+LFU       ██████████████████  91%
+TTL-only  ████████████████░░  80%
+Random    ███████████████░░░  76%
+          0%                 100%
 ```
 
 The criterion is analytical value: does this representation make the finding more concrete, comparable, or spatially obvious? If yes, use it.

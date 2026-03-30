@@ -25,7 +25,7 @@ Before editing or generating any `context/` files, read the reference files in t
    It defines what "comprehensive but non-redundant" means for architecture and system documents.
 8. Read `references/markdown-presentation-patterns.md` eighth.
    It defines when to use bullets, tables, matrices, trees, and diagrams, including when supportive multi-format presentation is appropriate.
-9. Read `references/implement-now-guidance.md` ninth if a plan file is present or needs to be created.
+9. Read `references/plan-file-guidance.md` ninth if a plan file is present or needs to be created.
    It defines the writing standards for high-quality temporary execution plans.
 10. Read `references/examples.md` last.
     It contains worked examples of good decompositions, stronger formatting patterns, and common corrections.
@@ -41,6 +41,7 @@ It maintains a **repository memory layer** that captures:
 - dependency and execution flows,
 - active risks and partial work,
 - durable lessons from prior attempts,
+- project preferences, design rationale, and guiding principles as evolving notes,
 - maintainable reference material whose relevance depends on current project reality,
 - temporary execution plans only when explicitly requested or clearly necessary.
 
@@ -73,15 +74,16 @@ Default to this folder model:
 ```text
 context/
 ├── architecture.md
+├── notes.md
 ├── systems/
 ├── plans/
-├── decisions/
+├── notes/
 └── references/
 ```
 
-Only `architecture.md` and `systems/` are universally essential.
+`architecture.md`, `systems/`, and `notes.md` are universally essential.
 
-`plans/`, `decisions/`, and `references/` are canonical folders, but they should contain files only when justified. Do not create filler files just to mirror the model.
+`notes/` should contain files whenever there are project preferences, design rationale, or durable lessons worth preserving. `plans/` and `references/` are canonical folders, but they should contain files only when justified. Do not create filler files just to mirror the model.
 
 `references/` is not a museum. Research and supporting papers there may need upkeep when implementation reality changes. Update, merge, split, condense, or prune reference material only when that materially improves accuracy, canonical ownership, or long-term usability. Do not apply aggressive pruning pressure by default.
 
@@ -93,10 +95,9 @@ Do not create default files such as:
 - `changes.md`
 - `milestone-1.md`
 - `open-questions.md`
-- `notes.md`
 - `misc.md`
 
-Durable historical knowledge belongs in the owning system document or an explicit decision/reference file, not in a rolling log.
+Durable historical knowledge belongs in the owning system document, a topical note file, or a reference file — not in a rolling log.
 
 ## Naming Rules
 
@@ -108,9 +109,9 @@ Use:
 - `systems/analytics.md`
 - `systems/debug-overlays.md`
 - `systems/agent-observations.md`
-- `plans/a2c.md`
-- `decisions/controller-baseline.md`
-- `references/a2c-vs-sac.md`
+- `plans/auth-migration.md`
+- `notes/caching-strategy.md`
+- `references/rest-vs-graphql.md`
 
 Avoid:
 
@@ -133,7 +134,7 @@ When the default structure genuinely does not serve the project, adapt with inte
 
 `context/` is not a one-shot output. It is an evergrowing, maintained memory layer.
 
-The principal-engineer personality maintains `context/` incrementally during normal sessions — creating files when new systems are added, updating owning documents when behaviour changes, and making targeted edits without invoking this skill. This skill is invoked for large passes when accumulated drift is too broad for inline edits to handle reliably.
+The coordinating personality maintains `context/` incrementally during normal sessions — creating files when new systems are added, updating owning documents when behaviour changes, and making targeted edits without invoking this skill. This skill is invoked for large passes when accumulated drift is too broad for inline edits to handle reliably.
 
 ## Operating Modes
 
@@ -181,10 +182,13 @@ When this skill is triggered, follow this sequence:
 4. Decide whether the current `context/` should be preserved, updated, repaired, or restructured.
 5. Update or create `architecture.md`.
 6. Update, create, merge, split, rename, or delete files in `systems/` as justified.
-7. Create or update files in `plans/`, `decisions/`, or `references/` only when justified by their role.
-8. Run `scripts/lint_context.py`.
-9. Fix any hard failures and review any warnings with judgment.
-10. Present the resulting tree, major decisions, and any remaining risks or caveats.
+7. Update or create `notes.md` and `notes/` files — capture any design rationale, project preferences, or trial-and-error outcomes that surfaced since the last upkeep. Audit existing notes for staleness.
+8. Check all active `plans/` files — tick completed checkboxes, update status, remove plans whose completion criteria are fully met. Plan files produced by analysis workflows (code health audits, refactoring sweeps) follow the same lifecycle.
+9. Check `references/` for staleness — if the repository now implements something a reference says is missing, or if a comparison reflects outdated constraints, refresh or prune the reference.
+10. Create or update other files in `plans/` or `references/` only when justified by their role.
+11. Run `scripts/lint_context.py`.
+12. Fix any hard failures and review any warnings with judgment.
+13. Present the resulting tree, major decisions, and any remaining risks or caveats.
 
 ## Architecture and System Separation
 
@@ -221,7 +225,7 @@ Before considering the `context/` folder complete, verify:
 
 - `architecture.md` exists and is structurally deep enough to orient a new reader.
 - every important subsystem or feature has one canonical home,
-- folder roles are respected: systems for implementation truth, plans for active execution, decisions for durable cross-cutting choices, references for supporting material,
+- folder roles are respected: systems for implementation truth, notes for evolving project knowledge, plans for active execution, references for supporting material,
 - naming is lowercase and stable rather than chronological or vague,
 - the repo scan was run unless a documented fallback was genuinely necessary,
 - the context lint was run unless a documented fallback was genuinely necessary,
@@ -230,7 +234,10 @@ Before considering the `context/` folder complete, verify:
 - existing good-enough files were preserved rather than rewritten for cosmetic reasons,
 - system docs describe current reality rather than aspiration,
 - durable lessons are attached to the owning subsystem rather than placed in a history log,
+- `notes.md` exists and accurately indexes all files in `notes/`,
+- note files are topical and current, not stale or redundant with system files,
 - research references that depend on current implementation reality were refreshed when they had gone stale,
 - `references/` was kept useful without aggressive or cosmetic pruning,
-- temporary plan files exist only when currently relevant,
+- active plan files have up-to-date checkbox status reflecting current progress,
+- completed plans have been removed,
 - material overlap between files is low.

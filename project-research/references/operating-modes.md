@@ -8,9 +8,9 @@ This is the default mode.
 
 Use it when the user asks for research on a topic for the project, for example:
 
-- `research A2C for this repo`
-- `look into event-sourcing for this codebase`
-- `research best practices for implementing rollback netcode here`
+- `research event sourcing for this repo`
+- `look into connection pooling for this codebase`
+- `research best practices for implementing retry strategies here`
 
 This mode means:
 
@@ -28,7 +28,7 @@ Use this when the core question is comparative or selection-oriented.
 
 Typical prompts:
 
-- `A2C vs SAC for this project`
+- `Redis vs Postgres for this project`
 - `SQLite vs sled for this repo`
 - `which rendering architecture fits this engine`
 
@@ -45,8 +45,8 @@ Use this when the repository already contains relevant research and the new requ
 
 Typical triggers:
 
-- `update the A2C research now that the code changed`
-- `merge these two controller papers`
+- `update the caching research now that the code changed`
+- `merge these two storage papers`
 - `extend the storage research with RocksDB`
 - `reorganise the networking references into a folder`
 

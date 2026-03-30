@@ -1,5 +1,20 @@
 # Anti-Patterns
 
+## Table of Contents
+
+1. [Milestone Slicing](#1-milestone-slicing)
+2. [Diary History](#2-diary-history)
+3. [Duplicate Ownership](#3-duplicate-ownership)
+4. [Vague Catch-All Files](#4-vague-catch-all-files)
+5. [Over-Broad System Files](#5-over-broad-system-files)
+6. [Cosmetic Rewrites](#6-cosmetic-rewrites)
+7. [Aspirational Current-State Sections](#7-aspirational-current-state-sections)
+8. [Shallow Architecture](#8-shallow-architecture)
+9. [Thin Systems](#9-thin-systems)
+10. [Decorative Formatting](#10-decorative-formatting)
+11. [Stale Research References](#11-stale-research-references)
+12. [Research Hoarding](#12-research-hoarding)
+
 This reference names the common failure modes that make a `context/` folder noisy, unstable, shallow, or misleading.
 
 ## 1. Milestone Slicing
@@ -46,8 +61,8 @@ Corrective action:
 
 Bad:
 
-- analytics described fully in both `systems/analytics.md` and `systems/telemetry.md`,
-- reward logic described fully in both game and training docs,
+- authentication described fully in both `systems/auth.md` and `systems/user-management.md`,
+- caching logic described fully in both the API and storage docs,
 - architecture repeating large chunks of system-doc reality.
 
 Why it fails:
@@ -66,8 +81,8 @@ Corrective action:
 Bad:
 
 - `misc.md`
-- `notes.md`
 - `general-systems.md`
+- a single undifferentiated dump file with no topical structure
 
 Why it fails:
 
@@ -78,8 +93,10 @@ Why it fails:
 
 Corrective action:
 
-- redistribute content into proper system docs,
+- redistribute content into proper system docs or topical note files,
 - delete the catch-all file.
+
+Note: the canonical `notes/` folder with topical note files is not a catch-all. Each note file has a clear topic, evolves in place, and is indexed in `notes.md`. The anti-pattern is an undifferentiated dump file, not a structured topical notes system.
 
 ## 5. Over-Broad System Files
 

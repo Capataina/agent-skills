@@ -33,13 +33,14 @@ Why it is bad:
 ```text
 context/
 ├── architecture.md
+├── notes.md
 ├── systems/
-│   ├── environment.md
-│   ├── agent-observations.md
-│   ├── analytics.md
-│   ├── telemetry.md
-│   └── agent-learning.md
-├── decisions/
+│   ├── authentication.md
+│   ├── data-pipeline.md
+│   ├── api-gateway.md
+│   ├── notifications.md
+│   └── search-indexing.md
+├── notes/
 ├── references/
 └── plans/
 ```
@@ -57,11 +58,12 @@ Suppose a project already has:
 ```text
 context/
 ├── architecture.md
+├── notes.md
 ├── systems/
-│   ├── debug-overlays.md
-│   ├── telemetry.md
-│   └── analytics.md
-├── decisions/
+│   ├── logging.md
+│   ├── monitoring.md
+│   └── alerting.md
+├── notes/
 ├── references/
 └── plans/
 ```
@@ -89,16 +91,16 @@ Suppose a project has:
 ```text
 context/
 └── systems/
-    ├── reward.md
-    └── training-signal.md
+    ├── user-permissions.md
+    └── access-control.md
 ```
 
 Both files explain:
 
-- reward terms,
-- value targets,
-- terminal penalties,
-- rollout reward accumulation.
+- role definitions,
+- permission hierarchies,
+- authentication flows,
+- authorisation checks.
 
 Correct action:
 
@@ -113,9 +115,9 @@ Correct action:
 ```markdown
 ## History
 
-- 2026-03-01: tried lidar
-- 2026-03-02: lidar looked noisy
-- 2026-03-03: switched to raycasts
+- 2026-03-01: tried GraphQL
+- 2026-03-02: GraphQL seemed heavy
+- 2026-03-03: switched back to REST
 ```
 
 ### Good
@@ -123,8 +125,8 @@ Correct action:
 ```markdown
 ## Durable Notes / Discarded Approaches
 
-- A lidar-style observation attempt was discarded because the current environment geometry and sampling approach produced noisy, unstable signals relative to the implementation cost.
-- If lidar is revisited later, retry only with a clearer spatial aggregation model, explicit normalisation strategy, and dedicated validation tooling so the result can be compared cleanly against raycasts.
+- A GraphQL-based API layer was discarded because the current query patterns are simple enough that the added schema complexity and resolver overhead outweighed the flexibility benefits.
+- If GraphQL is revisited later, retry only when the client needs genuinely varied query shapes, with a clear schema versioning strategy and dedicated performance testing so the result can be compared cleanly against the current REST endpoints.
 ```
 
 Why the second version is better:
@@ -150,10 +152,10 @@ repo/
 repo/
 ├── src/
 │   ├── main.rs                 # App entrypoint and runtime wiring
-│   ├── game/                   # Environment simulation and gameplay truth
-│   ├── agent/                  # Stable controller-facing interfaces
-│   ├── analytics/              # Run-level tracking and export
-│   └── debug/                  # Runtime inspection overlays and HUD
+│   ├── api/                    # HTTP handlers, routing, and middleware
+│   ├── services/               # Business logic and domain operations
+│   ├── storage/                # Database access and persistence
+│   └── jobs/                   # Background task processing and scheduling
 ├── tests/                      # Regression and unit coverage
 ├── context/                    # Repository memory layer
 └── README.md                   # Project mission and scope
@@ -215,25 +217,25 @@ Suppose a project once had:
 ```text
 context/
 └── references/
-    └── actor-critic/
+    └── caching-strategies/
         ├── overview.md
-        ├── a2c.md
-        └── sac-vs-a2c.md
+        ├── redis.md
+        └── memcached-vs-redis.md
 ```
 
 This was justified when:
 
-- the repository was still deciding which baseline direction to trust,
+- the repository was still deciding which caching layer to adopt,
 - the subtopics were changing independently,
 - the broader research area still needed room to grow.
 
-Later, the repository stabilises around one implemented direction and most of the actionable lessons now belong to one stable topic.
+Later, the repository stabilises around one implemented approach and most of the actionable lessons now belong to one stable topic.
 
 Correct action:
 
 - update stale repository-specific claims,
 - preserve the durable research insights,
-- condense the folder into one richer canonical file such as `references/actor-critic.md` only if that shape is now easier to maintain and navigate,
+- condense the folder into one richer canonical file such as `references/caching-strategy.md` only if that shape is now easier to maintain and navigate,
 - cross-reference any remaining neighbouring files rather than duplicating their content.
 
 Incorrect action:

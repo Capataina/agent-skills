@@ -1,5 +1,17 @@
 # Document Model
 
+## Table of Contents
+
+1. [Canonical Context Structure](#canonical-context-structure)
+2. [Canonical Ownership Rule](#canonical-ownership-rule)
+3. [`architecture.md`](#1-architecturemd)
+4. [`systems/<topic>.md`](#2-systemstopicmd)
+5. [`notes.md`](#3-notesmd)
+6. [`notes/<topic>.md`](#4-notestopicmd)
+7. [`plans/<topic>.md`](#5-planstopicmd)
+8. [`references/<topic>.md`](#6-referencestopicmd)
+9. [Disallowed Default File Types](#disallowed-default-file-types)
+
 This reference defines the canonical file types, their roles, their required section templates, and how canonical ownership should be preserved even when a document uses multiple presentation formats.
 
 ## Canonical Context Structure
@@ -9,15 +21,16 @@ Default to this structure:
 ```text
 context/
 ├── architecture.md
+├── notes.md
 ├── systems/
 ├── plans/
-├── decisions/
+├── notes/
 └── references/
 ```
 
-Only `architecture.md` and `systems/` are universally required.
+`architecture.md`, `systems/`, and `notes.md` are universally essential.
 
-The other folders are canonical roles, not mandatory filler targets. Create files in them only when their role is justified.
+`notes/` should contain files whenever there are project preferences, design rationale, or durable lessons worth preserving. `plans/` and `references/` should contain files only when their role is justified. Do not create filler files just to mirror the model.
 
 ## Canonical Ownership Rule
 
@@ -146,7 +159,83 @@ Use this section order:
 - Tie future work to the subsystem itself rather than to a project timeline.
 - Put durable past lessons in the durable-notes section rather than in diary format.
 
-## 3. `plans/<topic>.md`
+## 3. `notes.md`
+
+### Role
+
+This is the compact index and summary of all project notes in `notes/`. It is always read on startup alongside `architecture.md` to give the agent immediate access to project preferences, design rationale, and durable lessons without reading every individual note file.
+
+### Required Qualities
+
+- Short — one bullet per note file, summarising the key takeaway in a single line.
+- Always up to date — when a note file is created, updated, or deleted, this index must reflect the change.
+- Navigational — each entry should point to its detail file for full context.
+
+### Format
+
+```markdown
+# Notes
+
+- [caching-strategy](notes/caching-strategy.md) — LRU with 5-minute TTL; invalidate on write
+- [deployment-model](notes/deployment-model.md) — single-region for now; multi-region deferred until latency data justifies it
+- [api-versioning](notes/api-versioning.md) — URL-based versioning; no breaking changes within a major version
+```
+
+Keep entries concise — one line each. The detail lives in the note files, not in the index.
+
+## 4. `notes/<topic>.md`
+
+### Role
+
+Note files capture evolving project knowledge that the agent needs to remember across sessions. This includes:
+
+- design rationale and the reasoning behind choices,
+- project preferences and guiding principles,
+- trial-and-error outcomes — what was tried, what failed, and why,
+- constraints and trade-offs that are not obvious from the code,
+- cross-cutting observations that do not belong to a single system file.
+
+Notes are **topical**, not chronological. Each file covers one topic and evolves as the project evolves. When the project's understanding of a topic changes, the note is updated in place — the old version is not preserved (git has the history).
+
+Notes are distinct from system files: a system file documents *what is implemented and how*. A note documents *why things are the way they are and what preferences or lessons guide future work*.
+
+### Naming Rules
+
+- Place files in `notes/`.
+- Use lowercase hyphenated names.
+- Name by topic, not by date or session.
+
+Examples:
+
+- `notes/reward-system.md`
+- `notes/gameplay-goals.md`
+- `notes/training-strategy.md`
+
+Avoid:
+
+- `notes/session-3.md`
+- `notes/march-changes.md`
+- `notes/misc.md`
+
+### Suggested Sections
+
+Adapt to the content, but favour:
+
+1. `Current Understanding` — what is currently true about this topic
+2. `Rationale` — why the current approach was chosen
+3. `What Was Tried` — previous approaches and why they were abandoned (only when relevant to future decisions)
+4. `Guiding Principles` — preferences or constraints that should guide future work on this topic
+
+Not every note needs all sections. A note that captures a single guiding principle ("entertainment value over optimal performance") may be just a few lines. A note about a complex design trade-off (reward shaping) may be substantial.
+
+### Lifecycle
+
+- Notes are living documents — they evolve, they do not accumulate.
+- When a note becomes irrelevant because the project moved past the topic entirely, delete it and remove its index entry.
+- When two notes converge on the same topic, merge them.
+- Do not let notes become stale — a stale note is worse than no note, because it actively misleads.
+
+## 5. `plans/<topic>.md`
 
 ### Role
 
@@ -158,7 +247,6 @@ It is not part of the stable long-term memory model. It exists only when explici
 
 - Place files in `plans/`.
 - Use a short stable descriptor.
-- Keep only one active implementation plan by default.
 
 ### Required Sections
 
@@ -174,43 +262,13 @@ Use this section order:
 ### Lifecycle Rules
 
 - Create only when there is a concrete active execution scope.
-- Keep it aligned with current work while active.
-- Remove or archive it once complete.
+- Multiple active plans are allowed when different systems have independent active work.
+- Keep each plan aligned with current work while active.
+- Tick checkboxes and update status within plan files as implementation progresses — do not leave completed items unchecked.
+- Remove or archive a plan once all its completion criteria are met.
 - Do not let old implementation plans accumulate indefinitely.
 
-## 4. `decisions/<topic>.md`
-
-### Role
-
-Decision files capture durable cross-cutting project decisions that are too important or too broad to bury inside a single system file.
-
-Examples:
-
-- baseline algorithm choice,
-- persistence model choice,
-- plugin architecture choice,
-- deployment model choice,
-- versioning or compatibility strategy.
-
-### Naming Rules
-
-- Place files in `decisions/`.
-- Use lowercase hyphenated names.
-- Name by decision topic rather than by date.
-
-### Suggested Sections
-
-Use this order when a durable decision file is justified:
-
-1. `Scope / Purpose`
-2. `Decision`
-3. `Context`
-4. `Options Considered`
-5. `Trade-Offs`
-6. `Consequences / Follow-On Constraints`
-7. `Revisit Conditions`
-
-## 5. `references/<topic>.md`
+## 6. `references/<topic>.md`
 
 ### Role
 
@@ -275,9 +333,10 @@ Do not create these as part of the normal model:
 - `HISTORY.md`
 - `CHANGELOG.md`
 - `MILESTONES.md`
-- `NOTES.md`
 - `MISC.md`
 - `OPEN_QUESTIONS.md`
 - `RECENT_CHANGES.md`
 
-If information from those categories is truly needed, attach it to the relevant canonical system doc instead.
+If information from those categories is truly needed, attach it to the relevant canonical system doc or to a topical note file instead.
+
+Note: `notes.md` (the index) and `notes/<topic>.md` (topical note files) are canonical file types, not catch-all dumping grounds. The disallowed pattern is a single undifferentiated notes file with no topical structure — not the structured notes system.

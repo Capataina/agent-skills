@@ -1,5 +1,14 @@
 # Update Workflow
 
+## Table of Contents
+
+1. [Low-Churn Rule](#low-churn-rule)
+2. [Progress Preservation Rule](#progress-preservation-rule)
+3. [Add / Merge / Split / Retire](#add--merge--split--retire)
+4. [Current vs Superseded Material](#current-vs-superseded-material)
+5. [Navigation Synchronisation](#navigation-synchronisation)
+6. [Depth Synchronisation](#depth-synchronisation)
+
 This skill should prefer upkeep over replacement.
 
 ## Low-Churn Rule
@@ -91,8 +100,8 @@ When a project changes direction:
 
 Examples:
 
-- keep `a2c.md` if the project moved to SAC but A2C still explains the transition,
-- add `a2c-vs-sac.md` when the comparison teaches a real trade-off,
+- keep `rest-api.md` if the project moved to GraphQL but REST still explains the transition,
+- add `rest-vs-graphql.md` when the comparison teaches a real trade-off,
 - mark ambiguous files with a short status section when needed.
 
 ## Navigation Synchronisation

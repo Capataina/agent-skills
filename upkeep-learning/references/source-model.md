@@ -1,5 +1,12 @@
 # Source Model
 
+## Table of Contents
+
+1. [Source Roles](#source-roles)
+2. [Required Learning Surfaces](#required-learning-surfaces)
+3. [Status Labelling](#status-labelling)
+4. [Conflict Resolution](#conflict-resolution)
+
 Do not treat the sources as a simple ranking where one source determines the entire learning archive.
 
 Use each source for its proper teaching job.

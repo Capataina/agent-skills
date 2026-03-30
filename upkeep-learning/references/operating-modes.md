@@ -1,5 +1,13 @@
 # Operating Modes
 
+## Table of Contents
+
+1. [Initialise](#1-initialise)
+2. [Update](#2-update)
+3. [Extend](#3-extend)
+4. [Audit](#4-audit)
+5. [Mode Selection Rule](#mode-selection-rule)
+
 This skill supports four operating modes. Every invocation should classify itself into exactly one primary mode before making structural decisions.
 
 ## 1. Initialise
@@ -36,8 +44,8 @@ Use when the user wants learning coverage for a specific new area without rework
 
 Examples:
 
-- add SAC coverage to an RL project that already documents A2C,
-- add a neuroscience path,
+- add Redis caching coverage to a project that already documents in-memory caching,
+- add an advanced topics path,
 - add project-specific system exercises,
 - add comparison files for a newly adopted approach.
 

@@ -1,6 +1,6 @@
 ---
 name: project-research
-description: "Conducts project-grounded technical research and writes durable reference material into `context/references/`. Use when asked to research an algorithm, architecture, implementation strategy, tooling option, protocol, subsystem pattern, or comparison such as `A2C for this project`, `SAC vs A2C for this repo`, or `research best practices for implementing X here`. Reads the project's `context/` first, inspects relevant code to verify current reality, performs substantial external research by default, and produces one paper or a small reference folder when scope warrants it. Not for quick summaries, generic web lookups, release notes, or bug fixing."
+description: "Conducts project-grounded technical research and writes durable reference material into `context/references/`. Use when asked to research an algorithm, architecture, implementation strategy, tooling option, protocol, subsystem pattern, or comparison such as `event sourcing for this project`, `Redis vs Postgres for this repo`, or `research best practices for implementing X here`. Reads the project's `context/` first, inspects relevant code to verify current reality, performs substantial external research by default, and produces one paper or a small reference folder when scope warrants it. Not for quick summaries, generic web lookups, release notes, or bug fixing."
 ---
 
 # Project Research
@@ -76,13 +76,13 @@ Default patterns:
 ```text
 context/
 └── references/
-    ├── a2c.md
+    ├── event-sourcing.md
     ├── rendering-pipeline.md
     ├── storage-engine-comparison.md
-    └── actor-critic/
+    └── caching-strategies/
         ├── overview.md
-        ├── a2c.md
-        └── sac-vs-a2c.md
+        ├── application-layer-caching.md
+        └── redis-vs-memcached.md
 ```
 
 Prefer one file when the topic has one stable question and one coherent answer.
@@ -104,8 +104,8 @@ Use the shortest stable topic name that remains unambiguous in `context/referenc
 
 Good examples:
 
-- `a2c.md`
-- `sac-vs-a2c.md`
+- `event-sourcing.md`
+- `redis-vs-memcached.md`
 - `ecs-scheduling.md`
 - `network-stack/`
 - `network-stack/retry-strategy.md`

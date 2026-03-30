@@ -1,10 +1,16 @@
 # Section Patterns
 
+## Table of Contents
+
+1. [High-Value Core Sections](#high-value-core-sections)
+2. [Strong Optional Supporting Sections](#strong-optional-supporting-sections)
+3. [Pattern Rule](#pattern-rule)
+
 Choose the sections that best fit the question. Do not mechanically include every section every time. The aim is a strong fit between the problem and the artefact.
 
 ## High-Value Core Sections
 
-These sections are strong defaults for many research artefacts.
+Three sections are always required in every research artefact: **Scope / Purpose**, **Current Project Relevance**, and **Relationship To Existing Context**. These are validated by the lint script and will cause hard errors if missing. They anchor the artefact to the repository and prevent context-free writing. The remaining sections below are strong defaults — choose the mix that best fits the research question.
 
 ### Scope / Purpose
 

@@ -1,5 +1,15 @@
 # Visual Markdown Patterns
 
+## Table of Contents
+
+1. [Strong Patterns](#strong-patterns)
+2. [Diagram Rule](#diagram-rule)
+3. [Creative ASCII Visualisation](#creative-ascii-visualisation)
+4. [Table Rule](#table-rule)
+5. [Emphasis Rule](#emphasis-rule)
+6. [Section Design Rule](#section-design-rule)
+7. [Failure Modes](#failure-modes)
+
 Use markdown as a teaching tool, not just a container for paragraphs.
 
 Rich formatting is expected whenever it improves understanding. The goal is maximum clarity and insight — use the full expressive range of markdown and ASCII to achieve it. Agent creativity in choosing representations is encouraged: if you can see a better way to show something visually, use it.
@@ -38,7 +48,7 @@ Examples:
 - subsystem relationship graph,
 - path progression map,
 - entity lifecycle,
-- training loop stages.
+- request processing pipeline.
 
 ASCII diagrams are the default when portable markdown is the goal. Mermaid is acceptable when the archive is rendered in an environment that supports it.
 
@@ -61,23 +71,23 @@ Legend:  ++ = highest density   ## = medium   -- = low
 
 **Comparison bar chart:**
 ```text
-A2C   ████████████░░░░░  62%
-SAC   ██████████████████  91%
-PPO   ████████████████░░  80%
-      0%                 100%
+LRU       ████████████░░░░░  62%
+LFU       ██████████████████  91%
+TTL-only  ████████████████░░  80%
+          0%                 100%
 ```
 
 **Class anatomy:**
 ```text
 ┌─────────────────────────────────┐
-│           ReplayBuffer          │
+│         ConnectionPool          │
 ├─────────────────────────────────┤
-│  capacity: int                  │
-│  buffer: deque[Transition]      │
-│  _rng: np.RandomState           │
+│  max_size: int                  │
+│  pool: deque[Connection]        │
+│  _lock: threading.Lock          │
 ├─────────────────────────────────┤
-│  push(transition) → None        │
-│  sample(n) → List[Transition]   │
+│  acquire() → Connection         │
+│  release(conn) → None           │
 │  __len__() → int                │
 └─────────────────────────────────┘
 ```

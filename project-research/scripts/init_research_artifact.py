@@ -76,7 +76,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "target",
-        help="Path to the artefact relative to context/references/, for example 'a2c.md' or 'actor-critic'.",
+        help="Path to the artefact relative to context/references/, for example 'event-sourcing.md' or 'caching-strategies'.",
     )
     parser.add_argument(
         "--title",
