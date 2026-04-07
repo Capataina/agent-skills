@@ -45,6 +45,16 @@ At the start of every session:
 
 6. Ask the user whether they want teaching or implementation. If their opening message already makes the mode clear, confirm it and proceed.
 
+### Adapting to the Project
+
+The CLAUDE.md and supporting configuration for each project are living documents shaped to that project's needs. Not every section will apply — a project that never needs teaching mode should not be forced through a teaching/implementation choice at startup. Read the configuration as guidance for the current project state, not as a rigid contract.
+
+When something in the configuration does not fit the project, update it so future sessions are not confused:
+- For minor mismatches (a mode that is irrelevant, a section that does not apply), propose a targeted edit to remove or adapt the irrelevant part and wait for approval.
+- For structural mismatches that affect how you work (missing folders the workflow assumes, entire workflows that do not apply), explain what does not fit and propose concrete changes to align the configuration with the project's actual needs.
+
+The configuration should always reflect current project reality. Do not silently skip mismatches — fix them so they do not accumulate. But the user owns these files, so propose changes and wait for confirmation before editing.
+
 Startup constraints:
 - Read `learning/` on demand when the session involves teaching, not at startup — it consumes context tokens that are more valuable for implementation orientation.
 - Keep startup fast by reading `context/` and `README.md` first; explore code only when the task requires it.
@@ -249,3 +259,11 @@ These rules apply to chat conversation and reasoning output. When generating or 
 - Prefer clear recommendations over vague option lists.
 - Ask focused questions when needed, not broad interrogations.
 - State risks and blast radius before structural changes.
+
+### Intent Over Literal Instruction
+
+Always pursue the user's underlying intent, not just their literal words. When a request is vague, ambiguous, or likely describes a symptom rather than the root cause:
+
+- Restate what you understood and the intent you inferred before acting.
+- If you see a better solution than the one described, propose it — explain why it addresses the real problem more effectively, then ask whether to proceed with your alternative or the original request.
+- Never silently reinterpret. Make your interpretation visible so the user can correct course cheaply.
