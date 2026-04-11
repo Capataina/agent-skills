@@ -91,7 +91,8 @@ The audit follows a structured two-pass approach:
 2. Read relevant `context/systems/` files to understand subsystem boundaries and current reality.
 3. Read relevant `context/references/` files for existing research and technical context.
 4. Perform a broad sweep of the codebase: understand the stack, the architecture, major subsystems, file sizes, obvious hotspots.
-5. At this point, you know *what the project is and how it is built*, but you have not gone deep into any specific system. Prioritise the systems where the deep dive will be most valuable.
+5. Run the project's existing test suite end-to-end (`cargo test`, `pytest`, `npm test`, `go test ./...`, or whatever the project uses) to capture the current pass/fail baseline. Pre-existing failures become Known Issues findings immediately, and a broken or missing test infrastructure is itself a finding worth recording.
+6. At this point, you know *what the project is, how it is built, and whether its test suite is healthy*. Prioritise the systems where the deep dive will be most valuable.
 
 ### Pass 2 — System-by-System Deep Dive
 
@@ -139,6 +140,7 @@ Before presenting the audit results, verify:
 - no finding introduces new overhead, dependencies, or maintenance burden in production code,
 - findings are categorised correctly according to the taxonomy,
 - the plan folder is organised logically with a clear index,
+- the project's existing test suite was run during Pass 1, and any pre-existing failures, flaky tests, or broken test infrastructure were recorded as Known Issues findings,
 - research was conducted for every substantive system in the project — not only the obviously computational ones — and not skipped because the surface looked clean,
 - research findings are grounded in the actual codebase, not generic advice,
 - diagnostic tests were written wherever they would resolve uncertainty about a finding before that finding was issued,

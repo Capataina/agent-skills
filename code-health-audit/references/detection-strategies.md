@@ -50,7 +50,22 @@ After reading context, perform a broad survey:
 
 This is a survey, not a deep read. You are building a mental map. The deep reading happens in Pass 2.
 
-### Step 3: Prioritise Systems for Pass 2
+### Step 3: Run the Project's Test Suite (Baseline Check)
+
+Before going deeper, run the project's existing test suite end-to-end to capture the current pass/fail baseline. Use whatever the project's idiomatic test command is — `cargo test`, `pytest`, `npm test`, `go test ./...`, `mix test`, `dotnet test`, or the language and framework's equivalent. This is a fast and important check, and it tells you the audit's starting position.
+
+What you learn from running it:
+
+- Whether the suite currently passes at all. A failing baseline changes the whole footing of the audit — every recommendation needs to account for the fact that the existing suite cannot be used as a verification ground.
+- Which tests are flaky, ignored, or skipped. Flaky tests are often a finding in their own right.
+- How long the suite takes to run. This informs whether the audit can cheaply write its own diagnostic tests as part of Pass 2 or whether test runtime will be a real constraint.
+- Whether the test infrastructure even works. Some projects have test configuration that has rotted — missing fixtures, broken dependency setup, outdated test runner configuration. The audit needs to know.
+
+Any pre-existing test failures are recorded as **Known Issues and Active Risks** findings immediately. They are not the audit's findings to introduce — they were already there before the audit started — but they belong in the audit output because they affect the safety of every other recommendation, they are exactly the kind of correctness risk the audit exists to surface, and the implementing engineer needs to know about them before acting on any other finding.
+
+If the suite cannot be run at all (no test framework, broken test runner config, missing dependencies), record that as a finding and proceed with the audit knowing that the diagnostic test writing in Pass 2 will need to either fix the infrastructure first or work around it. A project with no working test suite is a different audit posture than a project with a healthy one — the audit's confidence in its own recommendations is partly underwritten by the existing suite's ability to catch regressions.
+
+### Step 4: Prioritise Systems for Pass 2
 
 Based on what you learned:
 
@@ -59,6 +74,7 @@ Based on what you learned:
 - Which systems have the most active risks in their context files? (higher impact findings)
 - Which systems are on the critical path? (highest-value findings)
 - Which systems have had the most recent change activity? (higher chance of drift and debt)
+- Which systems contained the failing tests, if any? (immediate priority)
 
 Order your Pass 2 deep dive to hit the highest-value systems first.
 
