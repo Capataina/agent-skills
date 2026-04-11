@@ -50,12 +50,6 @@ It must reject:
 - rigid quota-thinking such as arbitrary paper counts,
 - decorative formatting without analytical value.
 
-## Structural Rules and Creative Freedom
-
-The structural rules in this skill — where artefacts live, how they are named, whether a topic warrants one paper or a folder — are governed by stable ownership principles described in the reference files.
-
-Everything within that structure is yours. The analytical moves you make, the visual representations you choose, the synthesis structure you construct, the depth you reach — these are matters of judgment. Reach for the most insightful, concrete, and useful representation of the material. Do not constrain yourself to a fixed template when the topic calls for something different.
-
 ## Priority Order
 
 When trade-offs exist, optimise in this order:
@@ -189,21 +183,11 @@ The target style is:
 
 The target artefact should read like a durable synthesis paper for the repository, not like notes from a search session.
 
-## Composition Rules
+## Composition
 
-Use the full expressive range of markdown and ASCII. The goal is analytical clarity — choose whatever format best communicates the information at hand. Agent creativity in visual representation is encouraged.
+Output is rich, expressive, and analytical — tables for comparisons and gap analyses, matrices for multi-dimensional analysis, trees for topic-folder decomposition, ASCII diagrams for flows and architectures, ASCII visualisations for magnitudes and distributions, short template blocks when a structure communicates faster than prose. The full expressive range of markdown is available; reach for whatever sharpens the analysis. See `references/formatting-patterns.md` for the specific patterns this skill uses.
 
-- bullets for concise takeaways and recommendation lists,
-- tables for comparisons, gap analyses, and implementation matrices,
-- matrices for multi-dimensional analysis (topic × subsystem impact, recommendation × cost/risk/benefit),
-- trees for topic-folder structure when decomposition matters,
-- ASCII diagrams or mermaid when flows, architectures, or relationships are clearer visually,
-- ASCII data visualisations (bar charts, heat maps) when comparing magnitudes, distributions, or densities,
-- short template blocks when a structure is easier to understand from a skeleton than from prose.
-
-Supportive multi-format presentation inside one artefact is good when it helps scanning and reasoning. Present the same insight in two forms when each form adds something the other does not.
-
-Do not duplicate canonical ownership across artefacts. If one file is the home for a stable topic, related files should reference it rather than re-explaining it fully.
+Supportive multi-format presentation inside one artefact is encouraged when it helps scanning and reasoning — present the same insight in two forms when each form adds something the other does not. Canonical ownership across artefacts is not duplicated: if one file is the home for a stable topic, related files should reference it rather than re-explaining it.
 
 ## Quality Checklist
 

@@ -10,9 +10,9 @@
 6. [Section Design Rule](#section-design-rule)
 7. [Failure Modes](#failure-modes)
 
-Use markdown as a teaching tool, not just a container for paragraphs.
+The universal output standard — rich formatting, depth as a virtue, full markdown range, agent creativity in choosing representations — is assumed. This file documents the specific visual patterns that teach well in `learning/` archive material and the discriminations that matter for educational writing.
 
-Rich formatting is expected whenever it improves understanding. The goal is maximum clarity and insight — use the full expressive range of markdown and ASCII to achieve it. Agent creativity in choosing representations is encouraged: if you can see a better way to show something visually, use it.
+Markdown in this context is a teaching tool, not a container for paragraphs. The patterns below describe how the standard formats earn their place in concept files, system deep-dives, exercise headers, and the rest of the archive.
 
 ## Strong Patterns
 

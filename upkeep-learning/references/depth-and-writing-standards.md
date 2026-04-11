@@ -14,7 +14,7 @@
 10. [Cross-Linking Rule](#cross-linking-rule)
 11. [Failure Modes](#failure-modes)
 
-This file defines the writing bar for the archive.
+The universal output standard — depth as a virtue, comprehensive explanation, rich formatting — applies to everything in `learning/`. This file defines the additional writing bar specific to educational content: how teaching prose differs from reference prose, what counts as pedagogical completeness, and the failure modes that make educational material weak.
 
 ## Core Rule
 

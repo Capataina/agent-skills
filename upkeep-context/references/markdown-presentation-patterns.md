@@ -11,9 +11,11 @@
 7. Supportive Multi-Format Presentation
 8. Anti-Patterns
 
+The universal output standard — rich formatting, depth as a virtue, full markdown range, agent creativity in choosing representations — is assumed. This file documents the specific patterns that work well in `context/` documents and the discriminations that matter for memory-layer writing.
+
 ## 1. Goal
 
-Use the full expressive range of markdown and ASCII to make repository memory as clear, scannable, and useful as possible for both humans and LLMs. Agent creativity in choosing representations is encouraged — if you can see a better way to show something visually, use it.
+Use the full expressive range of markdown and ASCII to make repository memory as clear, scannable, and useful as possible for both humans and LLMs. The patterns below describe how the standard formats earn their place in `context/` documents specifically.
 
 ## 2. Default Principle
 

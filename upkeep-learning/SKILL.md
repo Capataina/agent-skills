@@ -48,14 +48,6 @@ Read `references/visual-markdown-patterns.md` before adding substantial visual s
 **Uncertain about depth standards for a specific file type:**
 Read `references/file-type-standards.md` before writing that file type.
 
-## Structural Rules and Creative Freedom
-
-The structural rules in this skill — folder layout, navigation file names, canonical file roles, naming conventions — are fixed. They exist to make the archive predictable, navigable, and consistent across projects.
-
-Everything within that structure is yours. The narrative you construct, the analogies you draw, the visual representations you choose, the depth you reach, the connections you make between ideas — all of this is judgment and creative expression. The goal is maximum pedagogical value. Reach for whatever approach teaches best.
-
-When the default structure genuinely does not serve the project, adapt with intent and document why. The defaults exist for good reasons, but they are not cages.
-
 ## Core Identity
 
 This skill is not a lightweight doc generator.
@@ -241,9 +233,7 @@ Do not preserve obsolete material that adds no learning value.
 
 ### 8. Use formatting as a teaching tool
 
-The full expressive range of markdown is available and expected. Rich formatting is not decoration — it is a teaching tool.
-
-Use tables, comparison matrices, ASCII diagrams, flow charts, dependency maps, notation tables, and code blocks wherever they make understanding easier. If a concept has spatial structure, draw it. If a comparison has multiple dimensions, table it. If a data flow has stages, diagram it. Agent creativity in choosing the right visual representation is encouraged — the goal is maximum clarity, not adherence to a fixed set of formats.
+Rich formatting is a teaching tool, not decoration. Tables for comparisons, ASCII diagrams for flows and structures, dependency maps, notation tables, comparison matrices, worked-example layouts — use whatever shape teaches the topic best. See `references/visual-markdown-patterns.md` for the specific patterns this skill uses for educational content.
 
 ## Execution Workflow
 

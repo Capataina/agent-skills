@@ -7,28 +7,38 @@ description: "Maintains a repository-level context folder as durable implementat
 
 Maintain a `context/` folder as the repository's working memory layer. The goal is durable, implementation-grounded memory that lets a future engineer or agent understand the repository quickly without re-deriving everything from code.
 
-Before editing or generating any `context/` files, read the reference files in this order:
+## Reference Loading
 
-1. Read `references/context-principles.md` first.
-   It defines what `context/` is for, what it must contain, and what it must never become.
-2. Read `references/document-model.md` second.
-   It defines the canonical file types, section templates, and how canonical ownership works.
-3. Read `references/granularity-rules.md` third.
-   It defines how to choose file boundaries through stable ownership rather than chronology.
-4. Read `references/upkeep-decision-rules.md` fourth.
-   It defines when to preserve, update, merge, split, rename, or delete files with low churn.
-5. Read `references/anti-patterns.md` fifth.
-   It lists common failure modes that make `context/` shallow, noisy, or contradictory.
-6. Read `references/script-contract.md` sixth.
-   It defines the mandatory role of `scan_repo.py` and `lint_context.py`, plus fallback rules when a script genuinely cannot run.
-7. Read `references/content-depth-standards.md` seventh.
-   It defines what "comprehensive but non-redundant" means for architecture and system documents.
-8. Read `references/markdown-presentation-patterns.md` eighth.
-   It defines when to use bullets, tables, matrices, trees, and diagrams, including when supportive multi-format presentation is appropriate.
-9. Read `references/plan-file-guidance.md` ninth if a plan file is present or needs to be created.
-   It defines the writing standards for high-quality temporary execution plans.
-10. Read `references/examples.md` last.
-    It contains worked examples of good decompositions, stronger formatting patterns, and common corrections.
+Before editing or generating any `context/` files, read the **mandatory core**. These three files apply to every invocation of this skill:
+
+1. `references/context-principles.md` — what `context/` is for, what it must contain, and what it must never become.
+2. `references/document-model.md` — the canonical file types, section templates, and how canonical ownership works.
+3. `references/upkeep-decision-rules.md` — when to preserve, update, merge, split, rename, or delete files with low churn.
+
+Then apply the following task-based rules. Read the additional file before doing the matching kind of work:
+
+**Choosing file boundaries or restructuring the folder:**
+Read `references/granularity-rules.md` before deciding how to split, merge, or scope files in `systems/`.
+
+**Diagnosing or correcting a folder that looks broken:**
+Read `references/anti-patterns.md` before declaring a structural problem and before proposing a corrective restructure.
+
+**Running the bundled scripts (always required for non-audit runs):**
+Read `references/script-contract.md` before running `scan_repo.py` or `lint_context.py`, and before deciding what to do if a script cannot run.
+
+**Expanding architecture or system documents:**
+Read `references/content-depth-standards.md` before writing or expanding `architecture.md` or any `systems/*.md` file. It defines the depth bar these documents must clear.
+
+**Adding rich visual structure to a context document:**
+Read `references/markdown-presentation-patterns.md` before adding substantial tables, diagrams, trees, or ASCII visualisations. It documents the patterns this skill uses for dense visual content.
+
+**Creating or maintaining a plan file:**
+Read `references/plan-file-guidance.md` before creating, updating, or restructuring any file in `plans/`.
+
+**Uncertain about how a structural decision should land in practice:**
+Read `references/examples.md` for worked examples of good decompositions, supportive multi-format presentation, and common corrections.
+
+The mandatory core is always required because it carries the principles, document model, and decision rules that every operation depends on. The task-based files carry depth on specific patterns and should be read when the work calls for them — read them eagerly when in doubt rather than guessing.
 
 ## Core Identity
 
@@ -122,14 +132,6 @@ Avoid:
 
 Prefer the shortest stable topic name that is still unambiguous in its folder and in the repository.
 
-## Structural Rules and Creative Freedom
-
-The structural rules in this skill — folder layout, naming conventions, canonical file roles — are fixed. They exist to make `context/` predictable and navigable across projects and agents.
-
-Everything within that structure is yours. How you explain a subsystem, what depth you reach, what diagrams you draw, what visual representations you choose — these are matters of judgment and creative expression. The goal is maximum clarity and usefulness. Reach for whatever approach achieves that best.
-
-When the default structure genuinely does not serve the project, adapt with intent and document why. The defaults exist for good reasons and should not be abandoned lightly, but they are not cages.
-
 ## Living System
 
 `context/` is not a one-shot output. It is an evergrowing, maintained memory layer.
@@ -202,22 +204,11 @@ Do not let `architecture.md` duplicate all system docs. It is the map, not the t
 
 When a reference artefact clearly follows a research-paper structure with analytical sections and topic folders, upkeep should preserve its research-specific sections and analytical structure unless there is a clear reason to simplify or consolidate it.
 
-## Composition Rules
+## Composition
 
-The default output should be readable by both humans and LLMs. Use the clearest representation for the information at hand. The full expressive range of markdown and ASCII is available — use it where it improves understanding.
+Output is rich, expressive, and depth-friendly — tables for dense inventories and comparisons, trees for repository structure, ASCII diagrams for flows and relationships, ASCII visualisations when information has spatial or density structure, bullets for digestible takeaways, and combined formats when one representation helps scanning and another helps reasoning. The full expressive range of markdown and ASCII is available; reach for whatever conveys the information clearest. See `references/markdown-presentation-patterns.md` for the specific patterns this skill uses for dense visual content.
 
-- use bullets for concise takeaways, ownership points, and digestible lists,
-- use tables for dense inventories, comparisons, or interface summaries,
-- use trees for repository structure,
-- use ASCII diagrams or mermaid graphs when flows or relationships are awkward in prose,
-- use ASCII data visualisations (heat maps, bar charts, spatial layouts) when information has spatial or density structure,
-- use combined formats when one representation helps scanning and another helps reasoning.
-
-Agent creativity in choosing the right visual representation is encouraged. If a concept has a shape, draw it. If a comparison has multiple dimensions, table it. If a flow spans several layers, diagram it.
-
-Supportive duplication inside the same document is allowed when it improves comprehension, such as a table followed by bullets that interpret the table.
-
-Canonical duplication across documents is not allowed. If two files both fully own the same topic, pick one canonical home and reduce the other to interface-level mention.
+Supportive duplication inside the same document is allowed when it improves comprehension — a table followed by bullets that interpret it, a diagram followed by prose that explains the failure modes. Canonical duplication across documents is not allowed: if two files both fully own the same topic, pick one canonical home and reduce the other to interface-level mention.
 
 ## Quality Checklist
 

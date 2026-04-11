@@ -5,9 +5,9 @@
 1. [Good Uses Of Rich Formatting](#good-uses-of-rich-formatting)
 2. [Style Guidance](#style-guidance)
 
-Use the full expressive range of markdown and ASCII as analytical tools, not as decoration.
+The universal output standard — rich formatting, depth as a virtue, full markdown range, agent creativity in choosing representations — is assumed. This file documents the specific patterns that earn their place in research artefacts and the discriminations that matter for analytical writing.
 
-Agent creativity in choosing visual representations is encouraged. If you can see a way to make an insight clearer, more spatial, or more comparable through a diagram, table, or ASCII visualisation — use it.
+In research artefacts, formatting is an analytical tool. The patterns below describe how the standard formats sharpen synthesis, comparison, and recommendation in `context/references/` papers.
 
 The target style blends:
 
