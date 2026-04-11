@@ -72,10 +72,19 @@ The justification must explain *why* the change is an improvement, not just *wha
 
 ### Levels of Justification
 
-**Direct evidence (strongest):**
+**Direct evidence from a test the audit wrote (strongest):**
+- An equivalence test the audit wrote shows two implementations produce identical output across the input space (algorithm replacement, dead code removal of duplicates).
+- A benchmark the audit wrote shows implementation B is measurably faster than implementation A on the project's actual data (performance, algorithm optimisation, data layout).
+- A coverage probe the audit wrote shows the code path is never reached, even via reflection or dynamic dispatch (dead code).
+- A baseline test the audit wrote pins the current observable behaviour, making the proposed refactor safe to verify against (modularisation, refactoring).
+- A failing test the audit wrote reveals an actual bug (known issues — promote immediately).
+
+This is the strongest evidence type because the audit gathered it itself, against the project's actual code, using a test that lives in the project's test suite and can be re-run by anyone.
+
+**Direct evidence from existing artefacts (strong):**
 - The code demonstrably has no callers (dead code).
 - The values demonstrably match a mathematical formula (pattern extraction).
-- A profiler or benchmark shows the code is a bottleneck (performance).
+- An existing profiler or benchmark shows the code is a bottleneck (performance).
 - The same operation is demonstrably done differently in two places (inconsistency).
 
 **Analytical evidence (strong):**
@@ -90,7 +99,9 @@ The justification must explain *why* the change is an improvement, not just *wha
 - Based on the code structure, this appears to be unused, but dynamic dispatch makes certainty impossible. Flagged for triage.
 - The code likely allocates unnecessarily in this loop, but without profiling data, the actual impact is uncertain.
 
-Always use the strongest available evidence. Fall back to weaker evidence only when stronger evidence is not obtainable.
+Always use the strongest available evidence. The audit's first move when a finding sits at "moderate" or "weak" should be to ask: would a diagnostic test push it to "strong" or "strongest"? If yes, write the test (see detection-strategies §7). The whole point of the diagnostic test phase is to upgrade evidence quality before issuing findings.
+
+Fall back to weaker evidence only when stronger evidence is not obtainable, when the cost of writing the test would exceed the value of the finding, or when the finding's confidence already meets the bar without it.
 
 ### Justification Red Flags
 

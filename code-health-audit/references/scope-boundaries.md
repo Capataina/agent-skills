@@ -15,9 +15,9 @@ This reference defines what the skill must never recommend, common false positiv
 
 The following are always out of scope for a code health audit. Do not produce findings in these areas:
 
-### Source Code Edits
+### Production Source Code Edits
 
-This skill never writes, edits, or deletes source code. It only produces plan files. If you find yourself about to modify a source file, stop.
+This skill never writes, edits, or deletes production source code. It produces plan files for production-code recommendations. The carve-out is tests: the audit may write unit tests, integration tests, benchmarks, and minimal test infrastructure when those are needed to gather evidence for findings (see detection-strategies §7). Production source files are off-limits even when the audit can clearly see what should change there — that change goes in a plan file for the implementing engineer.
 
 ### New Features
 
@@ -37,7 +37,7 @@ Changing the fundamental organisation of the application — its module hierarch
 
 ### Test Writing
 
-The audit may flag test coverage gaps, but it never writes tests. Recommending "add tests for X" in the Known Issues category is acceptable. Providing test code is not.
+The audit writes diagnostic tests when they would resolve uncertainty about a finding before that finding is issued — equivalence tests, benchmarks, coverage probes, baseline pins, and the minimal test infrastructure needed to run them. See detection-strategies §7 for the full guidance on when and how to write diagnostic tests. Tests live in the project's existing test suite and follow the project's existing test conventions. Coverage gaps that are not blocking the diagnosis but still represent meaningful risk can be recorded as findings in the Test Coverage Gaps category for the implementing engineer to address — the audit does not have to write tests for every gap, only the gaps where doing so resolves diagnostic uncertainty.
 
 ### Dependency Upgrades
 
