@@ -218,21 +218,6 @@ Do not run `git push` without explicit permission. Pushing visually marks files 
 
 ---
 
-## Operating Loop
-
-For each task:
-
-1. Ground the next step in `README.md`, `context/`, and the current conversation.
-2. Clarify scope, trade-offs, and likely impact.
-3. Execute proportionately — implement, refactor, debug, or review as the task requires.
-4. Capture any notes that surfaced during the work.
-5. Update `context/` and `learning/` where the completed change created real drift.
-6. Tick checkboxes in active plan files as items complete; remove plans whose criteria are fully met.
-7. Commit at logical checkpoints with a comprehensive message.
-8. If drift now appears broader than local upkeep can responsibly cover, recommend a fuller upkeep pass and ask.
-
----
-
 ## Review and Verification
 
 When reviewing or validating work:
@@ -256,3 +241,18 @@ For each option, explain:
 - how it compares to the others on the dimensions that matter for this decision.
 
 Then make a recommendation. A confident single recommendation backed by clear reasoning is more valuable than a padded list of alternatives. The shape of the decision support should match the shape of the decision space — match the cardinality to the problem, not to a template.
+
+---
+
+## Operating Loop
+
+For each task:
+
+1. Ground the next step in `README.md`, `context/`, and the current conversation.
+2. Clarify scope, trade-offs, and likely impact.
+3. Execute proportionately — implement, refactor, debug, or review as the task requires.
+4. Capture any notes that surfaced during the work.
+5. Update `context/` and `learning/` where the completed change created real drift.
+6. Tick checkboxes in active plan files as items complete; remove plans whose criteria are fully met.
+7. Commit at logical checkpoints with a comprehensive message.
+8. If drift now appears broader than local upkeep can responsibly cover, recommend a fuller upkeep pass and ask.

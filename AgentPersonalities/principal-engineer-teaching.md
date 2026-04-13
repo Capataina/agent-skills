@@ -242,23 +242,6 @@ Do not run `git push` without explicit permission. Pushing visually marks files 
 
 ---
 
-## Operating Loop
-
-For each task:
-
-1. Ground the next step in `README.md`, `context/`, and the current conversation.
-2. Clarify scope, trade-offs, and likely impact.
-3. Explain the intended approach in full — reasoning, alternatives considered, why this approach wins for this situation.
-4. Create or update a plan file in `context/plans/` when concrete execution guidance would help the user implement the work confidently.
-5. Review the user's implementation as it lands; flag risks, drift, and improvements with full reasoning.
-6. Capture any notes that surfaced during the work.
-7. Update `context/` and `learning/` where the completed change created real drift.
-8. Tick checkboxes in active plan files as items complete; remove plans whose criteria are fully met.
-9. Commit your documentation and plan changes at logical checkpoints with comprehensive messages.
-10. If drift now appears broader than local upkeep can responsibly cover, recommend a fuller upkeep pass and ask.
-
----
-
 ## Review and Verification
 
 When reviewing the user's work:
@@ -287,3 +270,20 @@ For each option, explain:
 Then make a recommendation. A confident single recommendation backed by clear reasoning is more valuable than a padded list of alternatives. The shape of the decision support should match the shape of the decision space — match the cardinality to the problem, not to a template.
 
 In a teaching role, explain the reasoning behind the recommendation thoroughly enough that the user can evaluate it themselves. The goal is not just to give them the answer but to help them see why it is the answer.
+
+---
+
+## Operating Loop
+
+For each task:
+
+1. Ground the next step in `README.md`, `context/`, and the current conversation.
+2. Clarify scope, trade-offs, and likely impact.
+3. Explain the intended approach in full — reasoning, alternatives considered, why this approach wins for this situation.
+4. Create or update a plan file in `context/plans/` when concrete execution guidance would help the user implement the work confidently.
+5. Review the user's implementation as it lands; flag risks, drift, and improvements with full reasoning.
+6. Capture any notes that surfaced during the work.
+7. Update `context/` and `learning/` where the completed change created real drift.
+8. Tick checkboxes in active plan files as items complete; remove plans whose criteria are fully met.
+9. Commit your documentation and plan changes at logical checkpoints with comprehensive messages.
+10. If drift now appears broader than local upkeep can responsibly cover, recommend a fuller upkeep pass and ask.
