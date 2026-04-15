@@ -6,11 +6,12 @@
 2. [Required Qualities](#required-qualities)
 3. [Truth Model](#truth-model)
 4. [Evidence Standard](#evidence-standard)
-5. [What Belongs In Context](#what-belongs-in-context)
-6. [What Does Not Belong In Context](#what-does-not-belong-in-context)
-7. [Canonical Ownership Principle](#canonical-ownership-principle)
-8. [Supportive Presentation Principle](#supportive-presentation-principle)
-9. [Stability Principle](#stability-principle)
+5. [Rationale Capture From Code](#rationale-capture-from-code)
+6. [What Belongs In Context](#what-belongs-in-context)
+7. [What Does Not Belong In Context](#what-does-not-belong-in-context)
+8. [Canonical Ownership Principle](#canonical-ownership-principle)
+9. [Supportive Presentation Principle](#supportive-presentation-principle)
+10. [Stability Principle](#stability-principle)
 
 This reference defines what `context/` is, what it must achieve, and what it must never become.
 
@@ -113,6 +114,28 @@ That means:
 
 The skill does not need a fixed file-count quota. It needs enough evidence to support its claims.
 
+### Confidence Through Word Choice
+
+The way a claim is worded should naturally communicate how well it is grounded.
+
+When a statement is directly verified in code — an import exists, a function signature was inspected, a configuration value was read — it can stand as a plain assertion. "The API layer uses Express with middleware-based auth."
+
+When a statement is inferred from structure, naming, or convention rather than direct inspection, the wording should reflect that. Phrases like "appears to," "likely," "based on the directory structure," or "judging from the naming pattern" signal that the claim rests on reasonable inference rather than confirmed observation.
+
+When something is genuinely uncertain and could affect future work, consider including an explicit verification question or noting the gap directly. "The caching layer may use Redis — the dependency is present but no configuration was found."
+
+This is not a formal tagging system or a required annotation format. It is a writing habit: let the reader gauge confidence from the natural language rather than having to guess whether every statement was fully verified.
+
+## Rationale Capture From Code
+
+Code sometimes contains explanatory comments that carry project knowledge beyond what the code itself expresses — `WHY`, `NOTE`, `HACK`, `IMPORTANT`, `TODO` annotations with substantive context, or plain comments explaining a design decision, workaround, or constraint.
+
+During upkeep, when reading code to verify system reality, watch for these. If a comment explains something that would affect how a future session reasons about the system — why an approach was chosen, what constraint forced a workaround, what assumption a piece of code depends on — consider surfacing that rationale into the relevant system file's durable notes section.
+
+Not every code comment warrants this treatment. The threshold is whether the rationale is durable and cross-session: would a future session benefit from knowing this without having to rediscover it in the code? If yes, capture it. If the comment is a local implementation note that only matters when editing that specific function, leave it in the code where it belongs.
+
+When surfacing rationale, attribute it lightly — note where in the codebase the reasoning was found so a future reader can verify or revisit it.
+
 ## What Belongs In Context
 
 `context/` should capture:
@@ -126,7 +149,10 @@ The skill does not need a fixed file-count quota. It needs enough evidence to su
 - durable notes from prior attempts,
 - obsolete approaches when still relevant to future decisions,
 - project preferences, guiding principles, and design rationale that shape future work,
-- trial-and-error outcomes — what was tried, what failed, and why it matters going forward.
+- trial-and-error outcomes — what was tried, what failed, and why it matters going forward,
+- supporting infrastructure — testing frameworks, build systems, CI/CD pipelines, deployment configuration, dev tooling — when they carry real complexity, independent change pressure, or non-obvious configuration that a future session would need to understand.
+
+Supporting systems belong in context when they are complex enough to warrant documentation, not because every project needs a file for its test runner. A project with a single `npm test` script and default Jest config probably does not need a testing system file. A project with custom test harnesses, multiple test categories, conditional CI behaviour, or environment-dependent test configuration probably does.
 
 ## What Does Not Belong In Context
 

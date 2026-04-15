@@ -24,6 +24,18 @@ That means:
 
 Do not optimise for elegance at the cost of unnecessary churn.
 
+### Connection Discovery
+
+Upkeep is not only about per-file accuracy. Part of the job is noticing how systems relate to each other and whether those relationships are documented.
+
+While reviewing system files and scanning the repository, look for cross-system connections that may be undocumented:
+
+- Do system files reference the other systems they interface with? If `payments.md` depends on the user authentication system but never mentions it, that is a gap worth noting.
+- Does `architecture.md`'s dependency or relationship section reflect the actual web of connections between systems? New integrations or removed dependencies can quietly make the architecture description stale.
+- Do systems share data structures, configuration patterns, or conventions without documenting the coupling? Shared patterns create implicit contracts that can break when one side changes without awareness of the other.
+
+This is a mindset, not a mandatory checklist. During a routine upkeep pass, simply stay alert to connections. When one surfaces that is not reflected in the context docs, note it or update the relevant files. Not every connection needs formal documentation — the goal is that someone reading the context folder understands the important relationships, not that every possible link is catalogued.
+
 ## 2. Minimum-Sufficient Restructuring
 
 Before reorganising, ask:
@@ -154,6 +166,22 @@ During upkeep, audit notes for:
 - staleness — does the note still reflect current project reality?
 - redundancy — is the same information now captured in a system file?
 - completeness — are there design decisions or preferences that surfaced during recent work but were never captured as notes?
+
+### Convention Capture
+
+When scanning the repository during upkeep, recurring patterns sometimes become visible — the same error handling approach used across three or more files, a consistent naming convention for certain types of modules, a shared data transformation pattern, a standard way of structuring configuration.
+
+If a pattern is widespread enough to be a de facto convention but is not documented anywhere, it is a candidate for a note. Undocumented recurring patterns become tribal knowledge that breaks when someone new — human or agent — works in the codebase without knowing about them.
+
+Not every repeated pattern warrants a note. The threshold is whether violating the pattern would cause real confusion, inconsistency, or subtle bugs. A naming convention that three developers follow instinctively but a newcomer would not guess is worth capturing. A common import order that has no functional impact probably is not.
+
+### Rationale Capture During Upkeep
+
+When reading code during upkeep to verify system reality, watch for explanatory comments that carry design rationale — comments explaining why an approach was chosen, what constraint forced a workaround, what assumption a piece of code depends on, or what would need to change if circumstances shift.
+
+If the rationale is significant enough to affect how a future session reasons about the system, surface it into the relevant system file's durable notes or into a topical note file. This prevents important design knowledge from being buried in code comments that may not be encountered during a typical context read.
+
+The same threshold applies here as elsewhere: capture what a future session would benefit from knowing, and leave in the code what only matters when editing that specific code.
 
 ## 8. References Hygiene
 

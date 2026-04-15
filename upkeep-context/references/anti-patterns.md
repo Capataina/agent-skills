@@ -14,6 +14,8 @@
 10. [Decorative Formatting](#10-decorative-formatting)
 11. [Stale Research References](#11-stale-research-references)
 12. [Research Hoarding](#12-research-hoarding)
+13. [Siloed System Files](#13-siloed-system-files)
+14. [Missing Supporting Infrastructure](#14-missing-supporting-infrastructure)
 
 This reference names the common failure modes that make a `context/` folder noisy, unstable, shallow, or misleading.
 
@@ -250,3 +252,41 @@ Corrective action:
 - preserve breadth when it still has clear independent value,
 - merge or condense only when stable ownership and long-term usability improve,
 - keep pruning conservative rather than aggressive.
+
+## 13. Siloed System Files
+
+Bad:
+
+- system files that describe their interfaces without referencing the systems on the other end,
+- system A mentions "sends events to the processing layer" but never names which system file documents the processing layer, and vice versa.
+
+Why it fails:
+
+- relationships become undiscoverable,
+- a reader of system A doesn't know where to find the processing layer's documentation,
+- when system A's interface changes, nobody looking at the processing layer's system file would know to check system A,
+- the context folder has the knowledge but not the connections.
+
+Corrective action:
+
+- system files should reference the other system files they interact with at interface points,
+- "sends events to the processing pipeline (see `systems/processing.md`)" rather than just "sends events to the processing pipeline,"
+- the cross-reference makes the relationship navigable and explicit.
+
+## 14. Missing Supporting Infrastructure
+
+Bad:
+
+- significant build, test, deployment, or development infrastructure that exists in the codebase but has no system file and is only mentioned in passing (if at all) in other system files,
+- engineers who need to modify the CI pipeline, test framework, or build configuration have no documentation to work from.
+
+Why it fails:
+
+- supporting infrastructure often has real complexity — custom test harnesses, multi-stage build pipelines, deployment configurations with environment-specific logic,
+- when this complexity is undocumented, it becomes tribal knowledge that breaks when a new engineer (human or agent) encounters it.
+
+Corrective action:
+
+- when supporting infrastructure has independent change pressure, its own configuration files, and its own failure modes, document it in its own system file,
+- when it's tightly coupled to one domain system, document it as a section in that system's file,
+- the test is: do engineers ever work on this infrastructure without touching domain code? If yes, it deserves its own file.

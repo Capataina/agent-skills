@@ -4,13 +4,14 @@
 
 1. Stable Granularity Goal
 2. What Deserves Its Own File
-3. What Must Not Drive File Boundaries
-4. Boundary Tests
-5. Merge Rules
-6. Split Rules
-7. Preserve Rules
-8. Architecture vs System Scope
-9. Cross-Cutting Topics
+3. Infrastructure vs Domain Systems
+4. What Must Not Drive File Boundaries
+5. Boundary Tests
+6. Merge Rules
+7. Split Rules
+8. Preserve Rules
+9. Architecture vs System Scope
+10. Cross-Cutting Topics
 
 ## 1. Stable Granularity Goal
 
@@ -46,9 +47,28 @@ Examples that often justify separate files:
 - persistence or storage,
 - networking or communication,
 - caching layer,
-- deployment or infrastructure.
+- deployment or infrastructure,
+- testing framework and test infrastructure,
+- build system or bundler configuration,
+- CI/CD pipeline,
+- monitoring or observability,
+- developer tooling and local environment setup.
 
-## 3. What Must Not Drive File Boundaries
+Supporting infrastructure often gets overlooked because it feels secondary to the domain systems, but it has real boundaries, interfaces, and change pressure. A CI pipeline can break independently of any domain code. A test harness can have its own configuration complexity. These deserve the same granularity consideration as domain systems.
+
+## 3. Infrastructure vs Domain Systems
+
+When does infrastructure deserve its own system file versus being a section in the systems it supports?
+
+Infrastructure that has its own configuration files, its own failure modes independent of domain systems, and that engineers sometimes work on without touching domain code probably deserves its own file. A CI/CD pipeline with custom build steps, environment-specific configuration, and deployment logic that has broken independently of application code is a good candidate.
+
+Infrastructure that is tightly coupled to a single domain system and always changes alongside it is usually better captured as a section within that system's file. A test helper module that only exists to support one subsystem's tests does not need a standalone system doc.
+
+Some infrastructure starts as a section and grows into its own file over time. That is normal and expected — the granularity rules in this document apply the same way they do for domain systems. When the section gets large enough that it buries the domain system's own content, or when it starts carrying its own durable notes and risks, split it out.
+
+The key question is the same as for any boundary decision: does this topic change independently enough, and carry enough of its own complexity, that a separate file reduces confusion rather than creating it?
+
+## 4. What Must Not Drive File Boundaries
 
 Never split canonical docs by:
 
@@ -64,7 +84,7 @@ Never split canonical docs by:
 
 These are unstable slicing axes and produce overlap fast.
 
-## 4. Boundary Tests
+## 5. Boundary Tests
 
 Use these tests when deciding whether a topic deserves its own file.
 
@@ -98,7 +118,7 @@ Will this file still make sense six months from now if the subsystem remains?
 
 If the answer depends on chronology, current project phase, or arbitrary size labels, the boundary is wrong.
 
-## 5. Merge Rules
+## 6. Merge Rules
 
 Merge files when:
 
@@ -115,7 +135,7 @@ When merging:
 - remove redundant wording,
 - delete or rename the losing file only after its useful content has a clear home.
 
-## 6. Split Rules
+## 7. Split Rules
 
 Split a file when:
 
@@ -131,7 +151,7 @@ When splitting:
 - move content without rewriting everything unnecessarily,
 - keep the old filename only if one resulting file clearly matches it.
 
-## 7. Preserve Rules
+## 8. Preserve Rules
 
 Preserve a layout when:
 
@@ -143,7 +163,7 @@ Preserve a layout when:
 
 Do not restructure purely because a cleaner theoretical decomposition exists.
 
-## 8. Architecture vs System Scope
+## 9. Architecture vs System Scope
 
 Use `architecture.md` for:
 
@@ -167,7 +187,7 @@ If content answers "how is the repo organised overall?", it belongs in architect
 
 If content answers "what is true about this subsystem?", it belongs in a system doc.
 
-## 9. Cross-Cutting Topics
+## 10. Cross-Cutting Topics
 
 Some topics span multiple systems:
 

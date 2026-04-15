@@ -34,6 +34,14 @@ For an audit-only run:
 
 Use it to narrow exploration, not to replace reasoning.
 
+#### Import / Dependency Detection
+
+`scan_repo.py` also detects import statements across common languages (Python, JavaScript, TypeScript, Rust, Go, Java, Kotlin, C/C++, Swift) using lightweight regex patterns. It outputs source-file-to-imported-module relationships.
+
+This is a structural hint, not an authoritative dependency graph. The scanner uses regex, not AST parsing, so it may miss dynamic imports, re-exports, or unusual patterns. It may also pick up commented-out imports or imports inside string literals. Treat the output as a starting point for understanding how files relate to each other and for identifying which modules are central to the codebase.
+
+Use import data to inform relationship documentation in `architecture.md` and system files. Do not treat it as a complete or precise dependency map.
+
 ### What `lint_context.py` Is For
 
 `lint_context.py` should check:
@@ -45,6 +53,18 @@ Use it to narrow exploration, not to replace reasoning.
 - likely shallow or structurally weak output via warnings.
 
 Use it to catch consistency drift before handoff.
+
+#### Cross-Reference Validation
+
+`lint_context.py` checks that `architecture.md` and `systems/` are consistent with each other. It warns when architecture.md references a system file that does not exist, and when a system file exists but is not mentioned anywhere in architecture.md.
+
+These are warnings, not errors. A system file might be intentionally undocumented in architecture.md (perhaps it is an implementation detail rather than an architectural subsystem). A reference to a missing file might indicate a planned-but-not-yet-written system doc. Use the warnings to verify that omissions are intentional rather than accidental drift.
+
+#### Coverage Gap Detection
+
+When given a `--root` argument (or when it can infer the repo root), `lint_context.py` checks whether significant source directories have plausible system file coverage. A source directory is "significant" if it contains 5 or more files or 3 or more subdirectories within one of the standard source roots (`src/`, `lib/`, `app/`, `pkg/`, `cmd/`, `internal/`).
+
+Matching is loose: the directory name must appear as a substring of any system file name. A warning means "consider whether this source directory deserves its own system document," not "you must create a file." Small utility directories, vendored code, and generated output directories often do not need dedicated system files.
 
 ### Hard Rule
 

@@ -35,6 +35,9 @@ Read `references/markdown-presentation-patterns.md` before adding substantial ta
 **Creating or maintaining a plan file:**
 Read `references/plan-file-guidance.md` before creating, updating, or restructuring any file in `plans/`.
 
+**Analysing cross-system relationships, hubs, or knowledge gaps:**
+Read `references/cross-system-analysis.md` before documenting inter-system relationships in architecture or system files, identifying bridge modules or dependency hotspots, or assessing documentation coverage gaps.
+
 **Uncertain about how a structural decision should land in practice:**
 Read `references/examples.md` for worked examples of good decompositions, supportive multi-format presentation, and common corrections.
 
@@ -49,9 +52,11 @@ It maintains a **repository memory layer** that captures:
 - current implementation reality,
 - subsystem boundaries and interfaces,
 - dependency and execution flows,
-- active risks and partial work,
+- cross-system relationships, shared state, and integration points,
+- active risks, partial work, and downstream blast radius,
 - durable lessons from prior attempts,
 - project preferences, design rationale, and guiding principles as evolving notes,
+- recurring conventions and patterns that shape how the project is built,
 - maintainable reference material whose relevance depends on current project reality,
 - temporary execution plans only when explicitly requested or clearly necessary.
 
@@ -98,6 +103,8 @@ context/
 `references/` is not a museum. Research and supporting papers there may need upkeep when implementation reality changes. Update, merge, split, condense, or prune reference material only when that materially improves accuracy, canonical ownership, or long-term usability. Do not apply aggressive pruning pressure by default.
 
 Some `references/` artefacts may follow a richer research-paper structure, including topic folders and analysis-heavy papers. Preserve that stronger structure when it still matches the topic and remains maintainable.
+
+`notes.md` may also serve as a lightweight indicator of active work areas — a brief mention of which systems are currently under active development helps the agent prioritise which system files to read first. This is optional and should only be maintained when the project is large enough that prioritisation matters.
 
 Do not create default files such as:
 
@@ -181,16 +188,17 @@ When this skill is triggered, follow this sequence:
 1. Determine the operating mode from user intent and repository state.
 2. Run `scripts/scan_repo.py` and inspect key entrypoints plus any existing `context/` files.
 3. Map stable subsystem and feature boundaries from repository evidence.
-4. Decide whether the current `context/` should be preserved, updated, repaired, or restructured.
-5. Update or create `architecture.md`.
-6. Update, create, merge, split, rename, or delete files in `systems/` as justified.
-7. Update or create `notes.md` and `notes/` files — capture any design rationale, project preferences, or trial-and-error outcomes that surfaced since the last upkeep. Audit existing notes for staleness.
-8. Check all active `plans/` files — tick completed checkboxes, update status, remove plans whose completion criteria are fully met. Plan files produced by analysis workflows (code health audits, refactoring sweeps) follow the same lifecycle.
-9. Check `references/` for staleness — if the repository now implements something a reference says is missing, or if a comparison reflects outdated constraints, refresh or prune the reference.
-10. Create or update other files in `plans/` or `references/` only when justified by their role.
-11. Run `scripts/lint_context.py`.
-12. Fix any hard failures and review any warnings with judgment.
-13. Present the resulting tree, major decisions, and any remaining risks or caveats.
+4. Identify cross-system relationships, integration points, and documentation gaps. Look for systems that share data structures or config without documenting the connection, significant source directories with no system file, and dependency hotspots where many systems converge. The depth of this analysis should be proportionate to the project's complexity — a simple project may need none of it, a multi-service system may need all of it.
+5. Decide whether the current `context/` should be preserved, updated, repaired, or restructured.
+6. Update or create `architecture.md`.
+7. Update, create, merge, split, rename, or delete files in `systems/` as justified.
+8. Update or create `notes.md` and `notes/` files — capture any design rationale, project preferences, conventions, or trial-and-error outcomes that surfaced since the last upkeep. Audit existing notes for staleness.
+9. Check all active `plans/` files — tick completed checkboxes, update status, remove plans whose completion criteria are fully met. Plan files produced by analysis workflows (code health audits, refactoring sweeps) follow the same lifecycle.
+10. Check `references/` for staleness — if the repository now implements something a reference says is missing, or if a comparison reflects outdated constraints, refresh or prune the reference.
+11. Create or update other files in `plans/` or `references/` only when justified by their role.
+12. Run `scripts/lint_context.py`.
+13. Fix any hard failures and review any warnings with judgment.
+14. Present the resulting tree, major decisions, and any remaining risks or caveats.
 
 ## Architecture and System Separation
 
@@ -231,4 +239,8 @@ Before considering the `context/` folder complete, verify:
 - `references/` was kept useful without aggressive or cosmetic pruning,
 - active plan files have up-to-date checkbox status reflecting current progress,
 - completed plans have been removed,
-- material overlap between files is low.
+- material overlap between files is low,
+- cross-system relationships are documented where they add value — system files reference the systems they interact with, architecture captures significant integration points,
+- supporting infrastructure (testing, build, deployment) is documented when it has real complexity, not left as tribal knowledge,
+- recurring conventions and patterns discovered during upkeep are captured in notes when they would help maintain consistency,
+- claims in context docs reflect their confidence level through word choice — verified facts stated directly, inferences framed cautiously.

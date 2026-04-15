@@ -9,6 +9,9 @@
 5. Architecture Depth Expectation
 6. Supportive Multi-Format Presentation
 7. Condense Mature Research Carefully
+8. Cross-System Relationship Documentation
+9. Convention Capture
+10. Failure Propagation Documentation
 
 ## 1. Milestone Decomposition to System Decomposition
 
@@ -243,3 +246,176 @@ Incorrect action:
 - delete the broader research simply to make the folder smaller,
 - keep the folder expanded forever even after it has become overlapping maintenance overhead,
 - collapse the folder into a thin summary that loses the durable insights which justified the research in the first place.
+
+## 8. Cross-System Relationship Documentation
+
+### Bad
+
+Architecture lists systems in isolation:
+
+```markdown
+## Systems
+
+- `systems/scheduler.md` — job orchestration and scheduling
+- `systems/worker-pool.md` — task execution
+- `systems/storage.md` — persistence layer
+- `systems/notifications.md` — alert and notification delivery
+```
+
+A system file describes its interfaces generically:
+
+```markdown
+## Interfaces
+
+- Receives job definitions from the orchestration layer.
+- Writes results to the persistence layer.
+- Triggers alerts on failure.
+```
+
+Why it is bad:
+
+- none of the cross-references are navigable,
+- a reader of `worker-pool.md` cannot find the scheduler's documentation without scanning every file,
+- when the worker pool's interface changes, nobody maintaining `scheduler.md` or `notifications.md` would know to check.
+
+### Good
+
+Architecture shows data flow between systems:
+
+```markdown
+## Systems
+
+- `systems/scheduler.md` — job orchestration and scheduling
+- `systems/worker-pool.md` — task execution
+- `systems/storage.md` — persistence layer
+- `systems/notifications.md` — alert and notification delivery
+
+## Data Flow
+
+scheduler → worker-pool → storage
+                │
+                └──(on failure)──→ notifications
+```
+
+- The scheduler defines jobs and hands them to the worker pool (`systems/worker-pool.md`).
+- Workers execute tasks and persist results to storage (`systems/storage.md`).
+- On task failure, workers emit failure events consumed by notifications (`systems/notifications.md`).
+- Notifications has no back-channel to the worker pool; it is a terminal consumer.
+
+A system file cross-references its neighbours:
+
+```markdown
+## Interfaces
+
+- Receives job definitions from the scheduler (see `systems/scheduler.md`).
+- Writes execution results to the storage layer (see `systems/storage.md`).
+- Emits failure events consumed by the notification system (see `systems/notifications.md`).
+```
+
+Why it is good:
+
+- every relationship is navigable from both ends,
+- when any system's interface changes, the cross-reference tells maintainers exactly which other files to check,
+- the architecture data flow and the system file cross-references reinforce each other.
+
+## 9. Convention Capture
+
+### Bad
+
+The same convention appears described slightly differently across three system files:
+
+In `systems/api-gateway.md`:
+
+```markdown
+- Errors are wrapped with additional context before being returned.
+```
+
+In `systems/task-runner.md`:
+
+```markdown
+- All errors include the operation name and original error message.
+```
+
+In `systems/storage.md`:
+
+```markdown
+- Database errors are augmented with query context before propagating.
+```
+
+Why it is bad:
+
+- the convention is real but has no canonical home,
+- each description is slightly different, making it unclear whether these are three conventions or one,
+- a new contributor might follow one system file's phrasing and diverge from the others.
+
+### Good
+
+A convention note in `notes/` captures the pattern centrally:
+
+```markdown
+# Error Wrapping Convention
+
+## Pattern
+
+All errors are wrapped with operation context before propagating up the call stack. The wrapping adds the operation name and relevant identifiers to the original error, preserving the original error as the cause.
+
+## Where It Appears
+
+- API gateway: wraps handler errors with route and request identifiers.
+- Task runner: wraps execution errors with task name and run identifiers.
+- Storage layer: wraps database errors with query operation and entity identifiers.
+
+## Why It Matters
+
+Consistent wrapping means any error surfaced in logs or responses carries enough context to trace it back to its origin without requiring a debugger. Deviating from this pattern (e.g., returning raw errors or swallowing context) makes production debugging significantly harder.
+```
+
+System files then reference the convention instead of restating it:
+
+```markdown
+- Follows the project error wrapping convention (see `notes/error-wrapping-convention.md`).
+```
+
+Why it is good:
+
+- the convention has one canonical description,
+- system files stay focused on their own domain while referencing shared patterns,
+- a new contributor learns the convention once and recognises it everywhere.
+
+## 10. Failure Propagation Documentation
+
+### Bad
+
+```markdown
+## Known Issues / Active Risks
+
+- The event ingestion service may have performance issues under heavy load.
+- Memory usage can spike during peak traffic.
+```
+
+Why it is bad:
+
+- names a risk without tracing its consequences,
+- a reader knows something might go wrong but not what happens downstream,
+- no basis for prioritising the risk relative to others.
+
+### Good
+
+```markdown
+## Known Issues / Active Risks
+
+**Event ingestion backpressure under sustained load.** When the ingestion service falls behind, the event queue grows unbounded. Downstream effects:
+
+- The processing pipeline (see `systems/processing.md`) stops receiving new events, causing its dashboards to show stale data within minutes.
+- The alerting system (see `systems/alerting.md`) relies on processed events for threshold checks. Stale data means alerts either stop firing or false-trigger on outdated values.
+- The reporting service (see `systems/reporting.md`) aggregates hourly, so a sustained ingestion delay can silently corrupt an entire reporting window with partial data.
+
+Mitigation status: backpressure signalling is partially implemented. The ingestion service drops events after the queue exceeds a configured depth, but downstream systems do not yet detect or flag gaps in their input streams.
+```
+
+Why it is good:
+
+- traces the blast radius as a concrete chain across named systems,
+- cross-references let a reader navigate to each affected system's documentation,
+- mitigation status makes it clear what has been done and what remains,
+- concise enough to scan but specific enough to act on.

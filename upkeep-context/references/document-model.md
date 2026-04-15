@@ -10,7 +10,8 @@
 6. [`notes/<topic>.md`](#4-notestopicmd)
 7. [`plans/<topic>.md`](#5-planstopicmd)
 8. [`references/<topic>.md`](#6-referencestopicmd)
-9. [Disallowed Default File Types](#disallowed-default-file-types)
+9. [System File Maturity Indicators](#system-file-maturity-indicators)
+10. [Disallowed Default File Types](#disallowed-default-file-types)
 
 This reference defines the canonical file types, their roles, their required section templates, and how canonical ownership should be preserved even when a document uses multiple presentation formats.
 
@@ -75,6 +76,15 @@ Use this section order:
 5. `Dependency Direction`
 6. `Core Execution / Data Flow`
 7. `Structural Notes / Current Reality`
+
+### Optional Sections
+
+These sections are not universally needed. Include them when the project's shape justifies the additional navigational or analytical value.
+
+- **`Inter-System Relationships`** — data flows between systems, dependency chains, shared state. Include when the project has multiple interacting systems. Not needed for single-system projects.
+- **`Critical Paths and Blast Radius`** — end-to-end dependency chains, what breaks when key interfaces change. Include when the project has deep dependency chains worth tracing.
+- **`State Ownership`** — which systems own which state, how state is shared or accessed across boundaries. Include when shared state is a significant source of complexity.
+- **`Reading Guide`** — which system files cluster together by common task type, suggested reading orders for common questions. Include when the project has enough system files that navigation guidance saves time.
 
 ### Structure Rules
 
@@ -144,7 +154,7 @@ Use this section order:
 3. `Current Implemented Reality`
 4. `Key Interfaces / Data Flow`
 5. `Implemented Outputs / Artifacts`
-6. `Known Issues / Active Risks`
+6. `Known Issues / Active Risks` — document downstream impact, not just local risk. When a known issue could affect systems that depend on this one, state what would break and how. A risk entry that says "cache invalidation is unreliable" is less useful than one that says "cache invalidation is unreliable — downstream analytics will serve stale aggregates until the next full refresh."
 7. `Partial / In Progress`
 8. `Planned / Missing / Likely Changes`
 9. `Durable Notes / Discarded Approaches`
@@ -158,6 +168,8 @@ Use this section order:
 - Describe reality rather than aspiration in the current section.
 - Tie future work to the subsystem itself rather than to a project timeline.
 - Put durable past lessons in the durable-notes section rather than in diary format.
+- Cross-reference other system files at interface points. When system A sends data to system B, both system files should reference each other at the relevant boundary — this keeps navigation reliable as the project grows, because an engineer reading either file can find the other side of the interface.
+- When a system owns a significant data structure — a schema, config format, API contract, message format, or state shape — document its structure explicitly: fields, types, constraints, and why it is shaped that way. Include this when the data structure is important enough that engineers need to understand it to work with the system correctly.
 
 ## 3. `notes.md`
 
@@ -227,6 +239,19 @@ Adapt to the content, but favour:
 4. `Guiding Principles` — preferences or constraints that should guide future work on this topic
 
 Not every note needs all sections. A note that captures a single guiding principle ("entertainment value over optimal performance") may be just a few lines. A note about a complex design trade-off (reward shaping) may be substantial.
+
+### Note Types
+
+These are suggested patterns to guide capture, not a taxonomy the agent must pick from. A note can blend multiple types or follow none of them. The goal is to make it easier to recognise what kind of knowledge is being captured and what sections would serve it well.
+
+- **Decision notes** — what was decided, what alternatives were considered, what constraints shaped the choice, and what would change the decision. Useful when a decision is non-obvious and future sessions may question it.
+- **Discovery notes** — non-obvious things learned during work: surprising behaviour, hidden dependencies, undocumented interactions. Useful when the discovery would be expensive to re-derive.
+- **Convention notes** — recurring patterns, idioms, and conventions used across the codebase that are not enforced by tooling. Useful when the project has implicit standards that new contributors (or new agent sessions) would not discover from the code alone.
+- **Constraint notes** — external requirements, platform limitations, or organisational rules that shape decisions but are not visible in the repository. Useful when a constraint would otherwise appear arbitrary.
+
+### Cross-Referencing
+
+Notes should reference related system files, and system files should reference relevant notes. This creates a navigable web rather than two parallel collections. When a note captures the rationale behind a system's design, link the note from the system file's durable-notes section. When a system file documents behaviour that a note explains the reasoning for, link the system file from the note.
 
 ### Lifecycle
 
@@ -325,6 +350,20 @@ When these shapes are justified, preserve them. Do not flatten them into the gen
 - Update a reference artefact when implementation reality has changed enough to stale its repository-specific analysis.
 - Merge or condense a research folder when multiple artefacts now act as one stable topic and the broader split no longer improves navigation or upkeep.
 - Do not collapse a reference folder just because it is possible. Only condense when the result remains rich, accurate, and clearly more maintainable than the expanded shape.
+
+## System File Maturity Indicators
+
+This is an optional, lightweight convention for projects with many system files at different levels of completeness. When present, it helps the agent (and human readers) quickly judge how much to trust a system file's coverage without reading the whole document.
+
+Three levels:
+
+- **stub** — minimal coverage, created as a placeholder or during initial discovery. Enough to establish the file's scope but not enough to rely on for implementation decisions.
+- **working** — covers the basics: scope, boundaries, current reality, key interfaces. Sufficient for most day-to-day work but may have thin sections or missing edge cases.
+- **comprehensive** — full depth across all relevant sections. Reflects sustained investment in documenting the subsystem.
+
+The marker can appear in the system file's header (e.g., `*Maturity: working*`) or in `architecture.md`'s subsystem table as an additional column. Either location works — pick one per project and stay consistent.
+
+This convention is not required. Consider adopting it when the project has enough system files that a quick maturity signal saves time deciding which files to trust and which to expand.
 
 ## Disallowed Default File Types
 

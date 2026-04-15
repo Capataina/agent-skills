@@ -84,6 +84,78 @@ def warn_for_reference_shape(references_dir: Path, warnings: list[str]) -> None:
                 warnings.append(f"references/{path.name}/: empty reference folder")
 
 
+def validate_cross_references(
+    context_dir: Path, arch_text: str, systems_dir: Path, warnings: list[str]
+) -> None:
+    """Check that architecture.md and systems/ are consistent with each other.
+
+    Warns when architecture.md mentions a system file that does not exist, or
+    when a system file exists but is not referenced in architecture.md.
+    """
+    # Find references to system files in architecture.md.
+    # Matches patterns like: systems/foo.md, `foo` in a systems context, etc.
+    explicit_refs = set(re.findall(r"systems/([\w.-]+\.md)", arch_text))
+    # Also look for backtick-quoted names that match system file stems.
+    backtick_names = set(re.findall(r"`([\w.-]+)`", arch_text))
+
+    actual_files = {p.name for p in systems_dir.glob("*.md")} if systems_dir.exists() else set()
+    actual_stems = {p.stem for p in systems_dir.glob("*.md")} if systems_dir.exists() else set()
+
+    # Check for references to non-existent system files.
+    for ref in sorted(explicit_refs):
+        if ref not in actual_files:
+            warnings.append(
+                f"architecture.md references `systems/{ref}` but that file does not exist"
+            )
+
+    # Check for system files not mentioned in architecture.md.
+    for fname in sorted(actual_files):
+        stem = Path(fname).stem
+        if fname not in explicit_refs and stem not in backtick_names:
+            # Also check if the stem appears anywhere in the arch text as a substring.
+            if stem.lower() not in arch_text.lower():
+                warnings.append(
+                    f"systems/{fname} exists but is not referenced in architecture.md"
+                )
+
+
+SOURCE_DIRS = {"src", "lib", "app", "pkg", "cmd", "internal"}
+
+
+def detect_coverage_gaps(
+    root: Path, context_dir: Path, systems_dir: Path, warnings: list[str]
+) -> None:
+    """Warn about significant source directories that lack a plausible system file.
+
+    A source directory is 'significant' if it contains 5+ files or 3+ subdirectories.
+    Matching is loose: the directory name must appear as a substring of any system file name.
+    """
+    actual_stems = set()
+    if systems_dir.exists():
+        actual_stems = {p.stem.lower() for p in systems_dir.glob("*.md")}
+
+    for source_dir_name in sorted(SOURCE_DIRS):
+        source_dir = root / source_dir_name
+        if not source_dir.is_dir():
+            continue
+        for child in sorted(source_dir.iterdir()):
+            if not child.is_dir():
+                continue
+            # Assess significance.
+            files = [p for p in child.iterdir() if p.is_file()]
+            subdirs = [p for p in child.iterdir() if p.is_dir()]
+            if len(files) < 5 and len(subdirs) < 3:
+                continue
+            # Check if any system file name contains the directory name.
+            dirname_lower = child.name.lower()
+            has_match = any(dirname_lower in stem for stem in actual_stems)
+            if not has_match:
+                warnings.append(
+                    f"{source_dir_name}/{child.name}/ is a significant source directory "
+                    f"({len(files)} files, {len(subdirs)} subdirs) with no apparent system file coverage"
+                )
+
+
 def is_distinct_path(a: Path, b: Path) -> bool:
     try:
         return not a.samefile(b)
@@ -94,6 +166,7 @@ def is_distinct_path(a: Path, b: Path) -> bool:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Lint a context folder.")
     parser.add_argument("context_dir", nargs="?", default="context", help="Path to context directory")
+    parser.add_argument("--root", default=None, help="Repository root (defaults to parent of context_dir)")
     args = parser.parse_args()
 
     context_dir = Path(args.context_dir)
@@ -136,6 +209,14 @@ def main() -> int:
                 validate_sections(path, REQUIRED_SYSTEM_SECTIONS, errors)
                 text = path.read_text(encoding="utf-8")
                 warn_for_shallow_content(path, text, warnings, MIN_SYSTEM_LINES)
+
+        # Cross-reference and coverage gap checks.
+        if arch.exists() and systems_dir.exists():
+            validate_cross_references(context_dir, arch_text, systems_dir, warnings)
+
+        repo_root = Path(args.root).resolve() if args.root else context_dir.parent
+        if systems_dir.exists() and repo_root.is_dir():
+            detect_coverage_gaps(repo_root, context_dir, systems_dir, warnings)
 
         plans_dir = context_dir / "plans"
         if plans_dir.exists():
