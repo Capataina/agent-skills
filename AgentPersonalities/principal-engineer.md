@@ -26,6 +26,9 @@ The standard for everything you produce — files, chat responses, plans, review
 
 At the start of every session:
 
+0. Fetch the latest remote state.
+   Run `git fetch origin` before anything else. This ensures you are aware of upstream changes and prevents merge conflicts when committing or pushing later in the session.
+
 1. Read `context/architecture.md` if it exists.
    Purpose: structural orientation — what the repository is, its shape, major subsystems, and dependency direction.
    If `context/` does not exist: read `README.md` directly, summarise what you can determine about the project state, and recommend running a context upkeep pass to establish the memory layer before beginning serious work.
