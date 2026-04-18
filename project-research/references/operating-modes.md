@@ -14,13 +14,13 @@ Use it when the user asks for research on a topic for the project, for example:
 
 This mode means:
 
-- external research is substantial by default,
+- external research meets the tool-call floor by default (at least 3 distinct `WebSearch` + 3 distinct `WebFetch` across ≥2 source classes, with quoted passages and at least one contrasting source — see Sufficiency Floors below),
 - project grounding is mandatory,
 - the deliverable is one or more durable reference artefacts in `context/references/`.
 
 Choose this mode whenever the core question is:
 
-> what does serious outside research imply for this repository?
+> what does external research — across multiple primary sources, including at least one contrasting view — imply for this repository?
 
 ## 2. Project-Grounded Comparative Decision Research
 
@@ -52,25 +52,54 @@ Typical triggers:
 
 This mode should preserve stable topic ownership and avoid multiplying near-duplicate files.
 
+### Guardrail against self-refinement inflation
+
+Same-model refinement of one's own prior artefact has a documented failure mode (arXiv 2407.04549): within a single context, self-refinement inflates perceived quality while real quality drops. The artefact reads better after the pass but has not actually improved — the model is rewarding its own wording, not adding evidence.
+
+To resist this, an Update pass is only valid if at least one of the following is true:
+
+- new external sources not present in the prior artefact have been consulted and added to the External Research Trail,
+- repository state has changed since the prior artefact (cite the specific commit, branch, or file diff that motivates the update),
+- a specific factual error in the prior artefact has been identified and is being corrected (name the claim, the correction, and the source that grounds the correction).
+
+An Update pass that merely reorganises, rewords, or re-weights existing content without new evidence is not a valid Update. Prefer "no change needed" over rewrite with the same inputs. Document the decision either way in the artefact's handoff.
+
 ## Scope Rules
 
 Default scope rules:
 
-- prefer wide external research over shallow lookup,
-- prefer targeted code inspection over broad codebase traversal,
+- meet the tool-call floor on external research (3+ `WebSearch`, 3+ `WebFetch` across ≥2 source classes, with quoted passages and at least one contrasting source) rather than a single shallow lookup,
+- prefer targeted code inspection over traversing the whole repository,
 - prefer one coherent paper over many files,
 - prefer a topic folder only when decomposition clearly improves durability and clarity,
 - prefer updating existing research over creating overlap.
 
-## Sufficiency Test
+## Sufficiency Floors And Ceiling
 
-Do not use arbitrary counts such as "exactly three papers."
+Sufficiency is a two-layer idea in this skill: a **floor** below which research is incomplete regardless of how good the reasoning sounds, and a **ceiling** above which additional research stops sharpening the decision. Do not collapse these into one judgement. The floor is not negotiable; the ceiling is.
 
-Instead, research is sufficient when:
+### Sufficiency floors (non-ratable)
+
+Research is **not yet started** until all of the following are true. These are counted obligations, not qualitative assessments:
+
+- at least 3 distinct `WebSearch` calls have been made against topic-specific queries (not paraphrases of each other),
+- at least 3 distinct `WebFetch` calls have been made against primary sources identified by those searches, covering at least 2 source classes (for example: foundational paper + official documentation; benchmark + reference implementation),
+- at least one direct quoted passage from a primary source is attached to each major source-backed claim in the artefact,
+- at least one source that **limits, disagrees with, or complicates** the prevailing recommendation has been consulted and is represented in the artefact.
+
+Research that only confirms is insufficient regardless of depth. A research pass that quotes six sources all agreeing has not yet touched the contrasting-source obligation.
+
+### Sufficiency ceiling (qualitative, ratable)
+
+Once the floors are met, research is **sufficient to stop** when:
 
 - the major implementation directions are understood,
 - the strongest relevant trade-offs are captured,
 - the current repository state has been verified enough to support project-specific claims,
 - the recommendation no longer depends on obvious unanswered questions that could have been resolved within the run.
 
-Research is substantial when you have engaged with multiple distinct sources or perspectives, not just confirmed an initial impression. If your first search answered the question completely, verify that answer against at least one contrasting source before accepting it.
+The ceiling is a judgement call. The floor is not. Do not use the ceiling to argue past the floor. Specifically: the reasoning "my first search answered the question completely" is a motivated-reasoning signature, not a sufficiency argument — see `motivated-reasoning-defence.md`.
+
+### Quota-thinking is still wrong, in the other direction
+
+The floors above are not quotas to chase with thin coverage. Hitting 3 `WebSearch` calls with three near-identical queries does not satisfy the floor. The point of the count is to force a real breadth of evidence; padding it defeats the purpose just as badly as skipping it.

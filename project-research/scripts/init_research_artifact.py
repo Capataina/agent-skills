@@ -8,8 +8,12 @@ from pathlib import Path
 import sys
 
 
-FILE_TEMPLATE = """<!-- This scaffold is a starting point. Delete any section that does not
-     serve the research question. See references/anti-patterns.md #6. -->
+FILE_TEMPLATE = """<!-- This scaffold is a starting point. Delete any optional section that does
+     not serve the research question. See references/anti-patterns.md #6.
+     The External Research Trail, Pre-Completion Obligation Audit, and What I
+     Did Not Do sections are NOT optional — they encode the tool-call floor
+     described in SKILL.md and must be populated before the artefact is
+     presented as complete. -->
 
 # {title}
 
@@ -29,8 +33,12 @@ FILE_TEMPLATE = """<!-- This scaffold is a starting point. Delete any section th
 
 ## Research Signal
 
-| Topic | Source-backed signal | Current repository state | Project implication |
-|---|---|---|---|
+<!-- Evidence class values: "source-backed" (direct quoted passage from a
+     primary source), "repository fact" (verified via file:line), "project
+     inference" (explicitly labelled inference), "open uncertainty". -->
+
+| Topic | Source-backed signal | Source citation (URL + quoted passage ID) | Current repository state | Citation (file:line) | Project implication | Evidence class |
+|---|---|---|---|---|---|---|
 
 ## What Fits This Project Well
 
@@ -44,11 +52,72 @@ FILE_TEMPLATE = """<!-- This scaffold is a starting point. Delete any section th
 
 ## Relationship To Existing Context
 
+## External Research Trail
+
+<!-- Mandatory. Captures the tool-call floor defined in SKILL.md's
+     "External Research Floor" section. The floor is at least 3 distinct
+     WebSearch calls and at least 3 distinct WebFetch calls across at least
+     2 source classes, with at least one direct quoted passage per major
+     source-backed claim and at least one contrasting source. -->
+
+### Searches run
+
+| # | Query | Tool | Rationale | Sources surfaced |
+|---|---|---|---|---|
+
+### Sources consulted
+
+| URL | Tool | Source class | Key passages quoted below? |
+|---|---|---|---|
+
+<!-- Source class examples: foundational paper, official documentation,
+     strong reference implementation, benchmark, peer-reviewed evaluation,
+     production write-up, contrasting/limiting source. -->
+
+### Quoted passages
+
+<!-- Verbatim passages from primary sources that support specific claims in
+     this artefact. Each passage must be attributable to an entry in "Sources
+     consulted" and must be cited by at least one row in Research Signal. -->
+
+- **[Passage ID]** — source: [URL]
+  > quoted text here
+
+## Pre-Completion Obligation Audit
+
+<!-- Mandatory. Fill every row with concrete evidence before declaring the
+     artefact complete. "Evidence" means a specific count, file path, URL,
+     or passage ID — not a qualitative assertion. -->
+
+| Obligation | Status | Evidence |
+|---|---|---|
+| At least 3 distinct WebSearch calls with topic-specific queries |  |  |
+| At least 3 distinct WebFetch calls against primary sources |  |  |
+| Sources span at least 2 source classes |  |  |
+| At least 1 direct quoted passage per major source-backed claim |  |  |
+| At least 1 contrasting / limiting / disagreeing source consulted |  |  |
+| Relevant `context/` files read before project-specific claims |  |  |
+| Relevant code inspected (list file paths) |  |  |
+| `scripts/init_research_artifact.py` run (stdout captured) |  |  |
+| `scripts/validate_research_artifact.py` run (stdout captured) |  |  |
+
+## What I Did Not Do
+
+<!-- Mandatory. List anything a reader might reasonably expect the research
+     to cover that was intentionally or unintentionally skipped. Be specific:
+     "did not benchmark against X because Y" is useful; "limited time" is
+     not. Silent incompleteness is not permitted. -->
+
 """
 
 
-OVERVIEW_TEMPLATE = """<!-- This scaffold is a starting point. Delete any section that does not
-     serve the folder's purpose. See references/anti-patterns.md #6. -->
+OVERVIEW_TEMPLATE = """<!-- This scaffold is a starting point. Delete any optional section that
+     does not serve the folder's purpose. See references/anti-patterns.md #6.
+     The External Research Trail, Pre-Completion Obligation Audit, and What I
+     Did Not Do sections are NOT optional when this overview stands in for
+     the primary artefact of a research pass. If sub-papers in the folder
+     carry the full trail, this overview may summarise and link to them
+     instead of duplicating passages. -->
 
 # {title}
 
@@ -66,6 +135,43 @@ OVERVIEW_TEMPLATE = """<!-- This scaffold is a starting point. Delete any sectio
 - Explain how the papers in this folder relate to each other.
 
 ## Relationship To Existing Context
+
+## External Research Trail
+
+<!-- If individual sub-papers each carry their own External Research Trail,
+     summarise here and link to each. Otherwise populate fully, matching the
+     structure in the single-file template. -->
+
+### Searches run
+
+| # | Query | Tool | Rationale | Sources surfaced |
+|---|---|---|---|---|
+
+### Sources consulted
+
+| URL | Tool | Source class | Key passages quoted below? |
+|---|---|---|---|
+
+### Quoted passages
+
+- **[Passage ID]** — source: [URL]
+  > quoted text here
+
+## Pre-Completion Obligation Audit
+
+| Obligation | Status | Evidence |
+|---|---|---|
+| At least 3 distinct WebSearch calls (this folder or sub-papers) |  |  |
+| At least 3 distinct WebFetch calls against primary sources |  |  |
+| Sources span at least 2 source classes |  |  |
+| At least 1 contrasting / limiting / disagreeing source consulted |  |  |
+| Relevant `context/` files read before project-specific claims |  |  |
+| `scripts/init_research_artifact.py` run for this folder |  |  |
+| `scripts/validate_research_artifact.py` run |  |  |
+
+## What I Did Not Do
+
+<!-- Mandatory. Reader-facing summary of scope gaps and intentional exclusions. -->
 
 """
 

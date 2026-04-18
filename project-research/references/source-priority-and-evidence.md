@@ -46,6 +46,20 @@ Prefer high-signal sources such as:
 
 Use adjacent alternatives only when they improve the project decision. Do not mention them just to look comprehensive.
 
+### Contrasting-source obligation
+
+An external-research pass is incomplete until at least one source that limits, disagrees with, or complicates the emerging recommendation has been consulted and represented in the artefact. Confirmation-only research is a known failure mode of this skill, not a sign of convergence.
+
+Signatures of a skipped contrasting-source obligation:
+
+- every source quoted agrees with the main recommendation,
+- no "when this approach fails" material appears in the artefact,
+- the Alternatives That Materially Matter section is omitted or reduced to a sentence,
+- trade-offs are described generically rather than grounded in a specific dissenting or qualifying source,
+- the research converged on the first hypothesis without ever searching for a contrary view.
+
+The obligation is satisfied by a `WebSearch` specifically aimed at the contrary view (for example: "[approach] limitations", "[approach] failure modes", "[approach] vs [alternative] production incidents"), followed by a `WebFetch` on whatever substantive source that search surfaces. The resulting passage must appear in the artefact as a quoted limitation or counterargument, not merely as a mention.
+
 ## 4. Explicit Inference
 
 Inference is expected and necessary. The important rule is to label it honestly.

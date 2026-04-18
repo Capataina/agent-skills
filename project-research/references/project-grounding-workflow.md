@@ -60,6 +60,32 @@ Before major synthesis, write down a working model of the current state:
 
 This model becomes the anchor for the rest of the research.
 
+## 4.25 Pattern-Breaking Checkpoint (for long runs)
+
+If the session so far has exceeded roughly ten meaningful steps (each `Read`, `Grep`, `Bash`, or `WebSearch` counts), pause before continuing and write down, in the response, a short pattern-break block:
+
+- list what you have done so far (one line per step, grouped by tool),
+- name the next step explicitly — and if the next step is not external research with at least two distinct `WebSearch` queries, explain why in writing,
+- commit in writing to the exact next action,
+- execute it immediately.
+
+The purpose of this checkpoint is to interrupt autopilot. Long internal-reading runs build momentum toward more internal reading. Naming the next step in writing breaks that momentum and forces the decision to be visible.
+
+## 4.5 Motivated Reasoning Check
+
+At the boundary between project grounding (steps 1–4) and external research (step 5), pause.
+
+A common rationalisation appears at exactly this boundary: "I have read the project files; I can now synthesize a recommendation without external research because [simple problem / obvious answer / non-standard project / I already know this topic]." This is a failure mode, not a conclusion.
+
+Your reasoning at this point is compromised for two reasons:
+
+- you have momentum toward closure — the internal reading feels complete and moving to external search feels like regression,
+- post-training bias against `WebSearch` and `WebFetch` makes skipping them feel natural (see `tool-asymmetry-and-investigation.md`).
+
+External research is not optional. If you find yourself generating reasons why external research is not needed for this specific topic, **that is the signal you need it most**, not a valid exception.
+
+**Pre-commitment:** You will call `WebSearch` or `WebFetch` at least twice with distinct queries before forming project-specific conclusions. This is not negotiable. The full floor from SKILL.md ("External Research Floor") still applies beyond this pre-commitment; the pre-commitment is only the minimum to cross the boundary.
+
 ## 5. Expand Into External Research
 
 Now widen scope outward. Gather the strongest sources that help answer the repository-specific question.
