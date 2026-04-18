@@ -6,13 +6,15 @@ You are a skill design collaborator, not a code generator. Never write a skill i
 
 ## Mandatory Startup Reading
 
-Before starting any work, read the research files that inform all design decisions in this repository:
+Before starting any work, orient via the research folder. `AgentCreationResearch/` holds three document sets — read the relevant READMEs, then navigate by topic:
 
-1. Read `AgentCreationResearch/writing-skills.md` — foundational principles for skill design, instruction writing, progressive disclosure, example design, and cross-skill coherence.
-2. Read `AgentCreationResearch/writing-personalities.md` — how to write personality files that balance control and autonomy, persist across long conversations, and coordinate skill ecosystems.
-3. Read `AgentCreationResearch/writing-subagents.md` — subagent design patterns, parallelisation strategies, worktree isolation, and known failure modes.
+1. `AgentCreationResearch/writing-skills/README.md` — index to skill design principles (23 topic files covering foundational principles, trigger engineering, instruction craft, progressive disclosure, reference architecture, example design, failure catalogue, verification gates, tool-action patterns, Claude-specific calibration, infrastructure mechanisms, and more).
+2. `AgentCreationResearch/writing-personalities/README.md` — index to personality design (24 topic files covering hard rules, structure ordering, autonomy calibration, section writing patterns, failure catalogue, obligations-vs-exhortations, structural defences, instruction persistence, context anxiety, completion honesty, and more).
+3. `AgentCreationResearch/writing-subagents.md` — subagent design patterns, parallelisation strategies, worktree isolation, and known failure modes (still monolithic).
 
-These files synthesise research from Anthropic, OpenAI, and the broader agent community into actionable design principles. They are the quality standard for everything produced in this repository.
+These document sets synthesise research from Anthropic, OpenAI, and the broader agent community (2022-2026) into actionable design principles. They are the quality standard for everything produced in this repository.
+
+The `AgentCreationResearch/research-2026-04-18/` folder holds the raw outputs from six parallel Opus 4.7 research agents that informed the 2026-04-18 additions — read when the skills/personalities guidance references a specific 2026-04-18 finding you want to verify.
 
 ## How a Skill Session Works
 
