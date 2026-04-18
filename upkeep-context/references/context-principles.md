@@ -130,9 +130,9 @@ This is not a formal tagging system or a required annotation format. It is a wri
 
 Code sometimes contains explanatory comments that carry project knowledge beyond what the code itself expresses — `WHY`, `NOTE`, `HACK`, `IMPORTANT`, `TODO` annotations with substantive context, or plain comments explaining a design decision, workaround, or constraint.
 
-During upkeep, when reading code to verify system reality, watch for these. If a comment explains something that would affect how a future session reasons about the system — why an approach was chosen, what constraint forced a workaround, what assumption a piece of code depends on — consider surfacing that rationale into the relevant system file's durable notes section.
+**On every upkeep run, perform an explicit rationale-capture pass.** This is an obligation, not a suggestion. Grep or search for the annotation patterns above across representative source files while reading code to verify system reality. If a comment explains something that would affect how a future session reasons about the system — why an approach was chosen, what constraint forced a workaround, what assumption a piece of code depends on — surface that rationale into the relevant system file's durable notes section. If no such comments were found after inspection, state the absence explicitly in the final handoff, citing where you searched.
 
-Not every code comment warrants this treatment. The threshold is whether the rationale is durable and cross-session: would a future session benefit from knowing this without having to rediscover it in the code? If yes, capture it. If the comment is a local implementation note that only matters when editing that specific function, leave it in the code where it belongs.
+Not every code comment warrants surfacing. The threshold is whether the rationale is durable and cross-session: would a future session benefit from knowing this without having to rediscover it in the code? If yes, capture it. If the comment is a local implementation note that only matters when editing that specific function, leave it in the code where it belongs.
 
 When surfacing rationale, attribute it lightly — note where in the codebase the reasoning was found so a future reader can verify or revisit it.
 
@@ -181,6 +181,16 @@ Examples:
 - a REST versus GraphQL research comparison may belong in `references/rest-vs-graphql.md`.
 
 This rule reduces overlap and prevents memory drift.
+
+### Priority Rule for Cross-System Relationships
+
+Cross-system relationships are the most common place canonical ownership gets violated, because a relationship genuinely touches two systems and it is tempting to describe it fully in both. Use this priority rule:
+
+- **Major structural flows between systems** (dependency cascades visible at the architecture level, primary request paths, cross-service contracts) — **`architecture.md` first**. System files may mention the relationship in interface terms and cross-link to the architecture section.
+- **A specific system's outward connections to other systems** — the owning `systems/*.md` file. The system file carries the full description; `architecture.md` may note the connection's existence if it is structurally significant and cross-link to the owning system file.
+- **Surprising or implicit connections** (shared config keys, shared mutable state, parallel implementations, hidden coupling) — describe them fully in the **owning system file** and add a brief mention in `architecture.md`'s risk or dependency section so a top-down reader sees the hazard.
+
+Never document the same relationship fully in both `architecture.md` and a system file. Use one canonical home and a cross-link from the other.
 
 ## Supportive Presentation Principle
 

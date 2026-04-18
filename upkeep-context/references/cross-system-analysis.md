@@ -21,6 +21,8 @@ Read this file when upkeep work reveals non-trivial interactions between systems
 
 Not every project needs every technique described here. A focused single-purpose tool with three source files does not benefit from hub analysis or bridge identification. A distributed platform with a dozen interacting services benefits from most of them. Apply judgment about which techniques add value given the repository's actual complexity.
 
+The SKILL.md body's Mandatory Analytical Obligations section specifies which of these techniques must produce evidence on every run. The techniques below explain **how**; SKILL.md specifies **whether**.
+
 ## Inter-System Relationship Mapping
 
 ### What it is
@@ -57,6 +59,8 @@ A relationship entry should capture:
 ### When to skip
 
 Simple projects where every module's dependencies are obvious from a single import block do not need formal relationship mapping. If a reader can see the full dependency picture from the architecture tree and a quick scan of system files, the mapping adds overhead without insight. Apply this technique when the relationships are non-obvious, numerous, or carry important failure semantics.
+
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
 
 ## Bridge System Identification
 
@@ -103,6 +107,8 @@ The key information is:
 
 Small codebases where every module directly interacts with most other modules do not have meaningful bridge structure — everything is already connected. Bridge analysis adds value when the codebase has natural clusters of functionality that interact through narrow interfaces.
 
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
+
 ## Dependency Chain Tracing
 
 ### What it is
@@ -140,6 +146,8 @@ Document:
 
 Projects with flat architectures where most operations touch one or two modules do not have meaningful dependency chains. This technique adds value when operations cross three or more system boundaries, especially when the intermediate systems are not obvious from the entry point.
 
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
+
 ## Cross-Cutting Concerns Documentation
 
 ### What it is
@@ -174,6 +182,8 @@ Common categories of cross-cutting concerns:
 ### When to skip
 
 Projects where each system is genuinely independent and shares no conventions do not benefit from cross-cutting concern documentation. This technique adds value when you notice the same pattern implemented in three or more systems — that pattern deserves a canonical description somewhere.
+
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
 
 ## Connection Discovery Methodology
 
@@ -213,6 +223,8 @@ When the discovered connections are significant enough to change a reader's ment
 
 Connection discovery is investigative work with diminishing returns. In a small project where you have already read every file, the connections are already known. In a well-documented project where system files already describe their outward connections accurately, active discovery may not surface anything new. Invest time in discovery proportional to the project's complexity and the staleness of its documentation.
 
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
+
 ## Surprising Connections
 
 ### What it is
@@ -251,6 +263,8 @@ If the surprising connection is structural — affecting the overall architectur
 
 Do not manufacture surprising connections where none exist. If the codebase is straightforward and dependencies are explicit, there may be few or no surprising connections to document. This technique adds value when the codebase has significant implicit coupling, shared state, or configuration-driven behaviour.
 
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
+
 ## Knowledge Gaps Identification
 
 ### What it is
@@ -288,6 +302,8 @@ The important thing is that gaps are stated rather than hidden. A reader should 
 ### When to skip
 
 Very small projects where the entire codebase was inspected during upkeep have no meaningful knowledge gaps to document. This technique adds value when the codebase is large enough that upkeep necessarily involves prioritising which areas to inspect deeply and which to defer.
+
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
 
 ## Hub and Hotspot Identification
 
@@ -331,6 +347,8 @@ If a hub module has its own system file, note its hub status there as well — t
 ### When to skip
 
 Projects with flat dependency structures — where no module is significantly more depended-on than any other — do not have meaningful hubs. This technique adds value when the dependency graph has clear concentration points, or when the codebase is large enough that understanding which modules are central saves significant exploration time.
+
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."
 
 ## Cohesion and Coupling Analysis
 
@@ -381,3 +399,5 @@ A simple coupling summary can be a table in `architecture.md`:
 ### When to skip
 
 Projects where coupling is obvious from the architecture — a simple layered application where each layer depends only on the layer below — do not need formal coupling analysis. This technique adds value when the codebase has grown organically, when coupling is not obvious from the module structure, or when there are known pain points around changes that ripple unexpectedly.
+
+If this technique reduces to a trivial statement of absence, state that absence explicitly in the appropriate file. Silent omission is not equivalent to "not needed."

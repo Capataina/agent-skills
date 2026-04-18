@@ -34,7 +34,9 @@ While reviewing system files and scanning the repository, look for cross-system 
 - Does `architecture.md`'s dependency or relationship section reflect the actual web of connections between systems? New integrations or removed dependencies can quietly make the architecture description stale.
 - Do systems share data structures, configuration patterns, or conventions without documenting the coupling? Shared patterns create implicit contracts that can break when one side changes without awareness of the other.
 
-This is a mindset, not a mandatory checklist. During a routine upkeep pass, simply stay alert to connections. When one surfaces that is not reflected in the context docs, note it or update the relevant files. Not every connection needs formal documentation — the goal is that someone reading the context folder understands the important relationships, not that every possible link is catalogued.
+**On every upkeep run, perform an explicit Connection Discovery pass** following the methodology in `references/cross-system-analysis.md` §Connection Discovery Methodology. This is an obligation, not a mindset. The pass covers shared data structures, shared configuration, parallel evolution, hidden coupling through global state, event producer-consumer links, and common external dependencies. Each probe must produce an explicit outcome statement — "found and documented here," "looked and found none," or "not applicable because ..." — visible in the final handoff.
+
+The goal is still that a reader of `context/` understands the important relationships, not that every trivial link is catalogued. But the pass itself is not optional, and "I stayed alert and nothing surfaced" without evidence of what was probed does not discharge the obligation.
 
 ## 2. Minimum-Sufficient Restructuring
 
@@ -169,17 +171,17 @@ During upkeep, audit notes for:
 
 ### Convention Capture
 
-When scanning the repository during upkeep, recurring patterns sometimes become visible — the same error handling approach used across three or more files, a consistent naming convention for certain types of modules, a shared data transformation pattern, a standard way of structuring configuration.
+**On every upkeep run, perform an explicit convention-capture pass.** Scan representative source files across the repository for patterns that appear in three or more locations and are not tooling-enforced (linter rules, formatter config). Candidate categories include error handling approaches, naming conventions for specific module types, shared data transformation patterns, and configuration structuring habits.
 
-If a pattern is widespread enough to be a de facto convention but is not documented anywhere, it is a candidate for a note. Undocumented recurring patterns become tribal knowledge that breaks when someone new — human or agent — works in the codebase without knowing about them.
+If a pattern is widespread enough to be a de facto convention but is not documented anywhere, capture it in `notes/` with a named topic. If no unmarked conventions were found, state the absence explicitly in the final handoff, citing which source areas and pattern categories you scanned.
 
-Not every repeated pattern warrants a note. The threshold is whether violating the pattern would cause real confusion, inconsistency, or subtle bugs. A naming convention that three developers follow instinctively but a newcomer would not guess is worth capturing. A common import order that has no functional impact probably is not.
+Not every repeated pattern warrants capture. The threshold is whether violating the pattern would cause real confusion, inconsistency, or subtle bugs. A naming convention that three developers follow instinctively but a newcomer would not guess is worth capturing. A common import order that has no functional impact probably is not.
 
 ### Rationale Capture During Upkeep
 
-When reading code during upkeep to verify system reality, watch for explanatory comments that carry design rationale — comments explaining why an approach was chosen, what constraint forced a workaround, what assumption a piece of code depends on, or what would need to change if circumstances shift.
+**On every upkeep run, perform an explicit rationale-capture pass.** While reading code to verify system reality, grep or search for `WHY`, `NOTE`, `HACK`, `IMPORTANT`, `TODO` annotations and plain comments that carry design rationale — comments explaining why an approach was chosen, what constraint forced a workaround, what assumption a piece of code depends on, or what would need to change if circumstances shift.
 
-If the rationale is significant enough to affect how a future session reasons about the system, surface it into the relevant system file's durable notes or into a topical note file. This prevents important design knowledge from being buried in code comments that may not be encountered during a typical context read.
+If the rationale is significant enough to affect how a future session reasons about the system, surface it into the relevant system file's durable notes or into a topical note file. If no such comments were found after inspection, state the absence explicitly in the final handoff, citing where you searched. This prevents important design knowledge from being buried in code comments that may not be encountered during a typical context read, and prevents silent omission from masquerading as "nothing worth capturing."
 
 The same threshold applies here as elsewhere: capture what a future session would benefit from knowing, and leave in the code what only matters when editing that specific code.
 
