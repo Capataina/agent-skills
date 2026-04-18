@@ -226,6 +226,16 @@ Bad research queries are too generic:
 
 The discriminating question: would this query return advice that applies to *this specific system* with *this specific data* and *this specific access pattern*? If yes, the query is well-scoped.
 
+### Variety Requirement
+
+For a typical audit covering 5-15 substantive systems, the WebSearch queries across systems must span at least three distinct research modes:
+
+1. **Domain pattern lookup** — "how experienced engineers in domain X look at Y" queries. Surfaces the vocabulary, mental models, and established analysis frames that a specialist would bring.
+2. **Specific-technique evaluation** — "is algorithm / data-structure A better than B for this workload" queries. Surfaces head-to-head comparisons for a decision the audit is about to make.
+3. **Known-anti-pattern check** — "what are the established failure modes of this kind of system" queries. Surfaces the pitfalls that experienced engineers in this domain have already catalogued.
+
+If all your WebSearch calls across the audit are variants of mode 1, the audit has exploitation-collapsed into a single research pattern — you are pattern-matching on the framing that feels most natural rather than using research as a tool. Record the mode classification in the Obligation Evidence Map alongside each query so the distribution is visible. A post-audit audit of your own map that shows one mode dominating is itself a signal to go back and broaden the research.
+
 ### When Research Happens
 
 Research happens in Pass 2, during the system-by-system deep dive, after you have read the code for that system. This timing is critical:
@@ -252,7 +262,9 @@ This is one of the most important shifts in how this skill works. The audit is n
 
 ### When to Write a Diagnostic Test
 
-Write a test when:
+Diagnostic test writing is a required part of Pass 2. For any uncertainty that a test could resolve better than reading, you must write the test. The default posture is "write the test." Absence of a test is a finding-integrity failure, not a time-saving choice, unless one of the explicit deferrals below applies.
+
+Examples of the situations that require a test:
 
 - **You need to compare implementations.** Two functions claim to do the same thing. A benchmark or equivalence test resolves "which is faster" or "do they actually behave the same" in a way that reading cannot.
 - **You need to confirm a function is dead.** A function looks unused but might be invoked through reflection, dynamic dispatch, plugin systems, or external entry points. A test that exercises every plausible call site (or the absence of one) gives the audit the confidence it needs to recommend deletion.
@@ -262,11 +274,13 @@ Write a test when:
 - **A critical code path has no coverage at all and you cannot reason safely about changes there.** Filling that gap is a precondition for issuing any finding that touches the path.
 - **A finding's confidence level would jump from "moderate" to "high" if you had a test result.** That delta is exactly what diagnostic test writing exists for.
 
-Do not write a test when:
+Defer or skip a test only when:
 
-- The question can be resolved by reading the code in five minutes. Tests are not a substitute for reading.
-- The test would require rebuilding most of the system to set up. The cost of the scaffolding outweighs the value of the answer.
-- The finding does not actually depend on the test result — you are writing the test to look thorough rather than because you need the evidence.
+- The question is genuinely trivial — it can be resolved by reading the code in five minutes and the resolution is unambiguous. Tests are not a substitute for reading, but "I read it and I am sure" is only valid when the code is in fact unambiguous.
+- The test scaffolding cost exceeds the answer value. If the test would require rebuilding most of the system to set up, the cost of the scaffolding outweighs the value of the answer — record the deferral with justification.
+- The finding's confidence is already high without the test. You are not writing a test to look thorough; you are writing a test to gather evidence. If the evidence is already strong, the test adds nothing.
+
+In all other cases, absence of a diagnostic test is a finding failure, not a time-saving choice. Reasoned deferrals must appear in the Obligation Evidence Map (see `obligation-evidence-map.md`) with the specific justification — silent omission is not permitted.
 
 ### What Kinds of Tests to Write
 

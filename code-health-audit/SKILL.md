@@ -7,6 +7,14 @@ description: "Repository-wide code health audit identifying dead code, unused de
 
 Perform a comprehensive, repository-wide code health audit that identifies improvement opportunities across the entire codebase. The output is an organised set of plan files plus the diagnostic tests the audit wrote to verify its findings. Production source code is never edited; tests are written when they would resolve uncertainty before issuing a recommendation. Every proposed change must be provably "free": identical behaviour, better implementation.
 
+## Before Anything Else
+
+Before Pass 1 begins, and before reading any reference file, perform one initial `WebSearch` call with a query of the form: "code health audit patterns for [stack-or-project-type inferred from the working directory]" (e.g., "code health audit patterns for Rust reinforcement-learning project", "code health audit patterns for Python Django service").
+
+Record the query text and at least one source URL in the Obligation Evidence Map at `context/plans/code-health-audit/obligation-evidence-map.md` — create the map file now if it does not exist. This establishes the WebSearch pattern early so later Pass-2 research calls inherit it rather than fighting the default-to-Read bias. The call is cheap and non-negotiable. Skipping it is the single strongest predictor that the rest of the audit will also silently skip research.
+
+## Reference Loading
+
 Before beginning any audit, read the reference files in this order:
 
 1. Read `references/audit-philosophy.md` first.
@@ -25,8 +33,10 @@ Before beginning any audit, read the reference files in this order:
    It defines the template for individual findings — required fields, depth expectations, and writing standards.
 8. Read `references/scope-boundaries.md` eighth.
    It defines what the skill must never recommend, common false positives, and the line between cleanup and architecture change.
-9. Read `references/examples.md` last.
-   It contains worked examples of good audit findings, including rejected findings that looked promising but would have changed behaviour.
+9. Read `references/obligation-evidence-map.md` ninth (mandatory-core).
+   It defines the live evidence ledger produced as the audit runs — what it is, where it lives, which rows and columns are required, and when each row must be written. Non-negotiable tool obligations (§"Non-Negotiable Tool Obligations" below) are all verified against this map.
+10. Read `references/examples.md` last.
+    It contains worked examples of good audit findings, including rejected findings that looked promising but would have changed behaviour.
 
 ## Core Identity
 
@@ -81,9 +91,27 @@ Changes that violate this rule:
 
 The audit does not write, edit, or delete production source files. Production code is the implementing engineer's territory; the audit produces plan files for those changes. The carve-out for tests in Rule 2 does not extend to production source.
 
+## Non-Negotiable Tool Obligations
+
+Two tool-use obligations in this skill are non-negotiable and have been the dominant silent-failure pattern in past runs. They are stated here, in the SKILL.md body, rather than buried in references, because they must stay in working context for every system.
+
+### Research floor (WebSearch)
+
+Every substantive system identified in the Pass-1 prioritisation must have at least one `WebSearch` call with a well-scoped, system-specific query. The exact query text and at least one source URL must appear in the Obligation Evidence Map alongside the system's row, together with the research-mode classification (mode 1 domain pattern lookup, mode 2 specific-technique evaluation, mode 3 known-anti-pattern check — see `references/detection-strategies.md` §"How to Scope Research Queries" and §"Variety Requirement"). The research-mode distribution across the audit must span at least three modes; single-mode audits have exploitation-collapsed and must be broadened. Research may be skipped only for systems that meet the explicit criteria in `references/detection-strategies.md` §"When Research Is Not Required", and the skip must appear as a reasoned-omission row in the map.
+
+### Diagnostic-test floor
+
+Every finding whose confidence would move from moderate (or low) to high if a test result were available must have that test written *before* the finding is issued. The test file path and a one-line assertion summary (with result) must appear in the finding body and in the Obligation Evidence Map. Deferrals are permitted only for the three cases listed in `references/detection-strategies.md` §"When to Write a Diagnostic Test" (genuinely trivial question, test scaffolding cost exceeds answer value, finding confidence already high) and must appear as reasoned omissions. In all other cases, absence of a diagnostic test is a finding-integrity failure, not a time-saving choice.
+
+### Why these are non-negotiable
+
+WebSearch and writing new test files are both low-pretraining-support tools for coding models. The model is biased against using them — not because they are wrong in this context, but because Read, Edit, Bash, Grep, and Glob are far more represented in pretraining. That bias is a training artefact, not a reasoned judgement about this audit. You will feel pulled toward more reading and away from WebSearch and test writing. When you notice yourself drafting internal reasoning for why a system is trivial enough to skip research on, or why a finding's confidence is fine without a test, treat that drafting as evidence that you should perform the tool call immediately. The reasoning is motivated reasoning; the skip is the bias firing, not a judgement call.
+
+This is why the obligations are reified as map rows and per-finding evidence rather than as prose "please remember to research" instructions. The map row either exists or it does not. That is checkable; prose adherence is not.
+
 ## Two-Pass Approach
 
-The audit follows a structured two-pass approach:
+The audit follows a structured two-pass approach. Each pass ends with a checkpoint file written to disk — proceeding to the next pass or to final output before the checkpoint exists is not permitted. The checkpoints are structural artefacts, not scaffolding; they anchor the audit against premature-completion drift.
 
 ### Pass 1 — Context and Broad Scan
 
@@ -94,30 +122,39 @@ The audit follows a structured two-pass approach:
 5. Run the project's existing test suite end-to-end (`cargo test`, `pytest`, `npm test`, `go test ./...`, or whatever the project uses) to capture the current pass/fail baseline. Pre-existing failures become Known Issues findings immediately, and a broken or missing test infrastructure is itself a finding worth recording.
 6. At this point, you know *what the project is, how it is built, and whether its test suite is healthy*. Prioritise the systems where the deep dive will be most valuable.
 
+**Pass 1 checkpoint.** At the end of Pass 1, write `context/plans/code-health-audit/PASS-1-CHECKPOINT.md` containing: the systems identified with file counts, the test-suite baseline (command run, pass/fail counts, any flakiness observed), the Pass-2 prioritisation with rationale, and the known issues already surfaced from context files. Do not enter Pass 2 before the checkpoint exists.
+
 ### Pass 2 — System-by-System Deep Dive
 
 Pass 2 is iterative, not strictly sequential. The flow is: read the code until you hit an uncertainty, resolve the uncertainty with whichever tool fits (more reading, research, or a diagnostic test), then continue. The kinds of work that happen in Pass 2:
 
 1. **Read the code deeply** — understand the implementation, follow the call chain, trace the hot paths, read the actual data access patterns.
-2. **Conduct targeted research** for almost every substantive system, not just the obviously computational ones — request handlers, business logic, query handlers, schedulers, parsers, middleware, batch processors, and so on all benefit from research. Skip research only for genuinely trivial modules.
-3. **Write diagnostic tests** when reading and research surface a question that a test would resolve — equivalence tests for "do these two functions actually behave the same," benchmarks for "which is faster," coverage probes for "is this code reachable," baseline pins for "what does the current behaviour look like before I propose changing it." Tests are interleaved with reading, not batched at the end. See the detection strategies reference for the full guidance.
-4. **Analyse against every category in the taxonomy**. Pay particular attention to the Data Layout and Memory Access Patterns category for systems with hot loops over substantial data.
-5. **Record findings with full evidence and justification**, referencing any diagnostic tests the audit wrote so the implementing engineer can re-run them.
+2. **Conduct targeted research (required for substantive systems).** Research during the deep-dive phase *is required* for any system that does substantive work — not only the systems that look computationally heavy. Request handlers, business logic, query handlers, schedulers, parsers, middleware, batch processors all require research. Skip only for genuinely trivial modules per the explicit criteria in `references/detection-strategies.md` §"When Research Is Not Required". Queries must span the three research modes across the audit (see the Research floor above).
+3. **Write diagnostic tests.** Diagnostic test writing is a required part of Pass 2. For any uncertainty that a test could resolve better than reading, you must write the test — equivalence tests, benchmarks, coverage probes, baseline pins. Tests are interleaved with reading, not batched at the end. Absence of a test where one would have resolved uncertainty is a finding-integrity failure, not a time-saving choice. Deferrals are permitted only for the three cases listed in `references/detection-strategies.md` §"When to Write a Diagnostic Test" and must be recorded as reasoned omissions in the Obligation Evidence Map.
+4. **Analyse against every category in the taxonomy**. Data Layout and Memory Access Patterns applies to every system audited — see the Quality Checklist.
+5. **Record findings with full evidence and justification**, referencing any diagnostic tests the audit wrote so the implementing engineer can re-run them. Before issuing any finding at moderate or low confidence, attempt the confidence upgrade pathway (see `references/evidence-and-justification.md` §"Confidence Upgrade Pathway"). Append the system's row to the Obligation Evidence Map as the Pass-2 work for that system completes — never batched at the end.
 
 Research and diagnostic test writing happen *per system* because they need to be targeted. You do not research "how to optimise a query planner" or write a benchmark for it before you know the project has one and how it is implemented. You do both when you are deep in the storage engine and can ask the right questions, with the actual code in front of you to validate the findings against.
 
+**Pass 2 checkpoint.** At the end of Pass 2, write `context/plans/code-health-audit/PASS-2-SYSTEMS-AUDITED.md` containing a per-system row for every system in the Pass-1 prioritisation, with columns: research evidence (query + URL + mode), tests written (file paths + assertions + results), findings count, and confidence. This file is distinct from the Obligation Evidence Map (which is appended live and may contain PENDING rows during the audit) — the Pass-2 checkpoint is the static snapshot of the final state. Do not proceed to final output before it exists.
+
 ## Output
 
-The skill produces two kinds of output:
+The skill produces three kinds of output:
 
 **A plan folder inside `context/plans/`** named for the audit (e.g., `context/plans/code-health-audit/`). This folder contains:
 
 - an `index.md` file summarising all findings grouped by category and system,
+- a "What I Did Not Do" section at the top of `index.md` (see below — this is required, not optional),
+- the Pass-1 and Pass-2 checkpoint files (`PASS-1-CHECKPOINT.md`, `PASS-2-SYSTEMS-AUDITED.md`),
+- the live Obligation Evidence Map (`obligation-evidence-map.md`),
 - one file per major category or system, depending on what organisation best serves the findings (see output structure reference for guidance).
 
 The plan folder follows the same lifecycle as any plan file: it exists while the work is active, items get ticked as they are implemented, and the folder is removed once all actionable items are complete or consciously deferred.
 
 **Diagnostic tests in the project's test suite.** The audit writes tests directly into the project's existing test directory, following the project's existing test conventions. These tests live permanently in the test suite — they are not scaffolding to be deleted. Each finding that is grounded in a test the audit wrote should reference the test file path so the implementing engineer can re-run it to verify their changes. If the project has no test infrastructure at all, the audit can stand up the minimal setup needed (test framework, runner config, conventional directory) — but only what is required for the diagnostic work.
+
+**A "What I Did Not Do" section at the top of `index.md` (required).** Before presenting findings, enumerate every non-negotiable obligation from this skill with a status of `done` (with evidence — tool call reference, file path, URL, or test path), `partial` (with reason and partial evidence), or `skipped` (with reason). Silent omission is not permitted. This section is the project-level summary of the per-system Obligation Evidence Map; the two must agree. See `references/output-structure.md` §"What I Did Not Do Section" for the full structure.
 
 ## Evidence Standard
 
@@ -131,25 +168,52 @@ Every finding must be grounded in inspected code, not in assumptions about what 
 
 When a finding is based partly on inference rather than direct observation, say so explicitly.
 
+## Infrastructure Enforcement
+
+Two optional hooks are available for users who want to raise the enforcement floor beyond prose compliance. Neither is required to run the skill; both are Tier 4 mechanisms (see `AgentCreationResearch/writing-skills/19-verification-gates.md`) that catch silent omission of the non-negotiable tool obligations.
+
+**Stop hook (type: agent).** Greps the session transcript for `WebSearch` tool_use entries and compares the count against the substantive-system count derived from `context/plans/code-health-audit/index.md` (or the Pass-1 checkpoint if the index is not yet written). If fewer WebSearch calls than substantive systems — minus any reasoned omissions recorded in the Obligation Evidence Map — the hook returns `{ok: false, reason: "WebSearch obligation not met: N substantive systems, M calls, K reasoned omissions"}` and the skill cannot terminate.
+
+**Stop hook (type: command).** Validates the Obligation Evidence Map structurally — every row has non-empty research-obligation and diagnostic-test-obligation cells (or an explicit reasoned omission), every system in the Pass-1 prioritisation has a row, no row is in PENDING state. Exit non-zero with a structured reason on any violation.
+
+Neither hook is required to run the skill; both raise the enforcement floor. Users who configure them should install them at `.claude/hooks/` following the Claude Code hooks guide. Users who do not configure them rely on the in-prompt obligations and the What-I-Did-Not-Do declaration.
+
 ## Quality Checklist
 
-Before presenting the audit results, verify:
+The checklist is split into two halves. The first half — **Obligations** — is binary: each item either has the cited artefact or it does not, and the audit is not complete without every one of them. The second half — **Quality rubric** — applies only after the obligations are met. It is subjective and is not a substitute for the obligations.
 
-- every finding includes the full proof chain: current state, proposed change, justification, expected benefit, behavioural impact assessment,
-- no finding proposes a change that would alter application behaviour without explicit flagging,
-- no finding introduces new overhead, dependencies, or maintenance burden in production code,
-- findings are categorised correctly according to the taxonomy,
-- the plan folder is organised logically with a clear index,
-- the project's existing test suite was run during Pass 1, and any pre-existing failures, flaky tests, or broken test infrastructure were recorded as Known Issues findings,
-- research was conducted for every substantive system in the project — not only the obviously computational ones — and not skipped because the surface looked clean,
-- research findings are grounded in the actual codebase, not generic advice,
-- diagnostic tests were written wherever they would resolve uncertainty about a finding before that finding was issued,
-- diagnostic tests live in the project's test suite (not in the plan folder) and are referenced from the findings they support,
-- if the audit stood up new test infrastructure, it is the minimal version needed for the diagnostic work and follows the project's conventions for the stack,
-- no test was written to bulk up output rather than to gather evidence,
-- the audit covers the full codebase, not just the areas that were easiest to analyse,
-- the Data Layout and Memory Access Patterns category was applied to every system with hot loops, hot allocation paths, or substantial data movement,
-- dead code identification accounts for dynamic dispatch, reflection, macros, and other indirect usage patterns — and is backed by coverage probes the audit wrote where reflection or dynamic dispatch make static analysis insufficient,
-- severity and priority rankings reflect actual impact, not just ease of detection,
-- "free" findings are free in the sense of zero behavioural change and no new production-code burden, not in the sense of trivial implementation effort,
-- production source code was not modified — only test files and the plan folder.
+### Obligations (evidence required)
+
+Every item must cite a specific artefact (tool call, file path, query text, URL, or test file path). An item with no artefact cited is not met.
+
+- [ ] **Pre-Pass-1 front-loaded WebSearch performed:** query text and source URL cite: Obligation Evidence Map row at the top of `context/plans/code-health-audit/obligation-evidence-map.md`.
+- [ ] **Pass-1 checkpoint written before Pass 2 began:** cite: `context/plans/code-health-audit/PASS-1-CHECKPOINT.md`.
+- [ ] **Project test suite baseline captured in Pass 1:** exact command run, pass/fail counts; cite: Pass-1 checkpoint file.
+- [ ] **Pre-existing test failures recorded as Known Issues findings:** cite: finding file path(s) or explicit "no failures" note in the checkpoint.
+- [ ] **Research obligation met for every substantive system:** each substantive system from the Pass-1 prioritisation has ≥1 WebSearch call with a well-scoped system-specific query, query text + ≥1 source URL + research-mode classification recorded; cite: Obligation Evidence Map row per system. Systems skipped per the explicit criteria in `references/detection-strategies.md` §"When Research Is Not Required" appear as reasoned-omission rows with justification.
+- [ ] **Research-mode variety across the audit:** the WebSearch queries span at least three modes (domain pattern lookup, specific-technique evaluation, known-anti-pattern check); cite: mode-distribution summary at the top of the Obligation Evidence Map.
+- [ ] **Diagnostic-test obligation met:** every finding whose confidence would move from moderate or low to high with a test result has that test written before the finding was issued, with test file path + one-line assertion summary + result in the finding body; cite: finding file paths and test file paths. Deferrals appear as reasoned omissions with justification.
+- [ ] **Confidence upgrade pathway attempted before any moderate or low confidence finding:** cite: either a test file / research URL that was added as part of the upgrade, or a reasoned-omission row explaining why the upgrade was not feasible.
+- [ ] **Pass-2 systems-audited checkpoint written before final output:** cite: `context/plans/code-health-audit/PASS-2-SYSTEMS-AUDITED.md`.
+- [ ] **Obligation Evidence Map has one row per substantive system (no PENDING rows):** cite: map file.
+- [ ] **"What I Did Not Do" section present at the top of `index.md`:** enumerates every obligation with status done / partial / skipped, and agrees with the Obligation Evidence Map; cite: `index.md`.
+- [ ] **Data Layout and Memory Access Patterns applied to every system audited in Pass 2:** for each system, an explicit applicability decision is recorded — either the analysis was performed (cite: findings or "no Data Layout findings in this system" note) or the system was determined not applicable (cite: per-system justification).
+- [ ] **Production source code not modified:** only test files and the plan folder touched; cite: diff against `HEAD` or equivalent.
+
+### Quality rubric (applies only after obligations are met)
+
+These items are subjective second-tier checks. They are not a substitute for the Obligations section; failing a rubric item does not violate a hard constraint, but a failing rubric item on top of met obligations still indicates the audit can be improved before presentation.
+
+- Every finding includes the full proof chain: current state, proposed change, justification, expected benefit, behavioural impact assessment.
+- No finding proposes a change that would alter application behaviour without explicit flagging.
+- No finding introduces new overhead, dependencies, or maintenance burden in production code.
+- Findings are categorised correctly according to the taxonomy.
+- The plan folder is organised logically with a clear index.
+- Research findings are grounded in the actual codebase, not generic advice.
+- Diagnostic tests live in the project's test suite (not in the plan folder) and are referenced from the findings they support.
+- If the audit stood up new test infrastructure, it is the minimal version needed for the diagnostic work and follows the project's conventions for the stack.
+- No test was written to bulk up output rather than to gather evidence.
+- The audit covers the full codebase, not just the areas that were easiest to analyse.
+- Dead code identification accounts for dynamic dispatch, reflection, macros, and other indirect usage patterns — and is backed by coverage probes the audit wrote where reflection or dynamic dispatch make static analysis insufficient.
+- Severity and priority rankings reflect actual impact, not just ease of detection.
+- "Free" findings are free in the sense of zero behavioural change and no new production-code burden, not in the sense of trivial implementation effort.

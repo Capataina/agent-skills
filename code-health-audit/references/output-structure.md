@@ -10,6 +10,7 @@ This reference defines how to organise the audit output folder, name files, and 
 4. File Naming Conventions
 5. Lifecycle
 6. Relationship to Context
+7. What I Did Not Do Section
 
 ## 1. Folder Location and Naming
 
@@ -170,3 +171,29 @@ The audit output should reference context files where relevant:
 - When a finding reveals something that should be captured as a new note, recommend creating the note.
 
 The audit is a consumer of context, not a producer of it (except for its plan files). It does not update system files, architecture, or notes — it only reads them and produces plan files. Updates to context happen through the normal upkeep workflow as findings are implemented.
+
+## 7. What I Did Not Do Section
+
+Before presenting the audit, the `index.md` file must include a "What I Did Not Do" section that enumerates every non-negotiable obligation from the skill and reports its status. Silent omission is not permitted — an obligation either has evidence, a reasoned deferral, or an acknowledged skip.
+
+Structure:
+
+```markdown
+## What I Did Not Do
+
+For each obligation, status is `done` (with evidence), `partial` (with reason and partial evidence), or `skipped` (with reason).
+
+- **Pre-Pass-1 front-loaded WebSearch:** done — query "[text]"; source [URL]; recorded in obligation-evidence-map.md.
+- **Pass-1 checkpoint file written:** done — `context/plans/code-health-audit/PASS-1-CHECKPOINT.md`.
+- **Pass-2 systems-audited file written:** done — `context/plans/code-health-audit/PASS-2-SYSTEMS-AUDITED.md`.
+- **Obligation Evidence Map populated for every substantive system:** done — N rows for N substantive systems.
+- **WebSearch call per substantive system:** partial — 6 of 7 substantive systems; the seventh (`src/util/format_seconds.rs`) is a single-line glue module and is recorded as a reasoned omission per §"When Research Is Not Required".
+- **Research mode variety across queries:** done — modes 1, 2, and 3 all represented; distribution recorded in the map.
+- **Diagnostic tests written where they would resolve moderate-to-high confidence:** done — M tests written, all referenced from the findings they support.
+- **Data Layout and Memory Access Patterns analysis applied to every audited system:** done — per-system applicability decisions recorded.
+- **Project test suite baseline captured:** done — command: `cargo test`; result: 312 pass, 2 failing (recorded as Known Issues findings).
+```
+
+This section is an index-level obligation ledger, not a retrospective. Populate it from the Obligation Evidence Map — they must agree. Mismatch between the two is itself a finding-integrity failure and must be resolved before the audit is presented.
+
+Mirror: the Obligation Evidence Map (see `obligation-evidence-map.md`) is the per-system detail; the "What I Did Not Do" section is the project-level summary. Both are required.

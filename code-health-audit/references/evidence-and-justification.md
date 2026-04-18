@@ -8,9 +8,10 @@ This reference defines the proof chain every finding requires and how to assess 
 2. Current State Documentation
 3. Proposed Change Documentation
 4. Justification Standards
-5. Behavioural Impact Assessment
-6. Confidence Levels
-7. Research-Backed Findings
+5. Confidence Upgrade Pathway
+6. Behavioural Impact Assessment
+7. Confidence Levels
+8. Research-Backed Findings
 
 ## 1. The Proof Chain
 
@@ -112,7 +113,32 @@ These patterns indicate weak justification:
 - "This is a code smell" — name the concrete risk or cost.
 - "Modern code would..." — the standard is whether the change is an improvement in this project, not whether it matches a hypothetical ideal.
 
-## 5. Behavioural Impact Assessment
+## 5. Confidence Upgrade Pathway
+
+Before issuing a finding at moderate or low confidence, ask:
+
+1. "Would a diagnostic test upgrade this to high confidence?"
+2. "Would additional research or code reading resolve the uncertainty?"
+
+If the answer to either is yes, attempt the upgrade *before* issuing the finding, not after. Low and moderate confidence findings are not acceptable output unless you have already attempted the upgrade and failed — or the upgrade cost genuinely exceeds the finding's value and you have recorded that trade-off as a reasoned omission in the Obligation Evidence Map.
+
+The failure mode this section exists to prevent: issuing a lukewarm finding ("this *might* be O(n^2); unclear if it matters") when a 20-line benchmark or a 5-minute follow-up read would have produced a confident finding or ruled it out. Confidence is not a dial the audit gets to set by fiat — it is earned by the evidence, and the audit's job when confidence is low is to try to raise it.
+
+### Worked examples
+
+**Example 1 — Algorithmic complexity case.** A reading pass surfaces a nested loop in a query handler. The outer loop iterates over request items; the inner loop iterates over a lookup array. At a glance this is O(n·m). The uncertainty: is the lookup array small enough in practice that the nested loop never becomes a bottleneck, or is it growing with tenant count?
+
+Wrong: issue the finding at moderate confidence with "this *may* be a bottleneck depending on array size."
+
+Right: before issuing, either (a) write a quick benchmark that runs the handler against realistic tenant-size distributions captured from the project's data, or (b) read the code that populates the lookup array to determine its growth curve. Either pushes the finding to high confidence. The finding is then issued as "confirmed O(n·m) with m growing linearly in tenant count, reaching ~4,000 at current scale; benchmark at `tests/query_handler_bench.rs` shows 180ms per request at 4k tenants" — or it is withdrawn.
+
+**Example 2 — Dead-code-via-reflection case.** A module appears unused. Grep finds no direct callers. But the project uses a plugin loader that instantiates modules by name at runtime from a config file.
+
+Wrong: issue a "Triage Needed" finding at low confidence saying "appears dead but the plugin system makes this unclear."
+
+Right: before issuing, write a coverage probe — a test that exercises the plugin loader with the full set of plugin names from the project's config and asserts whether this module's entry point is ever called. If the probe shows zero invocations, the finding moves to high confidence as a Dead Code finding with the probe attached. If the probe shows the module is invoked by a plugin name, the finding is withdrawn. "Triage Needed" is a last-resort category when the upgrade was genuinely attempted and failed — not a comfortable default.
+
+## 6. Behavioural Impact Assessment
 
 Every finding must include an assessment of whether the proposed change affects observable behaviour.
 
@@ -154,7 +180,7 @@ To claim "no impact," you must demonstrate one of:
 - **Equivalence proof:** the new code produces identical output for all inputs the system generates. This requires understanding the input domain, not just the algorithm.
 - **Isolation proof:** the change is contained within a boundary that does not affect external interfaces (e.g., reducing visibility, removing unused imports).
 
-## 6. Confidence Levels
+## 7. Confidence Levels
 
 When the evidence is not definitive, state your confidence level:
 
@@ -164,7 +190,7 @@ When the evidence is not definitive, state your confidence level:
 
 Low-confidence findings should be categorised as "Triage Needed" rather than given definitive recommendations.
 
-## 7. Research-Backed Findings
+## 8. Research-Backed Findings
 
 When a finding is supported by external research:
 
