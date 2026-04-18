@@ -11,6 +11,7 @@
 7. [Solution Files](#solution-files)
 8. [Project-Specific Practice](#project-specific-practice)
 9. [Archive-Scale Exercise Expectation](#archive-scale-exercise-expectation)
+10. [Exercise Verification Gate](#exercise-verification-gate)
 
 Exercises are the practical layer of `learning/`. They should increase mastery, not spoil it.
 
@@ -156,3 +157,29 @@ It should cover:
 - roadmap-facing thought exercises where useful.
 
 Do not keep the exercise layer small out of caution. If the archive is large, the practice layer should also be rich.
+
+## Exercise Verification Gate
+
+Before an exercise is considered done, every implementation, debugging, extension, or reconstruction exercise must pass an explicit verification gate. Verification is not optional polish — it is the gate between "looks like an exercise" and "is an exercise". The failure mode being defended against is the exercise file that has the right shape but is unsolvable, over-scaffolded, or quietly contains the answer.
+
+For each exercise file, verify:
+
+- **File type is code, not markdown.** Implementation, debugging, extension, and reconstruction exercises must be `.py`, `.rs`, `.ts`, or whatever language fits the project. A purely conceptual exercise may be markdown; anything that asks the learner to write or modify code must not be.
+- **Header and working space proportions are real.** The structured comment header (prompt, goal, tasks, hints, expected behaviour) should be roughly 50 lines or more for a substantive exercise, and the learner working area should be at least 20 lines of scaffolded or empty code. A 200-line header with 3 blank lines beneath is a brief in exercise clothing; a 5-line header with an empty body is a missing prompt.
+- **The exercise is solvable.** Sketch a rough solution mentally (or on paper) before finalising the exercise. If you cannot sketch the solution in a few minutes, the exercise is either underspecified, too large, or missing information the learner will need. Fix it now rather than leaving the learner stuck.
+- **Completion time is realistic.** Estimate how long a motivated learner should spend — roughly 30 minutes to 2 hours for a standard exercise. Much shorter suggests the exercise is trivial or gives away the answer; much longer suggests it should be split into staged exercises.
+- **No silent answer leakage.** Re-scan the scaffolding for comments that reveal the bug, variable names that encode the answer, or starter code that is one rename away from the solution.
+
+For each solution file, verify:
+
+- **File name and location match the exercise.** `exercises/core/simple-mlp.py` pairs with `exercises/solutions/core/simple-mlp.py`. Mismatched names or folders break the pairing and make `SOLUTION_INDEX.md` lie.
+- **Solution is a working implementation, not a walkthrough.** The solution file should run (or compile) and produce the expected behaviour. It should not be a heavily commented essay that substitutes prose for code — that undermines the exercise.
+- **Solution is not more instructive than the exercise.** If learners will read the solution to learn the topic, the exercise file has already failed. Teaching belongs in the concept files; the solution file exists for verification and unblocking.
+
+For exercise ordering in `EXERCISE_ORDER.md`, verify:
+
+- **Pedagogical progression is real.** Each exercise should build on genuine prerequisites, not just sit in the next slot. If two exercises are independent, group them side by side rather than implying an order that does not matter.
+- **Dependencies are stated where they exist.** When an exercise requires a concept taught in a specific concept file or an earlier exercise, say so explicitly in the order file.
+- **The order file matches the exercise tree.** After any rename, move, or addition, reconcile `EXERCISE_ORDER.md` with the current tree before the pass ends.
+
+If any of these checks fail, fix the exercise before presenting the pass as complete. A broken exercise is worse than a missing one — it teaches the learner to distrust the archive.
